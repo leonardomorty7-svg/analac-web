@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --sidebar-width: 260px;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+@layer components {
+  .portal-sidebar {
+    @apply fixed inset-y-0 left-0 z-50 flex w-[var(--sidebar-width)] flex-col bg-brand-800 text-white;
+  }
+
+  .portal-content {
+    @apply ml-[var(--sidebar-width)] flex-1 p-8;
+  }
+
+  .nav-link {
+    @apply flex items-center gap-3 rounded-lg px-4 py-2.5 text-sm font-medium text-white/80 transition hover:bg-white/10 hover:text-white;
+  }
+
+  .nav-link.active {
+    @apply bg-white/15 text-white;
+  }
+}

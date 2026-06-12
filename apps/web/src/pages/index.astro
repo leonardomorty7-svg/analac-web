@@ -1,0 +1,58 @@
+---
+// src/pages/index.astro — Home completo de ANALAC
+import BaseLayout from '../layouts/BaseLayout.astro'
+import HeroHome from '../components/HeroHome.astro'
+import StatementSection from '../components/StatementSection.astro'
+import CienciaLacteaSection from '../components/CienciaLacteaSection.astro'
+import AliadosSection from '../components/AliadosSection.astro'
+import VitrinaFuturaSection from '../components/VitrinaFuturaSection.astro'
+
+import ConsumoSection from '../components/ConsumoSection.astro'
+import ImpactoSection from '../components/ImpactoSection.astro'
+import HazteAfiliadoSection from '../components/HazteAfiliadoSection.astro'
+---
+
+<BaseLayout
+  title="ANALAC | Asociación Nacional de Productores de Leche de Colombia"
+  description="ANALAC representa a los productores de leche de Colombia, promueve información sectorial, consumo lácteo, aliados estratégicos y fortalecimiento gremial."
+>
+  <HeroHome />
+  <StatementSection />
+  <CienciaLacteaSection />
+
+  <VitrinaFuturaSection />
+  
+  <ConsumoSection />
+  <ImpactoSection />
+  <HazteAfiliadoSection />
+  <AliadosSection class="fade-up" />
+
+  <script>
+    // Scroll-driven animations — fade up al entrar cada sección
+    const sections = document.querySelectorAll('section');
+
+    sections.forEach((section) => {
+      section.style.opacity = '0';
+      section.style.transform = 'translateY(40px)';
+      section.style.transition = 'opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1), transform 0.9s cubic-bezier(0.16, 1, 0.3, 1)';
+    });
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            entry.target.style.opacity = '1';
+            entry.target.style.transform = 'translateY(0)';
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      {
+        threshold: 0.08,
+        rootMargin: '0px 0px -40px 0px',
+      }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+  </script>
+</BaseLayout>

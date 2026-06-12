@@ -1,0 +1,441 @@
+---
+// src/pages/informacion-sectorial.astro
+import BaseLayout from '../layouts/BaseLayout.astro'
+import { bulletins } from '../data/bulletins'
+import { sectorIndicators } from '../data/stats'
+
+const chartData = [
+  { label: 'Producción Nacional (Formal)', value: '82%', color: 'var(--c-green-light)', amount: '3.42B L' },
+  { label: 'Acopio Formal Industria', value: '48%', color: 'var(--c-green)', amount: '1.64B L' },
+  { label: 'Consumo Per Cápita Objetivo', value: '86%', color: 'var(--c-green-deep)', amount: '155 L/hab' },
+  { label: 'Exportaciones Proyectadas', value: '15%', color: '#666666', amount: '12K Ton' }
+];
+---
+
+<BaseLayout
+  title="Información sectorial láctea | ANALAC"
+  description="Consulta boletines, indicadores, noticias y análisis del sector lácteo colombiano publicados por ANALAC."
+>
+  <!-- S1 Hero interior -->
+  <section class="page-hero hero-dark fade-up">
+    <div class="page-hero-bg"></div>
+    <div class="container page-hero-content">
+      <p class="overline overline-light">Centro de inteligencia</p>
+      <h1 class="page-hero-title">
+        Indicadores y estadísticas del sector lácteo colombiano
+      </h1>
+      <p class="page-hero-desc">
+        Datos de acopio, precios y producción nacional con actualización mensual, diseñados para empoderar al productor y fortalecer la competitividad.
+      </p>
+    </div>
+  </section>
+
+  <!-- S2 Indicadores actuales -->
+  <section class="section" style="padding: 120px 0; background: var(--c-cream);">
+    <div class="container">
+      <div class="section-header fade-up" style="margin-bottom: 48px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 24px;">
+        <div>
+          <p class="overline">Noviembre 2025</p>
+          <h2 class="h2" style="margin-top: 8px;">Dashboard de Indicadores</h2>
+        </div>
+        <span style="font-size: 13px; font-weight: 500; color: var(--c-muted); padding: 8px 16px; background: rgba(0,0,0,0.05); border-radius: 100px;">Actualizado: 30 nov. 2025</span>
+      </div>
+
+      <div class="indicadores-grid fade-up">
+        {sectorIndicators.map((ind) => (
+          <div class="ind-card premium-panel">
+            <div class="ind-icon">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 12V7H5a2 2 0 0 1 0-4h14v4"/><path d="M3 5v14a2 2 0 0 0 2 2h16v-5"/><path d="M18 12a2 2 0 0 0 0 4h4v-4Z"/></svg>
+            </div>
+            <div class="ind-body">
+              <div class="ind-value">{ind.value}</div>
+              <div class="ind-label">{ind.label}</div>
+              <div class="ind-sublabel">{ind.sublabel}</div>
+            </div>
+            <div class="ind-footer">
+              <span class={`trend-pill trend-pill--${ind.trend}`}>{ind.trendValue}</span>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- S3 Nueva Sección: Panorama del Sector -->
+  <section class="section" style="padding: 120px 0; background: #ffffff;">
+    <div class="container">
+      <div class="panorama-layout fade-up">
+        <div class="panorama-text">
+          <p class="overline">Contexto Nacional</p>
+          <h2 class="h2" style="margin-bottom: 24px;">Panorama del Sector</h2>
+          <p style="font-size: 19px; color: var(--c-muted); line-height: 1.6;">
+            A través del análisis detallado de la producción y el acopio formal, mapeamos la capacidad de crecimiento e identificamos oportunidades estratégicas para la consolidación láctea en Colombia.
+          </p>
+        </div>
+        <div class="panorama-charts">
+          {chartData.map(chart => (
+            <div class="chart-row">
+              <div class="chart-header">
+                <span class="chart-label">{chart.label}</span>
+                <span class="chart-amount">{chart.amount}</span>
+              </div>
+              <div class="chart-track">
+                <div class="chart-fill" style={`width: ${chart.value}; background: ${chart.color};`}></div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- S4 Boletines descargables -->
+  <section class="section" id="boletines" style="padding: 120px 0; background: var(--c-cream);">
+    <div class="container">
+      <div class="section-header text-center fade-up" style="max-width: 600px; margin: 0 auto 64px;">
+        <p class="overline">Publicaciones</p>
+        <h2 class="h2">Boletines Ejecutivos</h2>
+      </div>
+
+      <div class="boletines-grid fade-up">
+        {bulletins.map((b) => (
+          <article class="boletin-card premium-panel">
+            <div class="boletin-header" style={`border-bottom: 4px solid ${b.coverColor};`}>
+              <span class="boletin-tag">Boletín ANALAC</span>
+              <h3 class="boletin-date">{b.month} {b.year}</h3>
+            </div>
+            <div class="boletin-body">
+              <ul class="boletin-list">
+                {b.highlights.map((h) => (
+                  <li>
+                    <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--c-green)" stroke-width="3" style="flex-shrink:0; margin-top:4px;"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    <span>{h}</span>
+                  </li>
+                ))}
+              </ul>
+              <a
+                href={b.pdfUrl}
+                class="btn btn--outline-dark boletin-btn"
+                target="_blank"
+                rel="noopener noreferrer"
+                download
+                aria-label={`Descargar boletín ${b.month} ${b.year}`}
+              >
+                Descargar Informe ↓
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- S5 CTA -->
+  <section class="cta-final section fade-up" style="background: var(--c-green-deep);">
+    <div class="container text-center" style="max-width: 700px;">
+      <p class="overline overline-light" style="margin-bottom: 24px;">Suscripción gratuita</p>
+      <h2 class="h2 cta-title">Recibe nuestro boletín de inteligencia sectorial</h2>
+      <p style="color: rgba(255,255,255,0.7); font-size: 19px; margin-bottom: 48px; line-height: 1.6; text-wrap: balance;">
+        Únete a cientos de productores, gremios y tomadores de decisiones que reciben cada mes nuestros análisis.
+      </p>
+      <form class="subscribe-form" action="#" method="post" novalidate>
+        <div class="subscribe-row">
+          <input
+            type="email"
+            name="email"
+            placeholder="Ingresa tu correo electrónico..."
+            required
+            aria-label="Correo electrónico"
+            class="subscribe-input"
+          />
+          <button type="submit" class="btn btn--accent" style="padding: 16px 32px; font-size: 15px;">
+            Suscribirme
+          </button>
+        </div>
+      </form>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Hero */
+  .page-hero.hero-dark {
+    position: relative;
+    padding: 200px 0 140px;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    background-color: var(--c-green-deep);
+  }
+  .page-hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(rgba(10, 26, 12, 0.5), rgba(10, 26, 12, 0.85)), url('/images/colombia-dairy-bg-v3.jpg');
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+  }
+  .page-hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    text-align: center;
+    margin: 0 auto;
+  }
+  .page-hero-title {
+    font-size: clamp(40px, 6vw, 64px);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+    color: #ffffff;
+    text-wrap: balance;
+  }
+  .page-hero-desc {
+    font-size: 19px;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    max-width: 700px;
+    margin: 0 auto;
+    text-wrap: balance;
+  }
+  .overline-light {
+    color: var(--c-green-light);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  /* Premium Panels */
+  .premium-panel {
+    background: #ffffff;
+    border-radius: 16px;
+    border: 1px solid rgba(0,0,0,0.04);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.02);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+  }
+  .premium-panel:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 48px rgba(0,0,0,0.06);
+  }
+
+  /* Dashboard Indicadores */
+  .indicadores-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .ind-card {
+    padding: 32px 24px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+  .ind-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    background: #eaf3ea;
+    color: var(--c-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+  .ind-value {
+    font-size: 40px;
+    font-weight: 300;
+    letter-spacing: -0.03em;
+    color: var(--c-text);
+    line-height: 1;
+    margin-bottom: 8px;
+  }
+  .ind-label {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--c-text);
+    margin-bottom: 4px;
+  }
+  .ind-sublabel {
+    font-size: 13px;
+    color: var(--c-muted);
+  }
+  .ind-footer {
+    margin-top: auto;
+    padding-top: 24px;
+  }
+  .trend-pill {
+    display: inline-flex;
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  .trend-pill--up {
+    background-color: #eaf3ea;
+    color: var(--c-green);
+  }
+  .trend-pill--stable {
+    background-color: #f5f3ee;
+    color: var(--c-muted);
+  }
+  .trend-pill--down {
+    background-color: #fef2f2;
+    color: #b91c1c;
+  }
+
+  /* Panorama del Sector */
+  .panorama-layout {
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    gap: 64px;
+    align-items: center;
+  }
+  .chart-row {
+    margin-bottom: 32px;
+  }
+  .chart-row:last-child {
+    margin-bottom: 0;
+  }
+  .chart-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    font-size: 15px;
+    font-weight: 500;
+  }
+  .chart-label {
+    color: var(--c-text);
+  }
+  .chart-amount {
+    color: var(--c-muted);
+  }
+  .chart-track {
+    width: 100%;
+    height: 12px;
+    background: #f5f3ee;
+    border-radius: 100px;
+    overflow: hidden;
+  }
+  .chart-fill {
+    height: 100%;
+    border-radius: 100px;
+    transition: width 1s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /* Boletines */
+  .boletines-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .boletin-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    height: 100%;
+  }
+  .boletin-header {
+    background: #faf9f7;
+    padding: 32px 24px;
+  }
+  .boletin-tag {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--c-muted);
+    font-weight: 600;
+    display: block;
+    margin-bottom: 8px;
+  }
+  .boletin-date {
+    font-size: 24px;
+    font-weight: 400;
+    color: var(--c-text);
+    line-height: 1.1;
+  }
+  .boletin-body {
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+  }
+  .boletin-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 32px;
+  }
+  .boletin-list li {
+    font-size: 14px;
+    color: var(--c-muted);
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    line-height: 1.5;
+  }
+  .boletin-btn {
+    margin-top: auto;
+    width: 100%;
+    padding: 12px;
+  }
+
+  /* CTA Final */
+  .cta-final {
+    padding: 120px 0;
+  }
+  .cta-title {
+    color: #ffffff;
+    margin: 0 auto 24px;
+  }
+  .subscribe-form {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  }
+  .subscribe-row {
+    display: flex;
+    gap: 16px;
+    width: 100%;
+  }
+  .subscribe-input {
+    flex: 1;
+    height: 56px;
+    padding: 0 24px;
+    border-radius: 100px;
+    border: 1px solid rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.05);
+    color: #fff;
+    font-size: 16px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.2s ease, background 0.2s ease;
+  }
+  .subscribe-input::placeholder {
+    color: rgba(255,255,255,0.4);
+  }
+  .subscribe-input:focus {
+    border-color: rgba(255,255,255,0.6);
+    background: rgba(255,255,255,0.1);
+  }
+
+  /* Responsive */
+  @media (max-width: 1024px) {
+    .indicadores-grid, .boletines-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 768px) {
+    .panorama-layout {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+    .indicadores-grid, .boletines-grid {
+      grid-template-columns: 1fr;
+    }
+    .subscribe-row {
+      flex-direction: column;
+    }
+    .subscribe-input, .subscribe-row .btn {
+      width: 100%;
+    }
+  }
+</style>

@@ -1,0 +1,191 @@
+---
+// src/components/HeroHome.astro
+---
+<section class="hero-home fade-up">
+  <!-- Fondo de pantalla completa -->
+  <div class="hero-bg">
+    <img src="/images/hero/hero-01.jpg" alt="Colombian dairy farm golden hour" class="hero-img img-1" />
+    <img src="/images/hero/hero-02.jpg" alt="Sustainable Colombian dairy farming" class="hero-img img-2" />
+    <img src="/images/hero/hero-03.jpg" alt="Lush green Andean pastures at dawn" class="hero-img img-3" />
+    <div class="hero-overlay"></div>
+  </div>
+
+  <!-- Contenido principal -->
+  <div class="hero-content">
+    <p class="overline" style="margin-bottom: 24px; color: rgba(255, 255, 255, 0.85); letter-spacing: 0.15em; font-size: 12px; font-weight: 500;">ASOCIACIÓN NACIONAL DE PRODUCTORES DE LECHE</p>
+    
+    <h1 class="hero-title">
+      Unimos al <em class="hero-accent">sector lácteo colombiano</em> para impulsar su competitividad y desarrollo sostenible.
+    </h1>
+
+    <div class="hero-footer">
+      <div class="hero-actions">
+        <a href="/quienes-somos" class="btn btn--accent" style="padding: 12px 28px;">Conoce nuestra labor</a>
+        <a href="/informacion-sectorial" class="btn btn--outline-white" style="padding: 12px 28px;">Consulta boletines →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Indicador scroll animado -->
+  <div class="scroll-indicator">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="scroll-arrow"><path d="M12 5v14M19 12l-7 7-7-7"/></svg>
+    <span class="scroll-text">SCROLL DOWN</span>
+  </div>
+</section>
+
+<style>
+  .hero-home {
+    position: relative;
+    height: 100vh;
+    min-height: 700px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    background-color: #040a05;
+  }
+  .hero-img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    opacity: 0;
+    will-change: opacity, transform;
+    animation: crossfade 28.5s infinite linear, kenburns 28.5s infinite linear;
+  }
+  
+  .img-1 { animation-delay: 0s, 0s; }
+  .img-2 { animation-delay: -19s, -19s; }
+  .img-3 { animation-delay: -9.5s, -9.5s; }
+
+  @keyframes crossfade {
+    0% { opacity: 1; }
+    24.56% { opacity: 1; }
+    33.33% { opacity: 0; }
+    91.22% { opacity: 0; }
+    100% { opacity: 1; }
+  }
+
+  @keyframes kenburns {
+    0% { transform: scale(1.0104); }
+    33.33% { transform: scale(1.05); }
+    34% { transform: scale(1.0); }
+    91.22% { transform: scale(1.0); }
+    100% { transform: scale(1.0104); }
+  }
+  .hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0.45) 35%, rgba(0,0,0,0.55) 100%);
+  }
+  .hero-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 40px;
+  }
+
+  .hero-title {
+    text-align: center;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 32px;
+    font-size: clamp(48px, 5.5vw, 76px);
+    font-weight: 300;
+    color: white;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .hero-accent {
+    color: #a8d4a0;
+    font-style: normal;
+    font-weight: 600;
+  }
+
+  .hero-footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+
+
+
+  .hero-actions {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+  }
+
+  /* Indicador de scroll */
+  .scroll-indicator {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .scroll-arrow {
+    color: rgba(255,255,255,0.5);
+    animation: float 2.5s infinite ease-in-out;
+  }
+
+  .scroll-text {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    color: rgba(255,255,255,0.5);
+    font-weight: 500;
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(8px); }
+  }
+
+  @media (max-width: 768px) {
+    .hero-home {
+      padding: 0 24px;
+      padding-bottom: 64px;
+    }
+    .hero-content {
+      padding: 0;
+    }
+    .hero-title {
+      font-size: 42px;
+    }
+    .hero-footer {
+      flex-direction: column;
+      align-items: center;
+      gap: 32px;
+    }
+    .hero-actions {
+      flex-direction: column;
+      width: 100%;
+    }
+    .hero-actions .btn {
+      width: 100%;
+    }
+  }
+</style>

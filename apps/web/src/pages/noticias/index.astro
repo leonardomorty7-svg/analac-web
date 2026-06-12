@@ -1,0 +1,173 @@
+---
+// src/pages/noticias/index.astro
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import { news } from '../../data/news'
+
+const categories = ['Todos', ...new Set(news.map((n) => n.category))]
+---
+
+<BaseLayout
+  title="Noticias del sector lácteo | ANALAC"
+  description="Actualidad, comunicados, eventos y novedades relevantes para productores, aliados e instituciones del sector lácteo colombiano."
+>
+  <!-- Hero Editorial Premium -->
+  <section class="page-hero hero-dark fade-up" style="position: relative; padding: 200px 0 140px; min-height: 60vh; display: flex; align-items: center; background-color: var(--c-green-deep);">
+    <div style="position: absolute; inset: 0; background-image: linear-gradient(rgba(10, 26, 12, 0.6), rgba(10, 26, 12, 0.9)), url('/images/hero-noticias-v2.jpg'); background-size: cover; background-position: center; z-index: 0;"></div>
+    <div class="container" style="position: relative; z-index: 1; max-width: 900px; text-align: center; margin: 0 auto;">
+      <p class="overline" style="color: var(--c-green-light); border-color: rgba(255,255,255,0.2); display: inline-block; margin-bottom: 24px;">Publicaciones ANALAC</p>
+      <h1 style="font-size: clamp(40px, 6vw, 64px); font-weight: 400; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 24px; color: #ffffff; text-wrap: balance;">
+        Actualidad del <span style="color: var(--c-green-light);">sector lácteo colombiano</span>
+      </h1>
+      <p style="font-size: 19px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; max-width: 700px; margin: 0 auto; text-wrap: balance;">
+        Análisis, indicadores, sostenibilidad, comercio y tendencias que impactan la cadena láctea nacional.
+      </p>
+    </div>
+  </section>
+
+  <!-- Filtros Premium -->
+  <section style="background: var(--color-bg-page); padding: 48px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">
+    <div class="container" style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;" role="navigation" aria-label="Filtrar por categoría">
+      {categories.map((cat) => (
+        <a href={`/noticias${cat !== 'Todos' ? `?categoria=${cat}` : ''}`} class="filter-chip">
+          {cat}
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <!-- Noticia Destacada -->
+  <section class="section" style="background: var(--color-bg-white); padding-top: 100px; padding-bottom: 60px;">
+    <div class="container">
+      <article class="featured-article" style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 64px; align-items: center; padding: 48px; background: #fff; border: 1px solid rgba(0,0,0,0.04); border-radius: 24px; box-shadow: 0 12px 48px rgba(0,0,0,0.04);">
+        <div style="border-radius: 16px; overflow: hidden; height: 100%; min-height: 400px; position: relative;">
+          <img
+            src={news[0]!.imageUrl}
+            alt={news[0]!.imageAlt}
+            style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;"
+            loading="eager"
+          />
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 24px;">
+          <div style="display: flex; gap: 12px; align-items: center;">
+            <span class="tag tag--filled" style="background: var(--color-green-soft); color: var(--color-green-dark); font-weight: 500;">{news[0]!.category}</span>
+            <time style="font-size: 13px; font-weight: 500; color: var(--color-text-sub); text-transform: uppercase; letter-spacing: 0.05em;" datetime={news[0]!.dateISO}>
+              {news[0]!.date}
+            </time>
+          </div>
+          <h2 style="font-size: clamp(32px, 3.5vw, 48px); font-weight: 400; letter-spacing: -0.02em; line-height: 1.15; color: var(--color-text-main);">
+            {news[0]!.title}
+          </h2>
+          <p style="font-size: 16px; color: var(--color-text-sub); line-height: 1.7; max-width: 90%;">
+            {news[0]!.excerpt}
+          </p>
+          <a href={`/noticias/${news[0]!.slug}`} class="btn btn--primary" style="align-self: flex-start; margin-top: 8px;">
+            Leer análisis completo →
+          </a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- Grid Editorial de Noticias -->
+  <section class="section" style="background: var(--color-bg-page); padding: 80px 0 120px;">
+    <div class="container">
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;">
+        {news.slice(1).map((item) => (
+          <article class="news-card" style="background: var(--color-bg-white); border: 1px solid rgba(0,0,0,0.04); border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.02); display: flex; flex-direction: column;">
+            <a href={`/noticias/${item.slug}`} style="display: flex; flex-direction: column; text-decoration: none; height: 100%;" aria-label={`Leer: ${item.title}`}>
+              <div style="height: 220px; overflow: hidden; position: relative;">
+                <img
+                  src={item.imageUrl}
+                  alt={item.imageAlt}
+                  style="width: 100%; height: 100%; object-fit: cover;"
+                  class="news-img"
+                  loading="lazy"
+                />
+              </div>
+              <div style="padding: 28px; display: flex; flex-direction: column; gap: 16px; flex: 1;">
+                <div style="display: flex; gap: 12px; align-items: center;">
+                  <span class="tag tag--filled" style="font-size: 11px;">{item.category}</span>
+                  <time style="font-size: 11px; font-weight: 500; color: var(--color-text-sub); text-transform: uppercase; letter-spacing: 0.05em;" datetime={item.dateISO}>
+                    {item.date}
+                  </time>
+                </div>
+                <h3 style="font-size: 20px; font-weight: 500; letter-spacing: -0.01em; color: var(--color-text-main); line-height: 1.35;">
+                  {item.title}
+                </h3>
+                <p style="font-size: 14px; color: var(--color-text-sub); line-height: 1.6;">
+                  {item.excerpt}
+                </p>
+                <div style="margin-top: auto; padding-top: 20px; border-top: 1px solid rgba(0,0,0,0.05);">
+                  <span class="link-underline" style="font-size: 13px; font-weight: 500; color: var(--color-green-dark);">Leer artículo →</span>
+                </div>
+              </div>
+            </a>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- Cierre Institucional -->
+  <section style="background: var(--c-green-deep); padding: 120px 0; text-align: center;">
+    <div class="container" style="max-width: 600px; display: flex; flex-direction: column; align-items: center; gap: 24px;">
+      <p class="overline" style="color: rgba(255,255,255,0.7); border-color: rgba(255,255,255,0.2);">RECURSOS ANALAC</p>
+      <h2 style="font-size: 36px; font-weight: 400; color: #fff; letter-spacing: -0.02em; margin-top: -8px;">Mantente informado</h2>
+      <p style="font-size: 18px; color: rgba(255,255,255,0.8); line-height: 1.6;">
+        Accede a análisis, boletines e indicadores que fortalecen la toma de decisiones del sector lácteo colombiano.
+      </p>
+      <a href="/informacion-sectorial" class="btn btn--primary" style="margin-top: 16px; padding: 16px 36px; font-size: 16px; border: 1px solid rgba(255,255,255,0.1);">
+        Ver boletines e informes →
+      </a>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .filter-chip {
+    padding: 8px 20px;
+    background: transparent;
+    border: 1px solid rgba(0,0,0,0.1);
+    border-radius: 100px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--color-text-sub);
+    text-decoration: none;
+    transition: all 0.2s ease;
+  }
+  .filter-chip:hover {
+    background: var(--color-green-soft);
+    border-color: var(--color-green-soft);
+    color: var(--color-green-dark);
+  }
+
+  .featured-article {
+    transition: box-shadow 0.4s ease;
+  }
+  .featured-article:hover {
+    box-shadow: 0 20px 60px rgba(0,0,0,0.08) !important;
+  }
+
+  .news-card {
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+  .news-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.06) !important;
+  }
+  
+  .news-img {
+    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .news-card:hover .news-img {
+    transform: scale(1.05);
+  }
+
+  @media (max-width: 992px) {
+    article.featured-article { grid-template-columns: 1fr !important; gap: 32px !important; padding: 32px !important; }
+    div[style*="grid-template-columns: repeat(3, 1fr)"] { grid-template-columns: repeat(2, 1fr) !important; }
+  }
+  @media (max-width: 600px) {
+    div[style*="grid-template-columns: repeat(2, 1fr)"] { grid-template-columns: 1fr !important; }
+  }
+</style>

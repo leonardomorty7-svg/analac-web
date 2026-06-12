@@ -1,0 +1,492 @@
+---
+// src/components/StatementSection.astro
+---
+<section class="statement-scroll-section" id="scroll-statement">
+  <!-- Scroll Triggers -->
+  <div class="scroll-triggers">
+    <div class="trigger" data-index="0"></div>
+    <div class="trigger" data-index="1"></div>
+    <div class="trigger" data-index="2"></div>
+    <div class="trigger" data-index="3"></div>
+  </div>
+
+  <div class="sticky-container">
+    <canvas id="network-canvas" class="network-canvas" aria-hidden="true"></canvas>
+    
+    <div class="statement-header">
+      <span class="overline">NUESTRA RAZÓN DE SER</span>
+      <h2 class="h2 statement-h2">
+        Un gremio que <em class="statement-italic">representa, informa, promueve y conecta</em> 
+        al sector lácteo colombiano.
+      </h2>
+      <p class="statement-p">
+        Trabajamos cada día para que los productores de leche de Colombia tengan representación gremial, acceso a información sectorial y conexión con los actores del ecosistema lácteo.
+      </p>
+    </div>
+
+    <div class="track-viewport">
+      <div class="track" id="nodes-track">
+        <!-- Background Curve -->
+        <div class="track-bg">
+          <svg width="100%" height="200" viewBox="0 0 4000 200" preserveAspectRatio="none">
+            <line x1="0" y1="100" x2="4000" y2="100" stroke="rgba(109, 181, 109, 0.4)" stroke-width="2" />
+          </svg>
+        </div>
+        
+        <!-- Nodes -->
+        <div class="node-wrapper">
+          <div class="node active">
+            <div class="node-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>
+            </div>
+            <h3 class="node-title">Representamos</h3>
+            <p class="node-desc">La voz de productores, empresas y organizaciones vinculadas al sector lácteo colombiano.</p>
+          </div>
+        </div>
+
+        <div class="node-wrapper">
+          <div class="node">
+            <div class="node-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="18" y1="20" y2="10"/><line x1="12" x2="12" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="14"/></svg>
+            </div>
+            <h3 class="node-title">Informamos</h3>
+            <p class="node-desc">Boletines, indicadores y análisis para comprender los retos y oportunidades del sector.</p>
+          </div>
+        </div>
+
+        <div class="node-wrapper">
+          <div class="node">
+            <div class="node-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
+            </div>
+            <h3 class="node-title">Promovemos</h3>
+            <p class="node-desc">Contenidos educativos para impulsar el consumo informado de leche y lácteos.</p>
+          </div>
+        </div>
+
+        <div class="node-wrapper">
+          <div class="node">
+            <div class="node-icon">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+            </div>
+            <h3 class="node-title">Conectamos</h3>
+            <p class="node-desc">Asociados, aliados e instituciones que aportan al desarrollo del ecosistema lácteo.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="statement-cta">
+      <a href="/quienes-somos" class="btn-primary">Conoce nuestra historia →</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .statement-scroll-section {
+    position: relative;
+    height: 400vh; /* 4 slides */
+    background: #e8e4dc;
+  }
+  
+  .scroll-triggers {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 10;
+  }
+  
+  .trigger {
+    height: 25%;
+  }
+
+  .sticky-container {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100dvh;
+    width: 100%;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  /* Red de Conexión (Canvas) */
+  .network-canvas {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  /* Header */
+  .statement-header {
+    text-align: center;
+    max-width: 1400px;
+    padding: 0 5vw;
+    margin-bottom: 60px;
+    position: relative;
+    z-index: 2;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .overline {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #6db56d;
+    font-weight: 600;
+  }
+  .statement-h2 {
+    font-size: clamp(36px, 4vw, 56px);
+    color: #0f2211;
+    line-height: 1.15;
+    font-weight: 400;
+    margin-top: 24px;
+    margin-bottom: 24px;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  .statement-italic {
+    font-style: italic;
+    color: #4a7c4a;
+  }
+  .statement-p {
+    font-size: 19px;
+    color: rgba(15, 34, 17, 0.65);
+    max-width: 760px;
+    margin: 0 auto;
+    line-height: 1.6;
+    text-wrap: balance;
+  }
+
+  /* Track & Nodes */
+  .track-viewport {
+    width: 100vw;
+    height: 280px;
+    position: relative;
+    overflow: visible;
+  }
+  .track {
+    display: flex;
+    width: 400vw;
+    height: 200px;
+    position: relative;
+    transition: transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: transform;
+  }
+  .track-bg {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    pointer-events: none;
+  }
+
+  .node-wrapper {
+    width: 100vw;
+    height: 200px;
+    position: relative;
+    flex-shrink: 0;
+  }
+
+  .node {
+    position: absolute;
+    left: 50%;
+    top: 60px;
+    transform: translateX(-50%) scale(0.85);
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    opacity: 0.3;
+    transition: opacity 0.7s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+    will-change: opacity, transform;
+  }
+  .node.active {
+    opacity: 1;
+    transform: translateX(-50%) scale(1);
+  }
+
+  .node-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 12px 32px rgba(15,34,17,0.08);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 24px;
+    color: #6db56d;
+    transition: all 0.5s ease;
+  }
+  .node.active .node-icon {
+    background: #6db56d;
+    color: white;
+    box-shadow: 0 12px 32px rgba(109,181,109,0.4);
+    transform: scale(1.1);
+  }
+
+  .node-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: #0f2211;
+    margin-bottom: 12px;
+    text-align: center;
+  }
+
+  .node-desc {
+    font-size: 19px;
+    color: rgba(15,34,17,0.7);
+    line-height: 1.6;
+    text-align: center;
+    margin: 0;
+  }
+
+  /* CTA */
+  .statement-cta {
+    margin-top: 60px;
+    position: relative;
+    z-index: 2;
+  }
+  .btn-primary {
+    background: #6db56d;
+    color: white;
+    border-radius: 100px;
+    padding: 16px 36px;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(109, 181, 109, 0.2);
+    transition: all 0.3s ease;
+    display: inline-block;
+  }
+  .btn-primary:hover {
+    background: #5aa35a;
+    box-shadow: 0 6px 16px rgba(109, 181, 109, 0.3);
+    transform: translateY(-2px);
+  }
+
+  @media (max-width: 768px) {
+    .track-viewport {
+      height: 320px;
+    }
+    .node {
+      width: 280px;
+      top: 30px;
+    }
+    .statement-h2 {
+      font-size: 28px;
+      margin-bottom: 16px;
+    }
+    .statement-header {
+      margin-bottom: 32px;
+    }
+    .statement-cta {
+      margin-top: 32px;
+    }
+  }
+</style>
+
+<script>
+  const track = document.getElementById('nodes-track');
+  const nodes = document.querySelectorAll('.node');
+  const triggers = document.querySelectorAll('.trigger');
+
+  if (track && nodes.length && triggers.length) {
+    let currentIndex = 0;
+    const ratios = new Array(triggers.length).fill(0);
+    
+    // Umbrales granulares para detectar progresivamente la intersección sin espacios muertos
+    const thresholds = Array.from({length: 21}, (_, i) => i / 20);
+    
+    const observer = new IntersectionObserver((entries) => {
+      // Actualizar los ratios de intersección actuales
+      entries.forEach(entry => {
+        const index = parseInt(entry.target.getAttribute('data-index') || '0');
+        ratios[index] = entry.intersectionRatio;
+      });
+      
+      let maxRatio = 0;
+      let bestIndex = currentIndex;
+      
+      // Encontrar el elemento con mayor área visible
+      for (let i = 0; i < ratios.length; i++) {
+        // Se requiere superar al actual por al menos 1% para evitar parpadeos en el punto 50/50
+        if (ratios[i] > maxRatio + 0.01) {
+          maxRatio = ratios[i];
+          bestIndex = i;
+        }
+      }
+      
+      // Aplicar mutaciones visuales únicamente si hay un cambio real de estado
+      if (bestIndex !== currentIndex) {
+        currentIndex = bestIndex;
+        
+        // Empaquetar operaciones de DOM en el ciclo de pintado para 60fps constantes
+        requestAnimationFrame(() => {
+          track.style.transform = `translateX(-${currentIndex * 100}vw)`;
+          
+          nodes.forEach((node, i) => {
+            if (i === currentIndex) {
+              node.classList.add('active');
+            } else {
+              node.classList.remove('active');
+            }
+          });
+        });
+      }
+    }, {
+      rootMargin: "0px",
+      threshold: thresholds
+    });
+
+    triggers.forEach(t => observer.observe(t));
+    
+    // Forzar el estado inicial en el primer frame válido
+    requestAnimationFrame(() => {
+      nodes[0].classList.add('active');
+    });
+  }
+
+  /* --- Animación de Ondas de Difusión (Canvas) --- */
+  const canvas = document.getElementById('network-canvas');
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    let ripples = [];
+    let animationFrameId = null;
+    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+    function resize() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+
+    let frameCount = 0;
+    let nextSpawnFrame = 0;
+
+    class Ripple {
+      constructor() {
+        // Distribuir evitando bordes extremos (20% a 80% de la pantalla)
+        this.x = (Math.random() * 0.6 + 0.2) * width;
+        this.y = (Math.random() * 0.6 + 0.2) * height;
+        this.radius = 0;
+        // Expansión extremadamente lenta y orgánica (respiración)
+        this.velocity = Math.random() * 0.15 + 0.08; 
+        // Ondas amplias (250px a 600px de radio)
+        this.maxRadius = Math.random() * 350 + 250;
+        this.opacity = 0;
+      }
+
+      update() {
+        this.radius += this.velocity;
+        
+        // Curva de opacidad: fade in muy suave hasta el 40%, luego fade out prolongado
+        if (this.radius < this.maxRadius * 0.4) {
+          this.opacity += 0.0015;
+        } else {
+          this.opacity -= (this.velocity / this.maxRadius) * 1.5;
+        }
+        
+        if (this.opacity < 0) this.opacity = 0;
+      }
+
+      draw() {
+        if (!ctx || this.opacity <= 0) return;
+        
+        // Opacidad incrementada para mejor visibilidad pero manteniendo la elegancia (0.24 - 0.28)
+        const maxAlpha = 0.26;
+        const alpha = Math.min(this.opacity, maxAlpha);
+        
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        
+        // Tonos blancos translúcidos
+        ctx.strokeStyle = `rgba(255, 255, 255, ${alpha})`;
+        
+        // Trazo con mayor presencia visual sin ser pesado (2px - 3px)
+        ctx.lineWidth = 2.5;
+        
+        // Halo lechoso orgánico (difusión líquida, NO glow)
+        ctx.shadowBlur = 12;
+        ctx.shadowColor = `rgba(255, 255, 255, 0.12)`;
+        
+        ctx.stroke();
+        
+        // Limpiar el shadow después de pintar para no afectar otros elementos
+        ctx.shadowBlur = 0;
+      }
+      
+      isDead() {
+        return this.radius >= this.maxRadius || this.opacity <= 0;
+      }
+    }
+
+    function initNetwork() {
+      resize();
+      ripples = [];
+      frameCount = 0;
+      nextSpawnFrame = 0; // Spawn first immediately
+    }
+
+    function drawNetwork() {
+      if (!ctx) return;
+      ctx.clearRect(0, 0, width, height);
+      frameCount++;
+      
+      // Control de frecuencia: Una onda nueva cada 4 a 6 segundos (240 a 360 frames a 60fps)
+      // Máximo estricto de 4 ondas simultáneas en pantalla
+      if (frameCount >= nextSpawnFrame && ripples.length < 4) {
+        ripples.push(new Ripple());
+        nextSpawnFrame = frameCount + Math.floor(Math.random() * 120 + 240);
+      }
+      
+      for (let i = ripples.length - 1; i >= 0; i--) {
+        ripples[i].update();
+        ripples[i].draw();
+        
+        if (ripples[i].isDead()) {
+          ripples.splice(i, 1);
+        }
+      }
+      
+      animationFrameId = requestAnimationFrame(drawNetwork);
+    }
+
+    const networkObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          if (!prefersReducedMotion.matches && !animationFrameId) {
+            initNetwork();
+            drawNetwork();
+          }
+        } else {
+          if (animationFrameId) {
+            cancelAnimationFrame(animationFrameId);
+            animationFrameId = null;
+          }
+        }
+      });
+    }, { threshold: 0 });
+
+    const sectionEl = document.querySelector('.statement-scroll-section');
+    if (sectionEl) networkObserver.observe(sectionEl);
+
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+      clearTimeout(resizeTimeout);
+      resizeTimeout = setTimeout(() => {
+        if (animationFrameId) {
+          initNetwork();
+        }
+      }, 200);
+    });
+  }
+</script>

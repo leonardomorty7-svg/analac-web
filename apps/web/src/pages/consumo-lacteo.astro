@@ -1,0 +1,78 @@
+---
+// src/pages/consumo-lacteo.astro
+import BaseLayout from '../layouts/BaseLayout.astro'
+
+const recipes = [
+  { title: 'Changua bogotana', time: '20 min', difficulty: 'Fácil', ingredient: 'Leche entera', img: '/images/recetas/changua.jpg' },
+  { title: 'Natillas navideñas', time: '45 min', difficulty: 'Media', ingredient: 'Leche + panela', img: '/images/recetas/natilla.jpg' },
+  { title: 'Kumis casero', time: '24 h', difficulty: 'Fácil', ingredient: 'Leche entera', img: '/images/recetas/kumis.jpg' },
+  { title: 'Arequipe artesanal', time: '2 h', difficulty: 'Media', ingredient: 'Leche + azúcar', img: '/images/recetas/arequipe.jpg' },
+]
+---
+
+<BaseLayout
+  title="Nutrición y bienestar | ANALAC"
+  description="Explora artículos, recetas, ciencia láctea y contenidos educativos sobre leche, lácteos, alimentación y bienestar."
+>
+  <!-- Hero -->
+  <section class="page-hero hero-dark fade-up" style="position: relative; padding: 200px 0 140px; min-height: 70vh; display: flex; align-items: center; background-color: var(--c-green-deep);">
+    <div style="position: absolute; inset: 0; background-image: linear-gradient(rgba(10, 26, 12, 0.5), rgba(10, 26, 12, 0.85)), url('/images/hero-gastronomia.jpg'); background-size: cover; background-position: center; z-index: 0;"></div>
+    <div class="container" style="position: relative; z-index: 1; max-width: 900px; text-align: center; margin: 0 auto;">
+      <p class="overline" style="color: var(--c-green-light); border-color: rgba(255,255,255,0.2); display: inline-block; margin-bottom: 24px;">Campaña nacional</p>
+      <h1 style="font-size: clamp(40px, 6vw, 64px); font-weight: 400; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 24px; color: #ffffff; text-wrap: balance;">
+        Nutrición y bienestar <span style="color: var(--c-green-light);">alrededor de la leche y los lácteos</span>
+      </h1>
+      <p style="font-size: 19px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; max-width: 700px; margin: 0 auto; text-wrap: balance;">
+        Cada litro de leche que consumes fortalece a una familia de productores colombianos. ANALAC lidera la campaña nacional para aumentar el consumo per cápita y visibilizar el valor del sector.
+      </p>
+    </div>
+  </section>
+
+  <!-- Recetas -->
+  <section class="section" style="background: var(--color-bg-page); padding: 120px 0;">
+    <div class="container">
+      <p class="overline" style="display: block; text-align: center; margin-bottom: 12px;">Cocina colombiana</p>
+      <h2 class="h2" style="text-align: center; margin-bottom: 64px;">Recetas con lácteos</h2>
+      
+      <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 48px;">
+        {recipes.map((r) => (
+          <article class="recipe-card" style="background: var(--color-bg-white); border: 1px solid rgba(0,0,0,0.04); border-radius: var(--radius-card); overflow: hidden; box-shadow: 0 4px 24px rgba(0,0,0,0.02); display: flex; flex-direction: column; cursor: pointer;">
+            <div style="height: 400px; overflow: hidden; position: relative;">
+              <img src={r.img} alt={r.title} style="width: 100%; height: 100%; object-fit: cover;" class="recipe-img" loading="lazy" />
+              <div style="position: absolute; top: 20px; right: 20px;">
+                <span class="tag tag--filled" style="background: rgba(255,255,255,0.95); color: var(--color-green-dark); font-weight: 500; font-size: 14px; padding: 8px 16px;">{r.time}</span>
+              </div>
+            </div>
+            <div style="padding: 32px; display: flex; flex-direction: column; gap: 16px;">
+              <h3 style="font-size: 28px; font-weight: 400; color: var(--color-text-main); line-height: 1.2; letter-spacing: -0.02em;">{r.title}</h3>
+              <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 16px; border-top: 1px solid rgba(0,0,0,0.05);">
+                <span style="font-size: 15px; color: var(--color-text-sub);">{r.difficulty}</span>
+                <span class="tag" style="font-size: 13px; font-weight: 500;">{r.ingredient}</span>
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .recipe-img {
+    transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+  }
+  .recipe-card:hover .recipe-img {
+    transform: scale(1.05);
+  }
+  .recipe-card {
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+  .recipe-card:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.08) !important;
+  }
+
+  @media (max-width: 768px) {
+    div[style*="grid-template-columns: repeat(2, 1fr)"] { grid-template-columns: 1fr !important; }
+  }
+</style>

@@ -1,0 +1,217 @@
+---
+// src/components/AliadosSection.astro
+
+const aliados = [
+  { file: 'solla.webp', nombre: 'Solla' },
+  { file: 'saenz-fety.webp', nombre: 'Sáenz Fety' },
+  { file: 'lares.webp', nombre: 'LaRes' },
+  { file: 'delaval.webp', nombre: 'DeLaval' },
+  { file: 'carval.webp', nombre: 'Carval' },
+  { file: 'fedegan.png', nombre: 'Fedegán' },
+  { file: 'ganasal.webp', nombre: 'Ganasal' },
+  { file: 'grupo-bios.webp', nombre: 'Grupo Bios' },
+  { file: 'partner.webp', nombre: 'Edairy Partners' },
+  { file: 'ica.svg', nombre: 'ICA' },
+  { file: 'noga.webp', nombre: 'Noga' },
+  { file: 'nutrimixes.webp', nombre: 'Nutrimixes' },
+  { file: 'nutryr.webp', nombre: 'Nutryr' },
+  { file: 'ourofino.webp', nombre: 'Ourofino' },
+  { file: 'silveragro.webp', nombre: 'Silveragro' },
+  { file: 'biogenesis.webp', nombre: 'Biogénesis Bagó' },
+  { file: 'semex.webp', nombre: 'Semex' },
+  { file: 'genetica-selecta.webp', nombre: 'Genética Selecta' },
+];
+
+---
+
+<section class="aliados-section fade-up">
+  <div class="aliados-header">
+    <span class="overline reveal" style="transition-delay: 0ms">RED DE ALIADOS ESTRATÉGICOS</span>
+    <h2 class="aliados-title reveal" style="transition-delay: 150ms">Organizaciones e instituciones que respaldan el sector lácteo colombiano</h2>
+    <p class="aliados-p reveal" style="transition-delay: 280ms">Aportan conocimiento, soluciones y respaldo al fortalecimiento del ecosistema lácteo nacional.</p>
+  </div>
+
+  <div class="marquee-container reveal" style="transition-delay: 300ms">
+    <div class="marquee-track">
+      {[...aliados, ...aliados].map((aliado) => (
+        <div class="aliado-logo-wrapper">
+          <img src={`/images/aliados/${aliado.file}`} alt={`Logo ${aliado.nombre}`} class="aliado-logo" loading="lazy" />
+        </div>
+      ))}
+    </div>
+  </div>
+
+  <div class="aliados-actions reveal" style="transition-delay: 600ms">
+    <a href="/asociados-aliados" class="btn-primary">Ver todos los aliados</a>
+    <a href="/asociados-aliados" class="btn-secondary">Unirse como aliado</a>
+  </div>
+</section>
+
+<style>
+  .aliados-section {
+    background: #ffffff;
+    padding: 120px 5vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .aliados-header {
+    text-align: center;
+    max-width: 720px;
+    margin: 0 auto 60px;
+  }
+
+  .overline {
+    font-size: 11px;
+    color: #6db56d;
+    letter-spacing: 0.12em;
+    font-weight: 600;
+    margin-bottom: 24px;
+    display: inline-block;
+  }
+
+  .aliados-title {
+    font-size: clamp(28px, 4vw, 40px);
+    color: #060f07;
+    line-height: 1.15;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+
+  .aliados-p {
+    font-size: 19px;
+    color: rgba(6, 15, 7, 0.6);
+    line-height: 1.6;
+  }
+
+  .marquee-container {
+    width: 100vw;
+    max-width: 100%;
+    overflow: hidden;
+    margin-bottom: 60px;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+  }
+
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    gap: 40px;
+    animation: scroll 40s linear infinite;
+    padding: 0 20px;
+  }
+
+  .marquee-track:hover {
+    animation-play-state: paused;
+  }
+
+  @keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-50% - 20px)); }
+  }
+
+  .aliado-logo-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 140px;
+    height: 80px;
+    padding: 16px;
+  }
+
+  .aliado-logo {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    filter: grayscale(100%) opacity(0.5);
+    transition: all 0.4s ease;
+  }
+
+  .aliado-logo-wrapper:hover .aliado-logo {
+    filter: grayscale(0%) opacity(1);
+    transform: scale(1.08);
+  }
+
+  .aliados-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    background: #6db56d;
+    color: #ffffff;
+    padding: 14px 32px;
+    border-radius: 100px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    white-space: nowrap;
+    transition: background 0.2s ease;
+  }
+  .btn-primary:hover {
+    background: #5aa35a;
+  }
+
+  .btn-secondary {
+    display: inline-block;
+    background: transparent;
+    color: #060f07;
+    padding: 14px 32px;
+    border-radius: 100px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 400;
+    white-space: nowrap;
+    border: 1px solid rgba(6,15,7,0.2);
+    transition: border-color 0.2s ease;
+  }
+  .btn-secondary:hover {
+    border-color: rgba(6,15,7,0.6);
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 768px) {
+    .aliados-section {
+      padding: 80px 24px;
+    }
+    .marquee-track {
+      gap: 24px;
+      animation-duration: 30s;
+    }
+    @keyframes scroll {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(calc(-50% - 12px)); }
+    }
+    .aliado-logo-wrapper {
+      width: 100px;
+      height: 60px;
+      padding: 8px;
+    }
+  }
+</style>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if (el.isIntersecting) {
+        el.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.aliados-section .reveal').forEach(el => observer.observe(el));
+</script>

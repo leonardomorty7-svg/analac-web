@@ -1,0 +1,283 @@
+---
+// src/components/ConsumoSection.astro
+
+const recipes = [
+  {
+    categoria: "DESAYUNO",
+    titulo: "Parfait de yogur con frutas",
+    tiempo: "15 min",
+    imagen: "/images/receta-parfait.jpg"
+  },
+  {
+    categoria: "ALMUERZO",
+    titulo: "Pasta cremosa con queso",
+    tiempo: "25 min",
+    imagen: "/images/receta-pasta.jpg"
+  },
+  {
+    categoria: "POSTRE",
+    titulo: "Flan de leche tradicional",
+    tiempo: "40 min",
+    imagen: "/images/receta-flan.jpg"
+  }
+];
+---
+<section class="recetario section-full fade-up">
+  <div class="recetario-inner">
+    <div class="recetario-header reveal" style="transition-delay: 0ms">
+      <span class="overline">RECETARIO ANALAC</span>
+      <h2 class="recetario-h2">Recetas para inspirar el consumo de leche y lácteos</h2>
+      <p class="recetario-p">
+        Preparaciones, recomendaciones y contenidos gastronómicos para integrar los lácteos en la alimentación diaria de forma práctica, nutritiva y deliciosa.
+      </p>
+    </div>
+    
+    <div class="recipe-grid">
+      {recipes.map((receta, idx) => (
+        <a href="#" class="recipe-card reveal" style={`transition-delay: ${(idx + 1) * 150}ms`}>
+          <div class="rc-img-wrapper">
+            <img src={receta.imagen} alt={receta.titulo} class="rc-img" />
+          </div>
+          <div class="rc-content">
+            <div class="rc-meta">
+              <span class="rc-category">{receta.categoria}</span>
+              <span class="rc-time">
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                {receta.tiempo}
+              </span>
+            </div>
+            <h3 class="rc-title">{receta.titulo}</h3>
+            <span class="rc-cta">Ver receta →</span>
+          </div>
+        </a>
+      ))}
+    </div>
+
+    <div class="recetario-actions reveal" style="transition-delay: 600ms">
+      <a href="/consumo-lacteo" class="btn-primary">Explorar todas las recetas →</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .recetario {
+    background-color: #fff;
+    min-height: 100vh;
+    padding: 120px 5vw;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .recetario-inner {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .recetario-header {
+    text-align: center;
+    max-width: 700px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 64px;
+  }
+
+  .overline {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #6db56d;
+    font-weight: 600;
+    margin-bottom: 16px;
+  }
+
+  .recetario-h2 {
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 400;
+    color: #0f2211;
+    margin-bottom: 24px;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+  }
+
+  .recetario-p {
+    font-size: 19px;
+    color: rgba(15,34,17,0.65);
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  /* Grid de recetas */
+  .recipe-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    width: 100%;
+    margin-bottom: 64px;
+  }
+
+  .recipe-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: 0 4px 20px rgba(15, 34, 17, 0.04);
+    border: 1px solid rgba(0, 0, 0, 0.03);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .recipe-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 28px rgba(15, 34, 17, 0.08);
+  }
+
+  .rc-img-wrapper {
+    width: 100%;
+    aspect-ratio: 4/3;
+    overflow: hidden;
+    border-radius: 0;
+    margin-bottom: 0;
+  }
+
+  .rc-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .recipe-card:hover .rc-img {
+    transform: scale(1.05);
+  }
+
+  .rc-content {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    flex-grow: 1;
+  }
+
+  .rc-meta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+  }
+
+  .rc-category {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #6db56d;
+    font-weight: 600;
+  }
+
+  .rc-time {
+    font-size: 12px;
+    color: rgba(15,34,17,0.5);
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-weight: 500;
+  }
+
+  .rc-title {
+    font-size: 22px;
+    font-weight: 400;
+    color: #0f2211;
+    line-height: 1.3;
+    margin: 0 0 24px;
+    transition: color 0.3s ease;
+  }
+
+  .recipe-card:hover .rc-title {
+    color: #6db56d;
+  }
+
+  .rc-cta {
+    font-size: 14px;
+    color: #0f2211;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(15,34,17,0.2);
+    padding-bottom: 2px;
+    width: fit-content;
+    transition: border-color 0.3s ease, color 0.3s ease;
+    margin-top: auto;
+  }
+
+  .recipe-card:hover .rc-cta {
+    border-color: #6db56d;
+    color: #6db56d;
+  }
+
+  .recetario-actions {
+    display: flex;
+    justify-content: center;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    background: #6db56d;
+    color: #ffffff;
+    padding: 16px 36px;
+    border-radius: 100px;
+    text-decoration: none;
+    font-size: 15px;
+    font-weight: 500;
+    box-shadow: 0 4px 12px rgba(109, 181, 109, 0.2);
+    transition: transform 0.2s ease, background 0.2s ease, box-shadow 0.2s ease;
+  }
+  .btn-primary:hover {
+    background: #5aa35a;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(109, 181, 109, 0.3);
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 992px) {
+    .recipe-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 768px) {
+    .recetario {
+      padding: 80px 24px;
+    }
+    .recipe-grid {
+      grid-template-columns: 1fr;
+      gap: 48px;
+    }
+    .recetario-h2 {
+      font-size: 32px;
+    }
+  }
+</style>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if (el.isIntersecting) {
+        el.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.recetario .reveal').forEach(el => observer.observe(el));
+</script>

@@ -1,0 +1,344 @@
+---
+// src/components/CienciaLacteaSection.astro
+
+const mainArticle = {
+  categoria: "Nutrición",
+  titulo: "El calcio de la leche y su absorción en adultos mayores",
+  resumen: "Investigaciones recientes confirman que la biodisponibilidad del calcio lácteo supera significativamente la de suplementos sintéticos.",
+  imagen: "/images/ciencia/nutricion.png",
+};
+
+const sideArticles = [
+  {
+    categoria: "Producción",
+    titulo: "Impacto del manejo de ordeño en la calidad composicional de la leche",
+    imagen: "/images/ciencia/produccion.png",
+  },
+  {
+    categoria: "Consumo",
+    titulo: "Leche entera vs. descremada: evidencia actualizada sobre salud cardiovascular",
+    imagen: "/images/ciencia/consumo.png",
+  }
+];
+---
+
+<section class="ciencia-section">
+  <div class="ciencia-header reveal" style="transition-delay: 0ms">
+    <span class="overline">CIENCIA LÁCTEA</span>
+    <h2 class="ciencia-h2">Investigación, nutrición y producción láctea con información confiable y aplicada</h2>
+  </div>
+
+  <div class="editorial-grid">
+    <!-- Artículo Destacado (70%) -->
+    <a href="#" class="editorial-main reveal" style="transition-delay: 200ms">
+      <div class="main-bg" style={`background-image: url('${mainArticle.imagen}')`}></div>
+      <div class="main-overlay"></div>
+      <div class="main-content">
+        <span class="editorial-tag">{mainArticle.categoria}</span>
+        <h3 class="main-title">{mainArticle.titulo}</h3>
+        <p class="main-desc">{mainArticle.resumen}</p>
+        <span class="editorial-read">Leer artículo completo →</span>
+      </div>
+    </a>
+
+    <!-- Artículos Secundarios (30%) -->
+    <div class="editorial-side">
+      {sideArticles.map((art, idx) => (
+        <a href="#" class="side-card reveal" style={`transition-delay: ${(idx + 2) * 200}ms`}>
+          <div class="side-img-wrapper">
+            <img src={art.imagen} alt={art.categoria} class="side-img"/>
+          </div>
+          <div class="side-content">
+            <span class="editorial-tag-side">{art.categoria}</span>
+            <h3 class="side-title">{art.titulo}</h3>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <div class="ciencia-actions reveal" style="transition-delay: 800ms">
+    <a href="/consumo-lacteo" class="btn-primary">Explorar el Centro de Conocimiento →</a>
+  </div>
+</section>
+
+<style>
+  .ciencia-section {
+    min-height: 100vh;
+    background-color: #f5f3ee;
+    padding: 64px 5vw 120px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 48px;
+  }
+
+  .ciencia-header {
+    text-align: center;
+    max-width: 1000px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .overline {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #6db56d;
+    font-weight: 600;
+  }
+
+  .ciencia-h2 {
+    font-size: clamp(32px, 4vw, 48px);
+    font-weight: 400;
+    color: #0f2211;
+    line-height: 1.15;
+    margin: 0;
+    letter-spacing: -0.02em;
+  }
+
+
+
+  /* Editorial Grid Layout */
+  .editorial-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 32px;
+    width: 100%;
+    max-width: 1240px;
+  }
+
+  /* Main Article */
+  .editorial-main {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-height: 520px;
+    padding: 48px;
+    text-decoration: none;
+    isolation: isolate;
+  }
+  .main-bg {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    z-index: 1;
+  }
+  .editorial-main:hover .main-bg {
+    transform: scale(1.03);
+  }
+  .main-overlay {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(to top, rgba(6,15,7,0.95) 0%, rgba(6,15,7,0.4) 60%, transparent 100%);
+    z-index: 2;
+    transition: background 0.5s ease;
+  }
+  .editorial-main:hover .main-overlay {
+    background: linear-gradient(to top, rgba(6,15,7,0.98) 0%, rgba(6,15,7,0.6) 60%, rgba(6,15,7,0.2) 100%);
+  }
+  
+  .main-content {
+    position: relative;
+    z-index: 3;
+    max-width: 85%;
+  }
+
+  .editorial-tag {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: white;
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    padding: 6px 14px;
+    border-radius: 4px;
+    display: inline-block;
+    margin-bottom: 24px;
+  }
+
+  .main-title {
+    font-size: clamp(28px, 3vw, 40px);
+    color: white;
+    font-weight: 400;
+    line-height: 1.15;
+    margin: 0 0 16px;
+    letter-spacing: -0.01em;
+  }
+
+  .main-desc {
+    font-size: 16px;
+    color: rgba(255,255,255,0.7);
+    line-height: 1.6;
+    margin: 0 0 28px;
+  }
+
+  .editorial-read {
+    font-size: 14px;
+    color: white;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(255,255,255,0.3);
+    padding-bottom: 3px;
+    transition: border-color 0.3s ease;
+  }
+  .editorial-main:hover .editorial-read {
+    border-color: white;
+  }
+
+  /* Side Articles */
+  .editorial-side {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .side-card {
+    display: flex;
+    flex-direction: column;
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    text-decoration: none;
+    height: 100%;
+    border: 1px solid rgba(0,0,0,0.06);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+  .side-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(15,34,17,0.06);
+  }
+
+  .side-img-wrapper {
+    width: 100%;
+    height: 180px;
+    overflow: hidden;
+  }
+
+  .side-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .side-card:hover .side-img {
+    transform: scale(1.05);
+  }
+
+  .side-content {
+    padding: 24px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .editorial-tag-side {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #6db56d;
+    font-weight: 600;
+    margin-bottom: 12px;
+  }
+
+  .side-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: #0f2211;
+    line-height: 1.4;
+    margin: 0;
+    transition: color 0.3s ease;
+  }
+  .side-card:hover .side-title {
+    color: #6db56d;
+  }
+
+  /* Editorial CTA */
+  .ciencia-actions {
+    margin-top: 24px;
+  }
+
+  .btn-primary {
+    background: #6db56d;
+    color: white;
+    border-radius: 100px;
+    padding: 16px 36px;
+    font-size: 15px;
+    font-weight: 500;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(109, 181, 109, 0.2);
+    transition: all 0.3s ease;
+    display: inline-block;
+  }
+  .btn-primary:hover {
+    background: #5aa35a;
+    box-shadow: 0 6px 16px rgba(109, 181, 109, 0.3);
+    transform: translateY(-2px);
+  }
+
+  /* Reveal Animations */
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Responsive */
+  @media (max-width: 992px) {
+    .editorial-grid {
+      grid-template-columns: 1fr;
+    }
+    .editorial-main {
+      min-height: 420px;
+      padding: 36px;
+    }
+    .main-content {
+      max-width: 100%;
+    }
+    .editorial-side {
+      flex-direction: row;
+    }
+    .side-card {
+      width: 50%;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .ciencia-section {
+      padding: 80px 24px;
+    }
+    .editorial-side {
+      flex-direction: column;
+    }
+    .side-card {
+      width: 100%;
+    }
+    .editorial-main {
+      padding: 28px;
+    }
+  }
+</style>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if (el.isIntersecting) {
+        el.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.ciencia-section .reveal').forEach(el => observer.observe(el));
+</script>

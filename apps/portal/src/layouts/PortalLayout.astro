@@ -1,0 +1,33 @@
+---
+// Layout principal del portal de afiliados ANALAC
+import '../styles/portal.css'
+
+interface Props {
+  title?: string
+  requireAuth?: boolean
+}
+
+const { title = 'Portal de Afiliados — ANALAC', requireAuth = true } = Astro.props
+
+// Con @clerk/astro el middleware maneja la protección de rutas
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <title>{title}</title>
+  </head>
+  <body class="min-h-screen bg-gray-50 font-sans antialiased">
+    <slot />
+  </body>
+</html>

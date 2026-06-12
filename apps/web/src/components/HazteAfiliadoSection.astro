@@ -1,0 +1,219 @@
+---
+// src/components/HazteAfiliadoSection.astro
+
+const beneficios = [
+  { numero: "01", titulo: "Representación gremial", desc: "Participación activa en espacios de diálogo, análisis y gestión sectorial." },
+  { numero: "02", titulo: "Acceso a información sectorial", desc: "Boletines, indicadores y análisis del comportamiento del sector lácteo." },
+  { numero: "03", titulo: "Participación en eventos", desc: "Espacios de diálogo, formación y relacionamiento con actores del ecosistema." },
+  { numero: "04", titulo: "Visibilidad en el ecosistema", desc: "Presencia digital dentro del directorio de asociados de ANALAC." },
+  { numero: "05", titulo: "Conexión con aliados estratégicos", desc: "Acceso a la red de empresas, instituciones y organizaciones vinculadas." },
+];
+---
+
+<section class="hazte-afiliado">
+  <div class="afiliado-inner">
+    <div class="afiliado-left reveal" style="transition-delay: 0ms">
+      <span class="overline">HAZTE AFILIADO</span>
+      <h2 class="afiliado-h2">Haz parte de una asociación que representa, informa y conecta</h2>
+      <p class="afiliado-p">ANALAC reúne a productores, empresas y organizaciones comprometidas con el fortalecimiento del sector lácteo colombiano.</p>
+      
+      <div class="afiliado-actions">
+        <a href="/quienes-somos" class="btn-primary">Iniciar proceso de afiliación →</a>
+        <a href="/contacto" class="btn-secondary">Solicitar información</a>
+      </div>
+    </div>
+    <div class="afiliado-right reveal" style="transition-delay: 200ms">
+      <div class="beneficios-list">
+        {beneficios.map((ben) => (
+          <div class="beneficio-item">
+            <span class="ben-num">{ben.numero}</span>
+            <div class="ben-content">
+              <h3 class="ben-title">{ben.titulo}</h3>
+              <p class="ben-desc">{ben.desc}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hazte-afiliado {
+    position: relative;
+    padding: 120px 5vw;
+    background-color: #060f07;
+    overflow: hidden;
+  }
+
+  .hazte-afiliado::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('/images/afiliados-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    filter: saturate(0.5) contrast(1.05);
+    z-index: 0;
+  }
+
+  .hazte-afiliado::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg, 
+      rgba(6, 15, 7, 0.95) 0%, 
+      rgba(6, 15, 7, 0.8) 50%, 
+      rgba(15, 34, 17, 0.9) 100%
+    );
+    z-index: 1;
+  }
+
+  .afiliado-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .afiliado-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .overline {
+    font-size: 11px;
+    color: #6db56d;
+    letter-spacing: 0.12em;
+    font-weight: 600;
+    margin-bottom: 24px;
+    display: inline-block;
+  }
+  .afiliado-h2 {
+    font-size: clamp(32px, 4vw, 48px);
+    color: #f5f3ee;
+    line-height: 1.15;
+    font-weight: 400;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+  }
+  .afiliado-p {
+    font-size: 19px;
+    color: rgba(245,243,238,0.65);
+    line-height: 1.7;
+    margin-bottom: 40px;
+    max-width: 480px;
+  }
+  .afiliado-actions {
+    display: flex;
+    gap: 16px;
+  }
+  .btn-primary {
+    background: #6db56d;
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 100px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background 0.2s;
+  }
+  .btn-primary:hover { background: #5aa35a; }
+  .btn-secondary {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #f5f3ee;
+    padding: 14px 28px;
+    border-radius: 100px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: background 0.2s;
+  }
+  .btn-secondary:hover { background: rgba(255,255,255,0.1); }
+
+
+  .beneficio-item {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    padding: 20px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .beneficio-item:last-child {
+    border-bottom: none;
+  }
+
+  .ben-num {
+    font-size: 13px;
+    color: #6db56d;
+    font-weight: 500;
+    min-width: 28px;
+    margin-top: 2px;
+  }
+
+  .ben-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .ben-title {
+    font-size: 16px;
+    color: #f5f3ee;
+    font-weight: 500;
+    margin: 0;
+  }
+
+  .ben-desc {
+    font-size: 19px;
+    color: rgba(245,243,238,0.6);
+    line-height: 1.5;
+    margin: 0;
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  @media (max-width: 992px) {
+    .afiliado-inner {
+      grid-template-columns: 1fr;
+      gap: 64px;
+    }
+  }
+  @media (max-width: 768px) {
+    .hazte-afiliado {
+      padding: 80px 24px;
+    }
+    .afiliado-actions {
+      flex-direction: column;
+      width: 100%;
+    }
+    .btn-primary, .btn-secondary {
+      width: 100%;
+      text-align: center;
+    }
+  }
+</style>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(el => {
+      if (el.isIntersecting) {
+        el.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.hazte-afiliado .reveal').forEach(el => observer.observe(el));
+</script>

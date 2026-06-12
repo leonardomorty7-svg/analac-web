@@ -1,0 +1,162 @@
+---
+// src/components/Footer.astro
+---
+<footer class="footer">
+  <div class="footer-grid">
+    <!-- COLUMNA 1 — Logo y texto -->
+    <div class="footer-col col-main">
+      <img src="/images/logo-white.svg" height="28px" alt="ANALAC" style="display: block; width: auto;" />
+      <p class="footer-desc">Asociación Nacional de Productores de Leche de Colombia. Representamos, informamos y conectamos el sector lácteo colombiano desde 1957.</p>
+      <div class="footer-social">
+        <a href="#" aria-label="X Twitter">X</a>
+        <a href="#" aria-label="LinkedIn">in</a>
+        <a href="#" aria-label="Instagram">ig</a>
+      </div>
+      <div class="footer-email">contacto@analac.org</div>
+    </div>
+
+    <!-- COLUMNA 2 — ANALAC -->
+    <div class="footer-col">
+      <h3 class="footer-col-title">ANALAC</h3>
+      <a href="/quienes-somos">Quiénes somos</a>
+      <a href="/quienes-somos#representacion">Representación gremial</a>
+      <a href="/quienes-somos#junta">Junta directiva</a>
+      <a href="/contacto">Contacto</a>
+    </div>
+
+    <!-- COLUMNA 3 — Información sectorial -->
+    <div class="footer-col">
+      <h3 class="footer-col-title">Información sectorial</h3>
+      <a href="/informacion-sectorial">Boletines</a>
+      <a href="/informacion-sectorial">Indicadores</a>
+      <a href="/informacion-sectorial">Informes</a>
+      <a href="/informacion-sectorial">Comunicados</a>
+    </div>
+
+    <!-- COLUMNA 4 — Consumo lácteo -->
+    <div class="footer-col">
+      <h3 class="footer-col-title">Consumo lácteo</h3>
+      <a href="/consumo-lacteo">Ciencia láctea</a>
+      <a href="/consumo-lacteo">Recetas</a>
+      <a href="/consumo-lacteo">Mitos y realidades</a>
+      <a href="/consumo-lacteo">Campañas</a>
+    </div>
+
+    <!-- COLUMNA 5 — Asociados y aliados -->
+    <div class="footer-col">
+      <h3 class="footer-col-title">Asociados y aliados</h3>
+      <a href="/asociados-aliados">Directorio de asociados</a>
+      <a href="/asociados-aliados">Directorio de aliados</a>
+      <a href="/asociados-aliados">Hazte afiliado</a>
+      <a href="/asociados-aliados">Sé aliado</a>
+    </div>
+
+    <!-- COLUMNA 6 — Plataformas -->
+    <div class="footer-col">
+      <h3 class="footer-col-title">Plataformas</h3>
+      <a href="https://portal.analac.com" target="_blank">Portal</a>
+      <a href="/academia">Academia</a>
+      <a href="/vitrina">Vitrina</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <span>© 2026 ANALAC. Todos los derechos reservados.</span>
+    <span>Asociación Nacional de Productores de Leche de Colombia</span>
+  </div>
+</footer>
+
+<style>
+  .footer {
+    background: #060f07;
+    padding: 80px 5vw 40px;
+  }
+
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1fr 1.2fr 1fr;
+    gap: 32px;
+    padding-bottom: 64px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+
+  @media (max-width: 1200px) {
+    .footer-grid { grid-template-columns: repeat(3, 1fr); gap: 48px; }
+  }
+  @media (max-width: 768px) {
+    .footer-grid { grid-template-columns: repeat(2, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .footer-grid { grid-template-columns: 1fr; }
+  }
+
+  /* Título de columna */
+  .footer-col-title {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #6db56d;
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+
+  /* Links */
+  .footer-col a {
+    display: block;
+    font-size: 14px;
+    color: rgba(245,243,238,0.55);
+    text-decoration: none;
+    margin-bottom: 10px;
+    transition: color 0.2s ease;
+  }
+  .footer-col a:hover { color: #f5f3ee; }
+
+  /* Párrafo col 1 */
+  .footer-desc {
+    font-size: 14px;
+    color: rgba(245,243,238,0.5);
+    line-height: 1.7;
+    margin: 16px 0 24px;
+    max-width: 280px;
+  }
+
+  /* Email */
+  .footer-email {
+    font-size: 13px;
+    color: rgba(245,243,238,0.4);
+    margin-top: 16px;
+  }
+
+  .footer-social {
+    display: flex;
+    gap: 12px;
+    margin-top: 8px;
+  }
+  .footer-social a {
+    width: 32px; height: 32px;
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 11px; color: rgba(245,243,238,0.5);
+    text-decoration: none;
+    transition: border-color 0.2s, color 0.2s;
+    margin-bottom: 0;
+  }
+  .footer-social a:hover {
+    border-color: #6db56d;
+    color: #6db56d;
+  }
+
+  /* FOOTER BOTTOM */
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 32px;
+    font-size: 12px;
+    color: rgba(245,243,238,0.3);
+  }
+  @media (max-width: 640px) {
+    .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+  }
+</style>

@@ -1,0 +1,166 @@
+---
+// src/components/ImpactoSection.astro
+---
+<section class="impacto fade-up">
+  <div class="impacto-inner">
+    <span class="overline">NUESTRO IMPACTO</span>
+    <h2 class="impacto-h2">Una trayectoria al servicio del sector lácteo colombiano</h2>
+    <div class="impacto-separator"></div>
+    <p class="impacto-desc-main" style="max-width: 700px; margin: 0 auto 40px; color: var(--c-muted); font-size: 19px; line-height: 1.6;">
+      Años de representación gremial, información sectorial y trabajo por el fortalecimiento de los productores de leche en Colombia.
+    </p>
+    
+    <div class="impacto-grid">
+      <!-- Cifras de impacto editables -->
+      <!-- Item 1 -->
+      <div class="impacto-item">
+        <div class="impacto-num">
+          <span data-counter="400000">0</span>+
+        </div>
+        <div class="impacto-label">productores representados</div>
+        <div class="impacto-desc">familias campesinas en todo el país (dato de referencia del demo)</div>
+      </div>
+      
+      <!-- Item 2 -->
+      <div class="impacto-item">
+        <div class="impacto-num">
+          <span data-counter="32">0</span>
+        </div>
+        <div class="impacto-label">departamentos con presencia</div>
+        <div class="impacto-desc">cobertura nacional en Colombia</div>
+      </div>
+      
+      <!-- Item 3 -->
+      <div class="impacto-item">
+        <div class="impacto-num">
+          $<span data-counter="1820">0</span>
+        </div>
+        <div class="impacto-label">precio litro referencial</div>
+        <div class="impacto-desc">COP en finca — dato de referencia del demo*</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .impacto {
+    background-color: #f5f3ee;
+    text-align: center;
+    min-height: 100vh;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 80px 48px;
+  }
+
+  .impacto-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .impacto-h2 {
+    font-size: 36px;
+    font-weight: 400;
+    color: var(--c-text);
+    margin-bottom: 0;
+    letter-spacing: -0.02em;
+  }
+
+  .impacto-separator {
+    width: 48px;
+    height: 3px;
+    background: #6db56d;
+    margin: 24px auto;
+  }
+
+  .impacto-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    border-top: 0.5px solid var(--c-border);
+    margin-bottom: 0;
+  }
+
+  .impacto-item {
+    padding: 40px 32px;
+    border-right: 0.5px solid var(--c-border);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .impacto-item:last-child {
+    border-right: none;
+  }
+
+  .impacto-num {
+    font-size: clamp(54px, 6vw, 82px);
+    font-weight: 500;
+    color: var(--c-green-deep);
+    letter-spacing: -0.04em;
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .impacto-label {
+    font-size: 16px;
+    color: var(--c-text);
+    font-weight: 500;
+    margin-bottom: 4px;
+  }
+
+  .impacto-desc {
+    font-size: 19px;
+    color: var(--c-muted);
+  }
+
+  @media (max-width: 768px) {
+    .impacto {
+      padding: 48px 24px;
+    }
+    .impacto-grid {
+      grid-template-columns: 1fr;
+    }
+    .impacto-item {
+      border-right: none;
+      border-bottom: 0.5px solid var(--c-border);
+    }
+    .impacto-item:last-child {
+      border-bottom: none;
+    }
+  }
+</style>
+
+<script>
+  function animateCounter(el: HTMLElement, target: number) {
+    const duration = 1500;
+    const step = target / (duration / 16);
+    let current = 0;
+    const timer = setInterval(() => {
+      current += step;
+      if (current >= target) { 
+        current = target; 
+        clearInterval(timer); 
+      }
+      el.textContent = Math.round(current).toLocaleString('es-CO');
+    }, 16);
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const counters = entry.target.querySelectorAll('[data-counter]');
+        counters.forEach(el => {
+          const targetEl = el as HTMLElement;
+          if (!targetEl.dataset.animated) {
+            targetEl.dataset.animated = 'true';
+            animateCounter(targetEl, parseInt(targetEl.dataset.counter || '0', 10));
+          }
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+
+  const section = document.querySelector('.impacto');
+  if (section) observer.observe(section);
+</script>
