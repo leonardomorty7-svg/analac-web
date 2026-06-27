@@ -42,8 +42,7 @@ const aliados = [
   </div>
 
   <div class="aliados-actions reveal" style="transition-delay: 600ms">
-    <a href="/asociados-aliados" class="btn-primary">Ver todos los aliados</a>
-    <a href="/asociados-aliados" class="btn-secondary">Unirse como aliado</a>
+    <a href="/asociados-aliados" class="btn-primary">Conoce nuestra red de aliados</a>
   </div>
 </section>
 
@@ -148,7 +147,7 @@ const aliados = [
     padding: 14px 32px;
     border-radius: 100px;
     text-decoration: none;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 500;
     white-space: nowrap;
     transition: background 0.2s ease;
@@ -205,10 +204,11 @@ const aliados = [
 </style>
 
 <script>
-  const observer = new IntersectionObserver((entries) => {
+  const observer = new IntersectionObserver((entries, observer) => {
     entries.forEach(el => {
       if (el.isIntersecting) {
         el.target.classList.add('visible');
+        observer.unobserve(el.target);
       }
     });
   }, { threshold: 0.1 });

@@ -1,0 +1,44 @@
+---
+// src/components/CtaFinal.astro
+const {
+  title = "Construyamos juntos el futuro del sector lácteo colombiano",
+  text = "",
+  primaryBtnText = "Afíliate",
+  primaryBtnLink = "/afiliate",
+  secondaryBtnText = "Contáctanos",
+  secondaryBtnLink = "/contacto"
+} = Astro.props;
+---
+<section class="cta-final section fade-up" style="background: var(--c-green-deep);">
+  <div class="container text-center">
+    <h2 class="h2 cta-title" style={text ? "margin-bottom: 24px;" : ""}>{title}</h2>
+    {text && <p style="color: rgba(255,255,255,0.9); font-size: 19px; line-height: 1.6; max-width: 700px; margin: 0 auto 48px;">{text}</p>}
+    <div class="cta-buttons">
+      <a href={primaryBtnLink} class="btn btn--accent" style="padding: 14px 32px; font-size: 15px;">{primaryBtnText}</a>
+      <a href={secondaryBtnLink} class="btn btn--outline-white" style="padding: 14px 32px; font-size: 15px;">{secondaryBtnText}</a>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-final {
+    padding: 120px 0;
+  }
+  .cta-title {
+    color: #ffffff;
+    max-width: 700px;
+    margin: 0 auto 48px;
+    text-wrap: balance;
+  }
+  .cta-buttons {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+  }
+
+  @media (max-width: 768px) {
+    .cta-buttons {
+      flex-direction: column;
+    }
+  }
+</style>

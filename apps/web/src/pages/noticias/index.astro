@@ -3,23 +3,23 @@
 import BaseLayout from '../../layouts/BaseLayout.astro'
 import { news } from '../../data/news'
 
-const categories = ['Todos', ...new Set(news.map((n) => n.category))]
+const categories = ['Todas las publicaciones', ...new Set(news.map((n) => n.category))]
 ---
 
 <BaseLayout
-  title="Noticias del sector lácteo | ANALAC"
-  description="Actualidad, comunicados, eventos y novedades relevantes para productores, aliados e instituciones del sector lácteo colombiano."
+  title="Comunicación Institucional | ANALAC"
+  description="Artículos técnicos, comunicados oficiales y publicaciones estratégicas de ANALAC para el sector lácteo colombiano."
 >
   <!-- Hero Editorial Premium -->
   <section class="page-hero hero-dark fade-up" style="position: relative; padding: 200px 0 140px; min-height: 60vh; display: flex; align-items: center; background-color: var(--c-green-deep);">
     <div style="position: absolute; inset: 0; background-image: linear-gradient(rgba(10, 26, 12, 0.6), rgba(10, 26, 12, 0.9)), url('/images/hero-noticias-v2.jpg'); background-size: cover; background-position: center; z-index: 0;"></div>
     <div class="container" style="position: relative; z-index: 1; max-width: 900px; text-align: center; margin: 0 auto;">
-      <p class="overline" style="color: var(--c-green-light); border-color: rgba(255,255,255,0.2); display: inline-block; margin-bottom: 24px;">Publicaciones ANALAC</p>
+      <p class="overline" style="color: var(--c-green-light); border-color: rgba(255,255,255,0.2); display: inline-block; margin-bottom: 24px;">Centro de Prensa y Comunicación</p>
       <h1 style="font-size: clamp(40px, 6vw, 64px); font-weight: 400; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 24px; color: #ffffff; text-wrap: balance;">
-        Actualidad del <span style="color: var(--c-green-light);">sector lácteo colombiano</span>
+        Comunicados y <span style="color: var(--c-green-light);">Actualidad Institucional</span>
       </h1>
       <p style="font-size: 19px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; max-width: 700px; margin: 0 auto; text-wrap: balance;">
-        Análisis, indicadores, sostenibilidad, comercio y tendencias que impactan la cadena láctea nacional.
+        Artículos técnicos, pronunciamientos oficiales y publicaciones estratégicas de ANALAC orientadas al desarrollo del sector lácteo nacional.
       </p>
     </div>
   </section>
@@ -28,7 +28,7 @@ const categories = ['Todos', ...new Set(news.map((n) => n.category))]
   <section style="background: var(--color-bg-page); padding: 48px 0; border-bottom: 1px solid rgba(0,0,0,0.05);">
     <div class="container" style="display: flex; gap: 12px; flex-wrap: wrap; justify-content: center;" role="navigation" aria-label="Filtrar por categoría">
       {categories.map((cat) => (
-        <a href={`/noticias${cat !== 'Todos' ? `?categoria=${cat}` : ''}`} class="filter-chip">
+        <a href={`/noticias${cat !== 'Todas las publicaciones' ? `?categoria=${cat}` : ''}`} class="filter-chip">
           {cat}
         </a>
       ))}
@@ -38,6 +38,10 @@ const categories = ['Todos', ...new Set(news.map((n) => n.category))]
   <!-- Noticia Destacada -->
   <section class="section" style="background: var(--color-bg-white); padding-top: 100px; padding-bottom: 60px;">
     <div class="container">
+      <div class="section-header fade-up" style="margin-bottom: 48px;">
+        <p class="overline">Destacado Editorial</p>
+        <h2 class="h2" style="font-size: 32px;">Comunicado Principal</h2>
+      </div>
       <article class="featured-article" style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 64px; align-items: center; padding: 48px; background: #fff; border: 1px solid rgba(0,0,0,0.04); border-radius: 24px; box-shadow: 0 12px 48px rgba(0,0,0,0.04);">
         <div style="border-radius: 16px; overflow: hidden; height: 100%; min-height: 400px; position: relative;">
           <img
@@ -71,6 +75,10 @@ const categories = ['Todos', ...new Set(news.map((n) => n.category))]
   <!-- Grid Editorial de Noticias -->
   <section class="section" style="background: var(--color-bg-page); padding: 80px 0 120px;">
     <div class="container">
+      <div class="section-header fade-up" style="margin-bottom: 48px;">
+        <p class="overline">Archivo de Prensa</p>
+        <h2 class="h2" style="font-size: 32px;">Últimas Publicaciones</h2>
+      </div>
       <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px;">
         {news.slice(1).map((item) => (
           <article class="news-card" style="background: var(--color-bg-white); border: 1px solid rgba(0,0,0,0.04); border-radius: 16px; overflow: hidden; box-shadow: 0 4px 20px rgba(0,0,0,0.02); display: flex; flex-direction: column;">
@@ -111,13 +119,13 @@ const categories = ['Todos', ...new Set(news.map((n) => n.category))]
   <!-- Cierre Institucional -->
   <section style="background: var(--c-green-deep); padding: 120px 0; text-align: center;">
     <div class="container" style="max-width: 600px; display: flex; flex-direction: column; align-items: center; gap: 24px;">
-      <p class="overline" style="color: rgba(255,255,255,0.7); border-color: rgba(255,255,255,0.2);">RECURSOS ANALAC</p>
-      <h2 style="font-size: 36px; font-weight: 400; color: #fff; letter-spacing: -0.02em; margin-top: -8px;">Mantente informado</h2>
+      <p class="overline" style="color: rgba(255,255,255,0.7); border-color: rgba(255,255,255,0.2);">Inteligencia y Documentación</p>
+      <h2 style="font-size: 36px; font-weight: 400; color: #fff; letter-spacing: -0.02em; margin-top: -8px;">Documentos Oficiales ANALAC</h2>
       <p style="font-size: 18px; color: rgba(255,255,255,0.8); line-height: 1.6;">
-        Accede a análisis, boletines e indicadores que fortalecen la toma de decisiones del sector lácteo colombiano.
+        Explora nuestros boletines técnicos, indicadores y análisis exclusivos diseñados para orientar el futuro del sector lácteo.
       </p>
       <a href="/informacion-sectorial" class="btn btn--primary" style="margin-top: 16px; padding: 16px 36px; font-size: 16px; border: 1px solid rgba(255,255,255,0.1);">
-        Ver boletines e informes →
+        Ir al Centro de Inteligencia →
       </a>
     </div>
   </section>

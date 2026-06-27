@@ -25,16 +25,16 @@ const recipes = [
 <section class="recetario section-full fade-up">
   <div class="recetario-inner">
     <div class="recetario-header reveal" style="transition-delay: 0ms">
-      <span class="overline">RECETARIO ANALAC</span>
-      <h2 class="recetario-h2">Recetas para inspirar el consumo de leche y lácteos</h2>
+      <span class="overline">CONSUMO LÁCTEO</span>
+      <h2 class="recetario-h2">Versatilidad del Lácteo Colombiano</h2>
       <p class="recetario-p">
-        Preparaciones, recomendaciones y contenidos gastronómicos para integrar los lácteos en la alimentación diaria de forma práctica, nutritiva y deliciosa.
+        Iniciativas e información enfocada en promover y fortalecer el consumo nacional de leche y sus derivados en el día a día de los colombianos.
       </p>
     </div>
     
     <div class="recipe-grid">
       {recipes.map((receta, idx) => (
-        <a href="#" class="recipe-card reveal" style={`transition-delay: ${(idx + 1) * 150}ms`}>
+        <a href="/consumo-lacteo" class="recipe-card reveal" style={`transition-delay: ${(idx + 1) * 150}ms`}>
           <div class="rc-img-wrapper">
             <img src={receta.imagen} alt={receta.titulo} class="rc-img" />
           </div>
@@ -47,14 +47,14 @@ const recipes = [
               </span>
             </div>
             <h3 class="rc-title">{receta.titulo}</h3>
-            <span class="rc-cta">Ver receta →</span>
+            <span class="rc-cta">Consultar preparación →</span>
           </div>
         </a>
       ))}
     </div>
 
     <div class="recetario-actions reveal" style="transition-delay: 600ms">
-      <a href="/consumo-lacteo" class="btn-primary">Explorar todas las recetas →</a>
+      <a href="/consumo-lacteo" class="btn-primary">Descubre los beneficios del consumo lácteo →</a>
     </div>
   </div>
 </section>
@@ -239,6 +239,7 @@ const recipes = [
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(109, 181, 109, 0.3);
   }
+
 
   .reveal {
     opacity: 0;

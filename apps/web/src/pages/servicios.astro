@@ -1,0 +1,273 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Servicios en Línea - ANALAC" description="Accede a los servicios digitales de la Asociación Nacional de Productores de Leche.">
+  
+  <!-- Hero -->
+  <header class="page-hero hero-dark fade-up">
+    <div class="page-hero-bg"></div>
+    <div class="container">
+      <div class="page-hero-content">
+        <h1 class="page-hero-title reveal" style="transition-delay: 150ms">Servicios en Línea</h1>
+        <p class="page-hero-desc reveal" style="transition-delay: 300ms">Accede desde un único lugar a los servicios digitales que ANALAC pondrá a disposición de productores, aliados y miembros del sector lácteo colombiano.</p>
+        <div class="hero-actions reveal" style="margin-top: 40px; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; transition-delay: 450ms">
+          <a href="#catalogo" class="btn btn--accent" style="padding: 14px 32px; font-size: 15px;">Explorar servicios</a>
+          <a href="/afiliate" class="btn btn--outline-white" style="padding: 14px 32px; font-size: 15px;">Afiliarme</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Catálogo de Servicios -->
+  <section class="section" id="catalogo" style="padding: 120px 0; background: var(--color-bg-page);">
+    <div class="container">
+      <div class="section-header text-center fade-up" style="max-width: 600px; margin: 0 auto 64px;">
+        <p class="overline">Transformación Digital</p>
+        <h2 class="h2">Ecosistema de Servicios</h2>
+      </div>
+      
+      <div class="valores-grid fade-up">
+        
+        <!-- Servicio 1 -->
+        <div class="valor-card premium-hover" style="flex-direction: column; align-items: flex-start; position: relative;">
+          <div style="position: absolute; top: 24px; right: 24px; background: rgba(0,0,0,0.04); padding: 4px 12px; border-radius: 100px; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--color-text-sub);">Próximamente</div>
+          <div class="valor-icon" style="margin-bottom: 8px;">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+          </div>
+          <h3 class="valor-title" style="font-size: 20px;">Portal del Afiliado</h3>
+          <p style="font-size: 14px; color: var(--color-text-main); margin-top: 12px; line-height: 1.6;">Plataforma de autogestión exclusiva para productores lecheros inscritos al gremio.</p>
+        </div>
+
+        <!-- Servicio 2 -->
+        <div class="valor-card premium-hover" style="flex-direction: column; align-items: flex-start; position: relative;">
+          <div style="position: absolute; top: 24px; right: 24px; background: rgba(0,0,0,0.04); padding: 4px 12px; border-radius: 100px; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--color-text-sub);">Próximamente</div>
+          <div class="valor-icon" style="margin-bottom: 8px;">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          </div>
+          <h3 class="valor-title" style="font-size: 20px;">Portal de Aliados</h3>
+          <p style="font-size: 14px; color: var(--color-text-main); margin-top: 12px; line-height: 1.6;">Red de beneficios comerciales e industriales para la optimización de procesos.</p>
+        </div>
+
+        <!-- Servicio 3 -->
+        <div class="valor-card premium-hover" style="flex-direction: column; align-items: flex-start; position: relative;">
+          <div style="position: absolute; top: 24px; right: 24px; background: rgba(0,0,0,0.04); padding: 4px 12px; border-radius: 100px; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--color-text-sub);">Próximamente</div>
+          <div class="valor-icon" style="margin-bottom: 8px;">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+          </div>
+          <h3 class="valor-title" style="font-size: 20px;">Academia ANALAC</h3>
+          <p style="font-size: 14px; color: var(--color-text-main); margin-top: 12px; line-height: 1.6;">Campus virtual de capacitación y formación técnica especializada en ciencias lecheras.</p>
+        </div>
+
+        <!-- Servicio 4 -->
+        <div class="valor-card premium-hover" style="flex-direction: column; align-items: flex-start; position: relative;">
+          <div style="position: absolute; top: 24px; right: 24px; background: #eaf3ea; color: var(--color-green-dark); padding: 4px 12px; border-radius: 100px; font-size: 11px; font-weight: 600; text-transform: uppercase;">Disponible próximamente</div>
+          <div class="valor-icon" style="margin-bottom: 8px;">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+          </div>
+          <h3 class="valor-title" style="font-size: 20px;">Pago de Membresía</h3>
+          <p style="font-size: 14px; color: var(--color-text-main); margin-top: 12px; line-height: 1.6;">Pasarela institucional y segura para el pago, renovación y consulta de cuotas gremiales.</p>
+        </div>
+
+        <!-- Servicio 5 -->
+        <div class="valor-card premium-hover" style="flex-direction: column; align-items: flex-start; position: relative;">
+          <div style="position: absolute; top: 24px; right: 24px; background: rgba(0,0,0,0.04); padding: 4px 12px; border-radius: 100px; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--color-text-sub);">Próximamente</div>
+          <div class="valor-icon" style="margin-bottom: 8px;">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+          </div>
+          <h3 class="valor-title" style="font-size: 20px;">Biblioteca Técnica</h3>
+          <p style="font-size: 14px; color: var(--color-text-main); margin-top: 12px; line-height: 1.6;">Repositorio digital con indicadores de mercado, documentos técnicos e informes estadísticos.</p>
+        </div>
+
+        <!-- Servicio 6 -->
+        <div class="valor-card premium-hover" style="flex-direction: column; align-items: flex-start; position: relative;">
+          <div style="position: absolute; top: 24px; right: 24px; background: rgba(0,0,0,0.04); padding: 4px 12px; border-radius: 100px; font-size: 11px; font-weight: 600; text-transform: uppercase; color: var(--color-text-sub);">Próximamente</div>
+          <div class="valor-icon" style="margin-bottom: 8px;">
+            <svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          </div>
+          <h3 class="valor-title" style="font-size: 20px;">Certificados</h3>
+          <p style="font-size: 14px; color: var(--color-text-main); margin-top: 12px; line-height: 1.6;">Generación automatizada de comprobantes de afiliación, estado de cuenta y paz y salvos.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ¿Por qué una plataforma digital? -->
+  <section class="section" style="padding: 120px 0; background: #ffffff;">
+    <div class="container">
+      <div class="section-header text-center fade-up" style="max-width: 600px; margin: 0 auto 64px;">
+        <h2 class="h2">¿Por qué una plataforma digital?</h2>
+        <p style="font-size: 19px; color: var(--color-text-sub); margin-top: 16px;">Beneficios tangibles de la transformación del gremio lechero.</p>
+      </div>
+
+      <div class="mision-vision fade-up">
+        
+        <div class="mv-card premium-panel">
+          <div class="mv-icon">
+             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          </div>
+          <h3 class="h2" style="font-size: 24px;">Autogestión</h3>
+          <p>Control total sobre tu información, documentos, pagos y perfiles sin necesidad de esperar horarios de oficina.</p>
+        </div>
+
+        <div class="mv-card premium-panel">
+          <div class="mv-icon">
+             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+          </div>
+          <h3 class="h2" style="font-size: 24px;">Disponibilidad 24/7</h3>
+          <p>Servicios, información gremial, indicadores y capacitación accesibles en cualquier momento y lugar.</p>
+        </div>
+
+        <div class="mv-card premium-panel">
+          <div class="mv-icon">
+             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+          </div>
+          <h3 class="h2" style="font-size: 24px;">Mayor transparencia</h3>
+          <p>Trazabilidad completa en todas las interacciones, estados de cuenta y comunicaciones institucionales.</p>
+        </div>
+
+        <div class="mv-card premium-panel">
+          <div class="mv-icon">
+             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          </div>
+          <h3 class="h2" style="font-size: 24px;">Procesos más rápidos</h3>
+          <p>Agilidad en la obtención de certificados, soporte técnico, resoluciones de PQRS y tramitación general.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Final -->
+  <section class="section" style="padding: 120px 0; background: var(--color-bg-page);">
+    <div class="container text-center fade-up">
+      <h2 class="h2" style="margin-bottom: 24px;">La transformación digital del sector comienza aquí.</h2>
+      <p style="font-size: 19px; color: var(--color-text-main); line-height: 1.6; max-width: 700px; margin: 0 auto 40px;">Muy pronto los asociados podrán realizar todos sus trámites desde una única plataforma institucional.</p>
+      
+      <div class="cta-buttons" style="display: flex; gap: 16px; justify-content: center;">
+        <a href="/afiliate" class="btn btn--accent" style="padding: 14px 32px; font-size: 15px;">Conocer afiliación</a>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  /* Hero */
+  .page-hero.hero-dark {
+    position: relative;
+    padding: 200px 0 140px;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+    background-color: #06150f;
+  }
+  .page-hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(rgba(6, 15, 7, 0.4), rgba(6, 15, 7, 0.8)), url('/images/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+  }
+  .page-hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    text-align: center;
+    margin: 0 auto;
+  }
+  .page-hero-title {
+    font-size: clamp(40px, 6vw, 64px);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-bottom: 24px;
+    color: #ffffff;
+    text-wrap: balance;
+  }
+  .page-hero-desc {
+    font-size: 19px;
+    color: rgba(255, 255, 255, 0.8);
+    line-height: 1.6;
+    max-width: 700px;
+    margin: 0 auto;
+    text-wrap: balance;
+  }
+  .overline-light {
+    color: var(--color-green-soft);
+    border-color: rgba(255, 255, 255, 0.2);
+  }
+
+  /* Valores Institucionales (3 cols) */
+  .valores-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+  .valor-card {
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.05);
+    border-radius: 12px;
+    padding: 32px;
+    display: flex;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .valor-card.premium-hover:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.04);
+    border-color: rgba(0,0,0,0.08);
+  }
+  .valor-icon {
+    color: var(--color-green-dark);
+    flex-shrink: 0;
+  }
+  .valor-title {
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--color-green-dark);
+    margin: 0;
+  }
+
+  /* Misión / Visión (2x2 cols) */
+  .mision-vision {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+  }
+  .premium-panel {
+    background: #fdfaf5;
+    padding: 64px;
+    border-radius: 16px;
+    border: 1px solid rgba(0,0,0,0.04);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.02);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+  }
+  .premium-panel:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 48px rgba(0,0,0,0.06);
+  }
+  .mv-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 12px;
+    background: #eaf3ea;
+    color: var(--color-green-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 32px;
+  }
+  .premium-panel p {
+    font-size: 19px;
+    line-height: 1.6;
+    color: var(--color-text-main);
+  }
+
+  /* Responsive */
+  @media (max-width: 768px) {
+    .mision-vision { grid-template-columns: 1fr; }
+    .valores-grid { grid-template-columns: 1fr; }
+  }
+</style>

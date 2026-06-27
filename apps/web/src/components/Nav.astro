@@ -3,21 +3,21 @@
 ---
 <nav class="nav" id="main-nav">
   <div class="nav-container">
-    <a href="/" class="nav-logo"><img src="/images/logo-white.svg" alt="ANALAC" style="height: 32px; width: auto; display: block;" /></a>
+    <a href="/" class="nav-logo"><img src="/images/logo-white.svg" alt="ANALAC" class="nav-logo-img" /></a>
     
     <div class="nav-links">
       <a href="/">Inicio</a>
-      <a href="/quienes-somos">Nosotros</a>
-      <a href="/informacion-sectorial">Información sectorial</a>
-      <a href="/consumo-lacteo">Recetario</a>
+      <a href="/quienes-somos">Quiénes Somos</a>
+      <a href="/informacion-sectorial">Información Sectorial</a>
+      <a href="/consumo-lacteo">Consumo Lácteo</a>
       <a href="/noticias">Noticias</a>
     </div>
 
     <div class="nav-cta">
-      <a href="https://portal.analac.com" class="nav-btn-discreet">Portal</a>
-      <a href="/academia" class="nav-btn-discreet">Academia</a>
-      <a href="/vitrina" class="nav-btn-discreet">Vitrina</a>
-      <a href="/quienes-somos" class="nav-btn">Afíliate →</a>
+      <a href="#" class="nav-btn-discreet">Portal Afiliados</a>
+      <a href="#" class="nav-btn-discreet">Portal Aliados</a>
+      <a href="#" class="nav-btn-discreet">Academia</a>
+      <a href="/afiliate" class="nav-btn">Hazte afiliado →</a>
     </div>
 
     <button class="nav-hamburger" id="nav-toggle" aria-label="Menu">
@@ -29,16 +29,16 @@
 <div class="mobile-menu" id="mobile-menu">
   <div class="mobile-links">
     <a href="/">Inicio</a>
-    <a href="/quienes-somos">Nosotros</a>
-    <a href="/informacion-sectorial">Información sectorial</a>
-    <a href="/consumo-lacteo">Recetario</a>
+    <a href="/quienes-somos">Quiénes Somos</a>
+    <a href="/informacion-sectorial">Información Sectorial</a>
+    <a href="/consumo-lacteo">Consumo Lácteo</a>
     <a href="/noticias">Noticias</a>
   </div>
   <div class="mobile-cta">
-    <a href="https://portal.analac.com" class="nav-btn-discreet">Portal</a>
-    <a href="/academia" class="nav-btn-discreet">Academia</a>
-    <a href="/vitrina" class="nav-btn-discreet">Vitrina</a>
-    <a href="/quienes-somos" class="nav-btn">Afíliate →</a>
+    <a href="#" class="nav-btn-discreet">Portal Afiliados</a>
+    <a href="#" class="nav-btn-discreet">Portal Aliados</a>
+    <a href="#" class="nav-btn-discreet">Academia</a>
+    <a href="/afiliate" class="nav-btn">Hazte afiliado →</a>
   </div>
 </div>
 
@@ -80,7 +80,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 68px;
+    height: 104px;
     z-index: 1000;
     background: linear-gradient(to bottom, rgba(6, 15, 7, 0.85) 0%, transparent 100%);
     transition: all 0.3s ease;
@@ -99,7 +99,7 @@
     max-width: 1440px;
     margin: 0 auto;
     height: 100%;
-    padding: 0 40px;
+    padding: 0 40px 0 60px;
   }
 
   .nav-logo {
@@ -107,9 +107,16 @@
     z-index: 1001;
   }
 
+  .nav-logo-img {
+    height: 80px;
+    width: auto;
+    display: block;
+    transition: height 0.3s ease;
+  }
+
   .nav-links {
     display: flex;
-    gap: 36px;
+    gap: 24px;
     margin-left: 72px;
   }
 
@@ -267,10 +274,13 @@
   }
 
   @media (max-width: 900px) {
+    .nav { height: 80px; }
     .nav-links { gap: 20px; margin-left: 40px; }
+    .nav-logo-img { height: 48px; }
   }
 
   @media (max-width: 768px) {
+    .nav { height: 68px; }
     .nav-links, .nav-cta {
       display: none;
     }
@@ -280,16 +290,7 @@
     .nav-container {
       padding: 0 24px;
     }
+    .nav-logo-img { height: 42px; }
   }
 </style>
 
-<script>
-  const nav = document.getElementById('main-nav');
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 60) {
-      nav?.classList.add('scrolled');
-    } else {
-      nav?.classList.remove('scrolled');
-    }
-  });
-</script>

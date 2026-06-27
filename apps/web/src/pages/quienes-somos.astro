@@ -1,6 +1,8 @@
 ---
 // src/pages/quienes-somos.astro
 import BaseLayout from '../layouts/BaseLayout.astro'
+import AliadosSection from '../components/AliadosSection.astro'
+import CtaFinal from '../components/CtaFinal.astro'
 ---
 
 <BaseLayout
@@ -143,6 +145,122 @@ import BaseLayout from '../layouts/BaseLayout.astro'
     </div>
   </section>
 
+  <!-- S5a ¿Qué Hacemos? -->
+  <section class="section" id="que-hacemos" style="padding: 120px 0; background: var(--color-bg-page);">
+    <div class="container">
+      <div class="section-header text-center fade-up" style="max-width: 600px; margin: 0 auto 64px;">
+        <p class="overline">Nuestra Labor</p>
+        <h2 class="h2">¿Qué hacemos?</h2>
+        <p style="font-size: 19px; color: var(--color-text-sub); margin-top: 16px;">ANALAC trabaja en diferentes frentes para fortalecer el sector lácteo colombiano.</p>
+      </div>
+      <div class="mision-vision fade-up">
+        <div class="mv-card premium-panel">
+          <div class="mv-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+          </div>
+          <h3 class="h2">Representación gremial</h3>
+          <p>Defensa de los intereses del sector productor de leche ante entidades públicas y privadas.</p>
+        </div>
+        <div class="mv-card premium-panel">
+          <div class="mv-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+          </div>
+          <h3 class="h2">Información sectorial</h3>
+          <p>Producción de indicadores, estudios, análisis y reportes para apoyar la toma de decisiones.</p>
+        </div>
+        <div class="mv-card premium-panel">
+          <div class="mv-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path></svg>
+          </div>
+          <h3 class="h2">Formación y capacitación</h3>
+          <p>Programas académicos, talleres y actualización permanente para productores y aliados.</p>
+        </div>
+        <div class="mv-card premium-panel">
+          <div class="mv-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
+          </div>
+          <h3 class="h2">Promoción del consumo</h3>
+          <p>Campañas institucionales orientadas a fortalecer el consumo de leche y sus derivados.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- S5.5 Nuestro Equipo -->
+  <section class="section" id="nuestro-equipo" style="padding: 120px 0;">
+    <div class="container">
+      <div class="section-header text-center fade-up" style="max-width: 600px; margin: 0 auto 64px;">
+        <p class="overline">Institucional</p>
+        <h2 class="h2">Nuestro Equipo</h2>
+        <p style="font-size: 19px; color: var(--color-text-sub); margin-top: 16px;">Conoce al equipo que trabaja diariamente para fortalecer el sector productor de leche en Colombia.</p>
+      </div>
+
+      <style>
+        @media (min-width: 993px) {
+          .grid-4 { grid-template-columns: repeat(4, 1fr) !important; }
+        }
+        @media (max-width: 992px) and (min-width: 769px) {
+          .grid-4 { grid-template-columns: repeat(2, 1fr) !important; }
+        }
+      </style>
+      <div class="equipo-grid grid-4 fade-up">
+        
+        <!-- Card 1 -->
+        <div class="equipo-card-premium">
+          <div style="position: relative; overflow: hidden;">
+            <img src="/images/equipo/andres_ramirez.png" alt="Andrés Ramírez" class="equipo-img" />
+          </div>
+          <div class="equipo-info">
+            <h3 class="equipo-nombre">Andrés Ramírez</h3>
+            <p class="equipo-cargo">Dirección Ejecutiva</p>
+            <p class="equipo-desc">Lidera la estrategia institucional y representa a ANALAC ante los diferentes actores del sector.</p>
+          </div>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="equipo-card-premium">
+          <div style="position: relative; overflow: hidden;">
+            <img src="/images/equipo/laura_hernandez.png" alt="Laura Hernández" class="equipo-img" />
+          </div>
+          <div class="equipo-info">
+            <h3 class="equipo-nombre">Laura Hernández</h3>
+            <p class="equipo-cargo">Área Técnica</p>
+            <p class="equipo-desc">Desarrolla estudios, indicadores y análisis para apoyar la toma de decisiones del gremio.</p>
+          </div>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="equipo-card-premium">
+          <div style="position: relative; overflow: hidden;">
+            <img src="/images/equipo/felipe_gonzalez.png" alt="Felipe González" class="equipo-img" />
+          </div>
+          <div class="equipo-info">
+            <h3 class="equipo-nombre">Felipe González</h3>
+            <p class="equipo-cargo">Comunicaciones</p>
+            <p class="equipo-desc">Gestiona la comunicación institucional, campañas y relacionamiento con productores y aliados.</p>
+          </div>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="equipo-card-premium">
+          <div style="position: relative; overflow: hidden;">
+            <img src="/images/equipo/sandra_morales.png" alt="Sandra Morales" class="equipo-img" />
+          </div>
+          <div class="equipo-info">
+            <h3 class="equipo-nombre">Sandra Morales</h3>
+            <p class="equipo-cargo">Administración</p>
+            <p class="equipo-desc">Coordina los procesos administrativos y el soporte operativo de la asociación.</p>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- S5b Asociaciones Afiliadas -->
+  <AliadosSection />
+
   <!-- S6 Equipo -->
   <section class="section" id="junta" style="background: var(--color-bg-page); padding: 120px 0;">
     <div class="container">
@@ -152,40 +270,257 @@ import BaseLayout from '../layouts/BaseLayout.astro'
       </div>
       <div class="equipo-grid fade-up">
         <div class="equipo-card-premium">
-          <img src="/images/equipo/javier.png" alt="Javier Pérez" class="equipo-img" />
+          <div style="position: relative; overflow: hidden;">
+            <img src="/images/equipo/javier_perez_new.png" alt="Javier Pérez" class="equipo-img" />
+          </div>
           <div class="equipo-info">
             <h3 class="equipo-nombre">Javier Pérez</h3>
             <p class="equipo-cargo">Presidente Ejecutivo</p>
+            <p class="equipo-desc">Lidera la estrategia institucional y representa a ANALAC ante organismos públicos y privados.</p>
           </div>
         </div>
         <div class="equipo-card-premium">
-          <img src="/images/equipo/maria.png" alt="María López" class="equipo-img" />
+          <div style="position: relative; overflow: hidden;">
+            <img src="/images/equipo/maria_lopez_new.png" alt="María López" class="equipo-img" />
+          </div>
           <div class="equipo-info">
             <h3 class="equipo-nombre">María López</h3>
             <p class="equipo-cargo">Directora Gremial</p>
+            <p class="equipo-desc">Supervisa la integración regional, garantizando la articulación efectiva de todos los productores afiliados.</p>
           </div>
         </div>
         <div class="equipo-card-premium">
-          <img src="/images/equipo/carlos.png" alt="Carlos Gómez" class="equipo-img" />
+          <div style="position: relative; overflow: hidden;">
+            <img src="/images/equipo/carlos_gomez_new.png" alt="Carlos Gómez" class="equipo-img" />
+          </div>
           <div class="equipo-info">
             <h3 class="equipo-nombre">Carlos Gómez</h3>
             <p class="equipo-cargo">Secretario General</p>
+            <p class="equipo-desc">Coordina la estructura administrativa, legal y operativa, asegurando el cumplimiento normativo del gremio.</p>
           </div>
         </div>
+      </div>
+    </div>
+  </section>  <!-- S6.5 Ecosistema Digital -->
+  <section class="section" id="ecosistema" style="background: #ffffff; padding: 120px 0;">
+    <div class="container">
+      <div class="section-header text-center fade-up" style="max-width: 800px; margin: 0 auto 80px;">
+        <div class="overline-light" style="color: var(--color-green-main); border-color: rgba(62,142,65,0.2); margin-bottom: 16px; display: inline-block;">PLATAFORMA DIGITAL</div>
+        <h2 class="h2">Ecosistema Digital ANALAC</h2>
+        <p style="font-size: 19px; color: var(--color-text-sub); margin-top: 24px; line-height: 1.6;">Todos los servicios institucionales disponibles desde una única plataforma para fortalecer la productividad, la gestión gremial y el acceso a la información.</p>
+      </div>
+
+      <style>
+        .ecosistema-grid {
+          display: grid;
+          gap: 40px;
+          grid-template-columns: repeat(4, 1fr);
+        }
+        .eco-card {
+          background: #ffffff;
+          border: 1px solid rgba(0,0,0,0.06);
+          border-radius: 16px;
+          padding: 40px 32px;
+          transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+          display: flex;
+          flex-direction: column;
+          height: 100%;
+          cursor: pointer;
+          position: relative;
+          overflow: hidden;
+        }
+        .eco-card::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          border-radius: 16px;
+          border: 1px solid transparent;
+          transition: border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+          pointer-events: none;
+        }
+        .eco-card:hover {
+          transform: translateY(-4px) scale(1.01);
+          box-shadow: 0 10px 40px -10px rgba(0,0,0,0.08);
+          border-color: transparent;
+        }
+        .eco-card:hover::before {
+          border-color: rgba(62, 142, 65, 0.15); /* var(--color-green-main) lightened */
+        }
+        .eco-icon {
+          width: 56px;
+          height: 56px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: var(--color-green-main);
+          margin-bottom: 24px;
+          background: rgba(62, 142, 65, 0.04);
+          border-radius: 14px;
+          transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), background 0.5s ease;
+        }
+        .eco-card:hover .eco-icon {
+          transform: scale(1.05);
+          background: rgba(62, 142, 65, 0.08);
+        }
+        .eco-title {
+          font-size: 20px;
+          font-weight: 600;
+          color: var(--color-text-main);
+          margin-bottom: 12px;
+          letter-spacing: -0.01em;
+        }
+        .eco-desc {
+          font-size: 15px;
+          line-height: 1.6;
+          color: var(--color-text-sub);
+          flex-grow: 1;
+        }
+        .eco-arrow {
+          margin-top: 24px;
+          display: flex;
+          align-items: center;
+          color: var(--color-green-main);
+          font-size: 14px;
+          font-weight: 600;
+          opacity: 0.7;
+          transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+        .eco-arrow svg {
+          margin-left: 8px;
+          transition: transform 0.3s ease;
+        }
+        .eco-card:hover .eco-arrow {
+          opacity: 1;
+        }
+        .eco-card:hover .eco-arrow svg {
+          transform: translateX(4px);
+        }
+        
+        @media (max-width: 1024px) {
+          .ecosistema-grid {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 24px;
+          }
+        }
+        @media (max-width: 600px) {
+          .ecosistema-grid {
+            grid-template-columns: 1fr;
+            gap: 20px;
+          }
+        }
+      </style>
+
+      <div class="ecosistema-grid fade-up">
+        
+        <!-- Service 1 -->
+        <div class="eco-card">
+          <div class="eco-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg>
+          </div>
+          <h3 class="eco-title">Portal de Afiliados</h3>
+          <p class="eco-desc">Gestiona pagos, beneficios, documentos y servicios exclusivos para afiliados.</p>
+          <div class="eco-arrow">
+            Acceder <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+
+        <!-- Service 2 -->
+        <div class="eco-card">
+          <div class="eco-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
+          </div>
+          <h3 class="eco-title">Portal de Aliados</h3>
+          <p class="eco-desc">Acceso para empresas, patrocinadores y organizaciones vinculadas al sector.</p>
+          <div class="eco-arrow">
+            Acceder <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+
+        <!-- Service 3 -->
+        <div class="eco-card">
+          <div class="eco-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+          </div>
+          <h3 class="eco-title">Pago de Membresías</h3>
+          <p class="eco-desc">Realiza pagos institucionales de forma rápida y segura mediante PSE.</p>
+          <div class="eco-arrow">
+            Acceder <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+
+        <!-- Service 4 -->
+        <div class="eco-card">
+          <div class="eco-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+          </div>
+          <h3 class="eco-title">Academia ANALAC</h3>
+          <p class="eco-desc">Cursos, talleres, formación técnica y actualización permanente.</p>
+          <div class="eco-arrow">
+            Acceder <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+
+        <!-- Service 5 -->
+        <div class="eco-card">
+          <div class="eco-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </div>
+          <h3 class="eco-title">Información Sectorial</h3>
+          <p class="eco-desc">Indicadores, estadísticas, estudios y reportes especializados.</p>
+          <div class="eco-arrow">
+            Acceder <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+
+        <!-- Service 6 -->
+        <div class="eco-card">
+          <div class="eco-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          </div>
+          <h3 class="eco-title">Biblioteca Digital</h3>
+          <p class="eco-desc">Publicaciones, documentos técnicos y recursos institucionales.</p>
+          <div class="eco-arrow">
+            Acceder <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+
+        <!-- Service 7 -->
+        <div class="eco-card">
+          <div class="eco-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+          </div>
+          <h3 class="eco-title">Certificados</h3>
+          <p class="eco-desc">Consulta y descarga certificados y documentos oficiales.</p>
+          <div class="eco-arrow">
+            Acceder <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+
+        <!-- Service 8 -->
+        <div class="eco-card">
+          <div class="eco-icon">
+            <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+          </div>
+          <h3 class="eco-title">Mesa de Ayuda</h3>
+          <p class="eco-desc">Canales de soporte y acompañamiento para afiliados y aliados.</p>
+          <div class="eco-arrow">
+            Acceder <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- S7 CTA Final -->
-  <section class="cta-final section fade-up" style="background: var(--c-green-deep);">
-    <div class="container text-center">
-      <h2 class="h2 cta-title">Construyamos juntos el futuro del sector lácteo colombiano</h2>
-      <div class="cta-buttons">
-        <a href="https://portal.analac.com" class="btn btn--accent" style="padding: 12px 28px;">Afíliate</a>
-        <a href="/contacto" class="btn btn--outline-white" style="padding: 12px 28px;">Contáctanos</a>
-      </div>
-    </div>
-  </section>
+  <!-- S7 CTA Final Customizado -->
+  <CtaFinal 
+    title="Únase a ANALAC"
+    text="Haga parte de la organización que representa y fortalece al sector productor de leche en Colombia mediante servicios, conocimiento y acompañamiento institucional."
+    primaryBtnText="Hazte afiliado"
+    primaryBtnLink="/afiliate"
+    secondaryBtnText="Conocer beneficios"
+    secondaryBtnLink="/servicios"
+  />
 </BaseLayout>
 
 <style>
@@ -394,6 +729,11 @@ import BaseLayout from '../layouts/BaseLayout.astro'
     overflow: hidden;
     border: 1px solid rgba(0,0,0,0.04);
     box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+  }
+  .equipo-card-premium:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.08);
   }
   .equipo-img {
     width: 100%;
@@ -402,47 +742,49 @@ import BaseLayout from '../layouts/BaseLayout.astro'
     object-position: top;
     display: block;
     background: #e8e4dc;
+    transition: transform 0.6s ease;
+  }
+  .equipo-card-premium:hover .equipo-img {
+    transform: scale(1.03);
   }
   .equipo-info {
-    padding: 24px;
+    padding: 32px 24px;
     text-align: center;
   }
   .equipo-nombre {
-    font-size: 20px;
-    font-weight: 500;
+    font-size: 22px;
+    font-weight: 600;
     color: var(--color-green-dark);
-    margin-bottom: 4px;
+    margin-bottom: 6px;
   }
   .equipo-cargo {
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-green-dark);
+    margin-bottom: 16px;
+    opacity: 0.8;
+  }
+  .equipo-desc {
     font-size: 15px;
-    color: var(--color-text-sub);
+    line-height: 1.6;
+    color: var(--color-text-main);
+    margin: 0;
   }
-
-  /* CTA Final */
-  .cta-final {
-    padding: 120px 0;
-  }
-  .cta-title {
-    color: #ffffff;
-    max-width: 700px;
-    margin: 0 auto 48px;
-    text-wrap: balance;
-  }
-  .cta-buttons {
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-  }
-
   /* Responsive */
   @media (max-width: 768px) {
     .impact-grid { grid-template-columns: 1fr 1fr; }
     .mision-vision { grid-template-columns: 1fr; }
     .valores-grid { grid-template-columns: 1fr; }
     .equipo-grid { grid-template-columns: 1fr; }
+    .afiliados-grid { grid-template-columns: repeat(2, 1fr) !important; }
     .timeline-premium .timeline-item { padding-left: 48px; }
     .timeline-premium .timeline-line { left: 12px; }
     .timeline-premium .timeline-dot { left: 5px; }
-    .cta-buttons { flex-direction: column; }
+    .timeline-premium .timeline-dot { left: 5px; }
+  }
+  @media (max-width: 480px) {
+    .afiliados-grid { grid-template-columns: 1fr !important; }
   }
 </style>

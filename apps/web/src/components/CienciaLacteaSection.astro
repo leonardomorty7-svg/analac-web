@@ -25,26 +25,26 @@ const sideArticles = [
 <section class="ciencia-section">
   <div class="ciencia-header reveal" style="transition-delay: 0ms">
     <span class="overline">CIENCIA LÁCTEA</span>
-    <h2 class="ciencia-h2">Investigación, nutrición y producción láctea con información confiable y aplicada</h2>
+    <h2 class="ciencia-h2">Investigación, nutrición y desarrollo productivo lácteo con información técnica rigurosa</h2>
   </div>
 
   <div class="editorial-grid">
     <!-- Artículo Destacado (70%) -->
-    <a href="#" class="editorial-main reveal" style="transition-delay: 200ms">
+    <a href="/noticias" class="editorial-main reveal" style="transition-delay: 200ms">
       <div class="main-bg" style={`background-image: url('${mainArticle.imagen}')`}></div>
       <div class="main-overlay"></div>
       <div class="main-content">
         <span class="editorial-tag">{mainArticle.categoria}</span>
         <h3 class="main-title">{mainArticle.titulo}</h3>
         <p class="main-desc">{mainArticle.resumen}</p>
-        <span class="editorial-read">Leer artículo completo →</span>
+        <span class="editorial-read">Leer informe técnico →</span>
       </div>
     </a>
 
     <!-- Artículos Secundarios (30%) -->
     <div class="editorial-side">
       {sideArticles.map((art, idx) => (
-        <a href="#" class="side-card reveal" style={`transition-delay: ${(idx + 2) * 200}ms`}>
+        <a href="/noticias" class="side-card reveal" style={`transition-delay: ${(idx + 2) * 200}ms`}>
           <div class="side-img-wrapper">
             <img src={art.imagen} alt={art.categoria} class="side-img"/>
           </div>
