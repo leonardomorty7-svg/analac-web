@@ -1,0 +1,64 @@
+---
+import AdminLayout from '../../layouts/AdminLayout.astro';
+export const prerender = false;
+
+// Middleware inline de protección
+const { user, supabase } = Astro.locals;
+if (!user) {
+  return Astro.redirect('/admin-analac/iniciar-sesion');
+}
+
+const { data: admin } = await supabase
+  .from('admin_users')
+  .select('*')
+  .eq('id', user.id)
+  .single();
+
+if (!admin) {
+  return Astro.redirect('/admin-analac/iniciar-sesion');
+}
+
+// Obtener métricas básicas
+const { count: pendingCount } = await supabase
+  .from('profile_revisions')
+  .select('*', { count: 'exact', head: true })
+  .eq('status', 'pending_review');
+
+const { count: approvedCount } = await supabase
+  .from('profile_revisions')
+  .select('*', { count: 'exact', head: true })
+  .eq('status', 'approved');
+
+const { count: publishedCount } = await supabase
+  .from('organization_profiles')
+  .select('*', { count: 'exact', head: true });
+
+---
+
+<AdminLayout title="Dashboard Principal" adminName={admin.name} adminRole={admin.role}>
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin-bottom: 32px;">
+    
+    <div style="background: white; padding: 24px; border-radius: 12px; border: 1px solid #e2e8f0; border-left: 4px solid #f59e0b;">
+      <h3 style="font-size: 14px; color: #64748b; font-weight: 600; margin: 0 0 8px 0; text-transform: uppercase;">Revisiones Pendientes</h3>
+      <div style="font-size: 32px; font-weight: 800; color: #0f172a;">{pendingCount || 0}</div>
+    </div>
+
+    <div style="background: white; padding: 24px; border-radius: 12px; border: 1px solid #e2e8f0; border-left: 4px solid #10b981;">
+      <h3 style="font-size: 14px; color: #64748b; font-weight: 600; margin: 0 0 8px 0; text-transform: uppercase;">Aprobadas para Publicar</h3>
+      <div style="font-size: 32px; font-weight: 800; color: #0f172a;">{approvedCount || 0}</div>
+    </div>
+
+    <div style="background: white; padding: 24px; border-radius: 12px; border: 1px solid #e2e8f0; border-left: 4px solid #3b82f6;">
+      <h3 style="font-size: 14px; color: #64748b; font-weight: 600; margin: 0 0 8px 0; text-transform: uppercase;">Perfiles Públicos</h3>
+      <div style="font-size: 32px; font-weight: 800; color: #0f172a;">{publishedCount || 0}</div>
+    </div>
+
+  </div>
+
+  <div style="background: white; border-radius: 12px; border: 1px solid #e2e8f0; padding: 24px;">
+    <h2 style="font-size: 18px; font-weight: 700; margin-top: 0; margin-bottom: 16px;">Acciones Rápidas</h2>
+    <div style="display: flex; gap: 16px;">
+      <a href="/admin-analac/directorio/pendientes" style="display: inline-block; background: #0f172a; color: white; padding: 10px 20px; border-radius: 6px; text-decoration: none; font-weight: 500; font-size: 14px;">Revisar Bandeja</a>
+    </div>
+  </div>
+</AdminLayout>

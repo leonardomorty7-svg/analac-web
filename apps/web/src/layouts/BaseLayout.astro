@@ -12,6 +12,8 @@ interface Props {
   ogImage?: string
   ogType?: 'website' | 'article'
   noIndex?: boolean
+  customSchema?: string
+  customCanonical?: string
 }
 
 const {
@@ -20,9 +22,26 @@ const {
   ogImage = '/og-analac.jpg',
   ogType = 'website',
   noIndex = false,
+  customSchema,
+  customCanonical
 } = Astro.props
 
-const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://analac.com')
+const canonicalURL = customCanonical ? new URL(customCanonical, Astro.site ?? 'https://analac.com') : new URL(Astro.url.pathname, Astro.site ?? 'https://analac.com')
+
+const defaultSchema = JSON.stringify({
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "ANALAC",
+  "url": "https://analac.com",
+  "logo": "https://analac.com/logo.svg",
+  "foundingDate": "1957",
+  "description": "Asociación Nacional de Productores de Leche de Colombia",
+  "address": {
+    "@type": "PostalAddress",
+    "addressCountry": "CO",
+    "addressLocality": "Bogotá"
+  }
+});
 ---
 
 <!doctype html>
@@ -66,22 +85,7 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://analac.c
     />
 
     <!-- Structured data -->
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Organization",
-        "name": "ANALAC",
-        "url": "https://analac.com",
-        "logo": "https://analac.com/logo.svg",
-        "foundingDate": "1957",
-        "description": "Asociación Nacional de Productores de Leche de Colombia",
-        "address": {
-          "@type": "PostalAddress",
-          "addressCountry": "CO",
-          "addressLocality": "Bogotá"
-        }
-      }
-    </script>
+    <script type="application/ld+json" set:html={customSchema || defaultSchema}></script>
   </head>
   <body>
     <Nav />
@@ -92,15 +96,15 @@ const canonicalURL = new URL(Astro.url.pathname, Astro.site ?? 'https://analac.c
 
     <!-- Payment Floating Button -->
     <a 
-      href="/pagos" 
+      href="/zona-pagos" 
       class="payment-pill" 
       id="payment-pill"
-      aria-label="Pago de Membresía"
+      aria-label="Zona de Pagos"
     >
       <div class="payment-icon-wrapper">
         <img src="/images/pse.png" alt="PSE" class="pse-img" />
       </div>
-      <span>Pago de Membresía</span>
+      <span>Zona de Pagos</span>
     </a>
 
     <!-- WhatsApp Floating Button -->

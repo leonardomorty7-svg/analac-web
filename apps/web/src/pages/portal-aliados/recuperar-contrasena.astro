@@ -1,0 +1,77 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+export const prerender = false;
+---
+
+<BaseLayout title="Recuperar Contraseña | Portal ANALAC">
+  <section style="min-height: 100vh; display: flex; align-items: center; justify-content: center; background: #f8fafc; padding: 40px 20px;">
+    <div style="background: white; padding: 48px; border-radius: 16px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); max-width: 440px; width: 100%;">
+      
+      <div style="text-align: center; margin-bottom: 32px;">
+        <h1 style="font-size: 24px; font-weight: 700; margin-bottom: 8px;">Recuperar Contraseña</h1>
+        <p style="color: #64748b; font-size: 15px;">Ingresa tu correo para recibir un enlace de recuperación.</p>
+      </div>
+
+      <div id="status-message" style="display: none; padding: 12px; border-radius: 8px; font-size: 14px; margin-bottom: 24px; text-align: center;"></div>
+
+      <form id="recovery-form" style="display: flex; flex-direction: column; gap: 20px;">
+        <div>
+          <label for="email" style="display: block; font-size: 14px; font-weight: 500; margin-bottom: 6px;">Correo Electrónico</label>
+          <input type="email" id="email" name="email" required style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px;" placeholder="tu@empresa.com" />
+        </div>
+
+        <button type="submit" id="submit-btn" style="background: #15803d; color: white; border: none; padding: 14px; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; margin-top: 8px; transition: background 0.2s;">
+          Enviar Enlace
+        </button>
+      </form>
+
+      <div style="margin-top: 32px; text-align: center; font-size: 14px;">
+        <a href="/portal-aliados/iniciar-sesion" style="color: #64748b; text-decoration: none; font-weight: 500;">← Volver al login</a>
+      </div>
+      
+    </div>
+  </section>
+</BaseLayout>
+
+<script>
+  import { getSupabaseBrowser } from '../../lib/supabase/browser';
+
+  const form = document.getElementById('recovery-form');
+  const statusMsg = document.getElementById('status-message');
+  const submitBtn = document.getElementById('submit-btn') as HTMLButtonElement;
+
+  form?.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    if (statusMsg) statusMsg.style.display = 'none';
+    if (submitBtn) {
+      submitBtn.disabled = true;
+      submitBtn.textContent = 'Enviando...';
+    }
+
+    const email = (document.getElementById('email') as HTMLInputElement).value;
+    const supabase = getSupabaseBrowser();
+    
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: window.location.origin + '/portal-aliados/actualizar-contrasena',
+    });
+
+    if (statusMsg) {
+      statusMsg.style.display = 'block';
+      if (error) {
+        statusMsg.style.background = '#fee2e2';
+        statusMsg.style.color = '#b91c1c';
+        statusMsg.textContent = 'Ocurrió un error. Verifica tu correo e intenta nuevamente.';
+      } else {
+        statusMsg.style.background = '#ecfdf5';
+        statusMsg.style.color = '#15803d';
+        statusMsg.textContent = 'Enlace de recuperación enviado. Revisa tu bandeja de entrada.';
+      }
+    }
+
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = 'Enviar Enlace';
+    }
+  });
+</script>

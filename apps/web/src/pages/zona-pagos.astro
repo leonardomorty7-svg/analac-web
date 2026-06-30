@@ -1,0 +1,743 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+// SEO Title & Description
+const title = "Zona de Pagos | ANALAC";
+const description = "Gestiona pagos, certificados y servicios institucionales desde una única plataforma.";
+---
+
+<BaseLayout title={title} description={description}>
+  
+  <!-- Subtle Background Gradients for depth -->
+  <div class="page-ambient-bg"></div>
+
+  <!-- Hero Section -->
+  <header class="page-hero">
+    <div class="page-hero-bg"></div>
+    <div class="container relative z-10">
+      <div class="breadcrumb reveal">
+        <a href="/">Inicio</a> <span class="separator">/</span> <span>Zona de Pagos</span>
+      </div>
+      <h1 class="page-hero-title reveal" style="transition-delay: 50ms;">Zona de Pagos</h1>
+      <p class="page-hero-subtitle reveal" style="transition-delay: 100ms;">
+        Gestiona pagos, certificados y servicios institucionales desde una única plataforma.
+      </p>
+      
+      <!-- Indicators -->
+      <div class="hero-indicators reveal" style="transition-delay: 150ms;">
+        <div class="indicator-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          <span>Plataforma segura</span>
+        </div>
+        <div class="indicator-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          <span>Atención institucional</span>
+        </div>
+        <div class="indicator-item">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>
+          <span>Disponible 24/7</span>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Payment Cards Section -->
+  <section class="section cards-section">
+    <div class="container">
+      <div class="payment-grid">
+        
+        <!-- Card 1 -->
+        <a href="#" class="eco-card reveal">
+          <div class="eco-icon-wrapper">
+            <div class="eco-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/></svg>
+            </div>
+          </div>
+          <div class="eco-content">
+            <h3 class="eco-title">Pago de Membresía</h3>
+            <p class="eco-desc">Paga o renueva tu cuota gremial de forma rápida y sin complicaciones.</p>
+            <div class="eco-arrow-link">
+              Acceder <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </div>
+        </a>
+
+        <!-- Card 2 -->
+        <a href="#" class="eco-card reveal" style="transition-delay: 50ms;">
+          <div class="eco-icon-wrapper">
+            <div class="eco-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            </div>
+          </div>
+          <div class="eco-content">
+            <h3 class="eco-title">Certificados</h3>
+            <p class="eco-desc">Solicita certificados de afiliación, paz y salvos y documentos institucionales.</p>
+            <div class="eco-arrow-link">
+              Acceder <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </div>
+        </a>
+
+        <!-- Card 3 -->
+        <a href="#" class="eco-card reveal" style="transition-delay: 100ms;">
+          <div class="eco-icon-wrapper">
+            <div class="eco-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+            </div>
+          </div>
+          <div class="eco-content">
+            <h3 class="eco-title">Eventos y Capacitaciones</h3>
+            <p class="eco-desc">Adquiere tus entradas para foros, talleres y congresos del sector lácteo.</p>
+            <div class="eco-arrow-link">
+              Acceder <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </div>
+        </a>
+
+        <!-- Card 4 -->
+        <a href="#" class="eco-card reveal" style="transition-delay: 150ms;">
+          <div class="eco-icon-wrapper">
+            <div class="eco-icon">
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+            </div>
+          </div>
+          <div class="eco-content">
+            <h3 class="eco-title">Otros Servicios</h3>
+            <p class="eco-desc">Consulta y abona otros servicios técnicos, asesorías y programas especiales.</p>
+            <div class="eco-arrow-link">
+              Acceder <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+            </div>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <section class="section faq-section">
+    <div class="container" style="max-width: 800px;">
+      <div class="text-center mb-16">
+        <h2 class="h2 reveal faq-main-title">Preguntas Frecuentes</h2>
+        <p class="reveal faq-main-desc" style="transition-delay: 100ms;">Resolvemos tus dudas sobre el proceso de pagos</p>
+      </div>
+
+      <div class="faq-list reveal" style="transition-delay: 150ms;">
+        
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>¿Qué métodos de pago acepta ANALAC?</span>
+            <div class="faq-icon-circle">
+              <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+            </div>
+          </button>
+          <div class="faq-answer-wrapper">
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                Aceptamos pagos seguros en línea a través de PSE, tarjetas de crédito (Visa, MasterCard, American Express), y transferencias bancarias directas a nuestras cuentas institucionales. Todos los pagos en línea están encriptados para su seguridad.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>¿Cuánto tiempo tarda en reflejarse mi pago de membresía?</span>
+            <div class="faq-icon-circle">
+              <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+            </div>
+          </button>
+          <div class="faq-answer-wrapper">
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                Los pagos realizados a través de PSE o tarjeta de crédito se reflejan inmediatamente en nuestro sistema. Las transferencias bancarias pueden tomar de 1 a 2 días hábiles en ser confirmadas por nuestro departamento de cartera.
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-question">
+            <span>¿Cómo puedo solicitar la factura electrónica de mi pago?</span>
+            <div class="faq-icon-circle">
+              <svg class="faq-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+            </div>
+          </button>
+          <div class="faq-answer-wrapper">
+            <div class="faq-answer">
+              <div class="faq-answer-inner">
+                Una vez confirmado su pago, la factura electrónica será enviada automáticamente al correo registrado en su cuenta. Si no la recibe después de 24 horas, puede solicitarla a través del formulario de la sección "Certificados".
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- Help Section (Custom Institutional Card) -->
+  <section class="help-section reveal">
+    <div class="container">
+      <div class="help-card">
+        <div class="help-card-bg"></div>
+        <div class="help-card-content">
+          <div class="help-left">
+            <h2 class="help-title">¿Necesitas ayuda con tu proceso de pago?</h2>
+            <p class="help-desc">Nuestro equipo de cartera está disponible para ayudarte con pagos, certificados y consultas administrativas.</p>
+          </div>
+          <div class="help-right">
+            <a href="/contacto" class="btn btn--accent help-btn-primary">Contactar soporte</a>
+            <a href="#" class="btn btn--outline-white help-btn-secondary">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+              WhatsApp
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  /* Base Overrides & Ambient */
+  body {
+    background-color: #fcfcfc;
+    position: relative;
+  }
+
+  .page-ambient-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle at 50% 0%, rgba(109, 181, 109, 0.03) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  /* Hero */
+  .page-hero {
+    position: relative;
+    padding: 140px 40px 80px;
+    color: #fff;
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+  }
+  
+  .page-hero-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(6, 20, 10, 0.92) 0%, rgba(15, 36, 20, 0.85) 100%), url('/images/zona_pagos_hero.jpg');
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+  }
+
+  .breadcrumb {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 24px;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+  .breadcrumb a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .breadcrumb a:hover {
+    color: var(--c-green);
+  }
+  .breadcrumb .separator {
+    margin: 0 10px;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .page-hero-title {
+    font-size: clamp(48px, 6vw, 72px);
+    font-weight: 800;
+    line-height: 1.05;
+    letter-spacing: -1.5px;
+    margin-bottom: 16px;
+    text-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  }
+
+  .page-hero-subtitle {
+    max-width: 600px;
+    color: rgba(255,255,255,0.85);
+    font-size: 20px;
+    line-height: 1.6;
+    margin-bottom: 32px;
+    font-weight: 400;
+  }
+
+  .hero-indicators {
+    display: flex;
+    gap: 24px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+
+  .indicator-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: rgba(255,255,255,0.9);
+    background: rgba(255,255,255,0.06);
+    padding: 8px 16px;
+    border-radius: 100px;
+    border: 1px solid rgba(255,255,255,0.1);
+    backdrop-filter: blur(8px);
+  }
+
+  .indicator-item svg {
+    color: var(--c-green);
+  }
+
+  /* Payment Cards Section */
+  .cards-section {
+    padding-top: 80px;
+    padding-bottom: 120px;
+  }
+
+  .payment-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    position: relative;
+    z-index: 10;
+    margin-top: -120px;
+  }
+
+  .eco-card {
+    background: #ffffff;
+    border-radius: 24px;
+    padding: 40px 32px;
+    border: 1px solid rgba(0,0,0,0.04);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.02), 0 1px 3px rgba(0,0,0,0.02);
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    position: relative;
+    height: 100%;
+  }
+
+  .eco-card:hover {
+    transform: translateY(-8px) scale(1.01);
+    box-shadow: 0 30px 60px rgba(0,0,0,0.06), 0 10px 20px rgba(0,0,0,0.03);
+    border-color: rgba(109, 181, 109, 0.2);
+  }
+
+  .eco-icon-wrapper {
+    margin-bottom: 40px;
+  }
+
+  .eco-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: #ffffff;
+    color: var(--c-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.06), inset 0 0 0 1px rgba(0,0,0,0.03);
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .eco-card:hover .eco-icon {
+    background: var(--c-green);
+    color: #ffffff;
+    transform: translateY(-4px) scale(1.05);
+    box-shadow: 0 12px 30px rgba(109, 181, 109, 0.3);
+  }
+
+  .eco-content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+  }
+
+  .eco-title {
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--color-text-main);
+    letter-spacing: -0.3px;
+    line-height: 1.3;
+  }
+
+  .eco-desc {
+    font-size: 15px;
+    color: #666666;
+    line-height: 1.6;
+    flex-grow: 1;
+    margin-bottom: 40px;
+  }
+
+  .eco-arrow-link {
+    display: inline-flex;
+    align-items: center;
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--c-green);
+    transition: all 0.3s ease;
+    margin-top: auto;
+  }
+
+  .eco-arrow-link svg {
+    margin-left: 6px;
+    transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .eco-card:hover .eco-arrow-link {
+    color: var(--c-green-deep);
+  }
+
+  .eco-card:hover .eco-arrow-link svg {
+    transform: translateX(8px);
+  }
+
+  /* Premium FAQ Section */
+  .faq-section {
+    padding: 60px 0 120px;
+    background: transparent;
+  }
+
+  .faq-main-title {
+    font-size: 36px;
+    font-weight: 800;
+    letter-spacing: -0.5px;
+    margin-bottom: 16px;
+  }
+
+  .faq-main-desc {
+    font-size: 18px;
+    color: #666666;
+  }
+
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .faq-item {
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.05);
+    border-radius: 20px;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.01);
+  }
+
+  .faq-item:hover {
+    border-color: rgba(0,0,0,0.1);
+    box-shadow: 0 12px 30px rgba(0,0,0,0.03);
+  }
+
+  .faq-item.is-open {
+    border-color: rgba(109, 181, 109, 0.3);
+    box-shadow: 0 20px 40px rgba(109, 181, 109, 0.06);
+    background-color: #fbfdfb;
+  }
+
+  .faq-question {
+    width: 100%;
+    padding: 32px;
+    background: none;
+    border: none;
+    text-align: left;
+    font-size: 18px;
+    font-weight: 600;
+    color: var(--color-text-main);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: inherit;
+    transition: color 0.3s ease;
+  }
+
+  .faq-icon-circle {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+    transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    flex-shrink: 0;
+    margin-left: 24px;
+  }
+
+  .faq-item:hover .faq-icon-circle {
+    background: #ececec;
+  }
+
+  .faq-item.is-open .faq-icon-circle {
+    background: var(--c-green);
+    color: #fff;
+    transform: rotate(180deg);
+  }
+
+  .faq-item.is-open .faq-question {
+    color: var(--c-green-deep);
+  }
+
+  .faq-answer-wrapper {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  .faq-item.is-open .faq-answer-wrapper {
+    grid-template-rows: 1fr;
+  }
+
+  .faq-answer {
+    overflow: hidden;
+    padding: 0 32px;
+  }
+
+  .faq-answer::after {
+    content: '';
+    display: block;
+    height: 32px;
+  }
+
+  .faq-answer-inner {
+    font-size: 16px;
+    color: #555555;
+    line-height: 1.8;
+  }
+
+  /* Help Section (Institutional Card) */
+  .help-section {
+    padding: 0 0 120px;
+  }
+
+  .help-card {
+    position: relative;
+    border-radius: 32px;
+    overflow: hidden;
+    box-shadow: 0 30px 60px rgba(0,0,0,0.08);
+  }
+
+  .help-card-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, var(--c-green-deep) 0%, #0d2a17 100%);
+    z-index: 0;
+  }
+
+  .help-card-bg::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60%;
+    height: 100%;
+    background: radial-gradient(circle at 100% 50%, rgba(109, 181, 109, 0.15) 0%, transparent 60%);
+    pointer-events: none;
+  }
+
+  .help-card-content {
+    position: relative;
+    z-index: 10;
+    padding: 80px 60px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+  }
+
+  .help-left {
+    flex: 1;
+    max-width: 600px;
+  }
+
+  .help-title {
+    color: #ffffff;
+    font-size: 40px;
+    font-weight: 800;
+    letter-spacing: -1px;
+    margin-bottom: 20px;
+    line-height: 1.1;
+  }
+
+  .help-desc {
+    color: rgba(255,255,255,0.85);
+    font-size: 18px;
+    line-height: 1.6;
+  }
+
+  .help-right {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    flex-shrink: 0;
+    min-width: 240px;
+  }
+
+  .help-btn-primary {
+    background: var(--c-green);
+    color: #fff;
+    padding: 18px 32px;
+    font-size: 16px;
+    border-radius: 100px;
+    text-align: center;
+    font-weight: 600;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+  }
+
+  .help-btn-primary:hover {
+    background: #5ea85e;
+    transform: translateY(-2px);
+    box-shadow: 0 14px 28px rgba(0,0,0,0.15);
+  }
+
+  .help-btn-secondary {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: #fff;
+    padding: 18px 32px;
+    font-size: 16px;
+    border-radius: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    text-decoration: none;
+  }
+
+  .help-btn-secondary:hover {
+    background: rgba(255,255,255,0.1);
+    border-color: rgba(255,255,255,0.3);
+    transform: translateY(-2px);
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 1200px) {
+    .payment-grid {
+      grid-template-columns: repeat(2, 1fr); /* 2x2 for laptop */
+    }
+  }
+
+  @media (max-width: 992px) {
+    .help-card-content {
+      flex-direction: column;
+      text-align: center;
+      padding: 60px 40px;
+      gap: 40px;
+    }
+    .help-left {
+      max-width: 100%;
+    }
+    .help-right {
+      width: 100%;
+      flex-direction: row;
+      justify-content: center;
+    }
+    .help-btn-primary, .help-btn-secondary {
+      width: auto;
+      flex: 1;
+      max-width: 250px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .page-hero {
+      padding: 140px 24px 80px;
+      min-height: auto;
+    }
+    .page-hero-title {
+      font-size: 40px;
+    }
+    .payment-grid {
+      grid-template-columns: 1fr; /* 1 column for mobile */
+      margin-top: -60px;
+    }
+    .faq-question {
+      padding: 24px;
+      font-size: 16px;
+    }
+    .faq-answer {
+      padding: 0 24px;
+    }
+    .help-card {
+      border-radius: 24px;
+    }
+    .help-card-content {
+      padding: 40px 24px;
+    }
+    .help-title {
+      font-size: 32px;
+    }
+    .help-right {
+      flex-direction: column;
+      align-items: stretch;
+    }
+    .help-btn-primary, .help-btn-secondary {
+      max-width: 100%;
+    }
+  }
+</style>
+
+<script>
+  // Intersection Observer for scroll animations
+  const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.1
+  };
+
+  const observer = new IntersectionObserver((entries, observer) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('active');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.reveal, .fade-up').forEach((el) => {
+      observer.observe(el);
+    });
+
+    // Custom FAQ Accordion Logic
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+      const button = item.querySelector('.faq-question');
+      button?.addEventListener('click', () => {
+        const isOpen = item.classList.contains('is-open');
+        
+        // Close others
+        faqItems.forEach(otherItem => {
+          otherItem.classList.remove('is-open');
+        });
+
+        // Toggle current
+        if (!isOpen) {
+          item.classList.add('is-open');
+        }
+      });
+    });
+  });
+</script>

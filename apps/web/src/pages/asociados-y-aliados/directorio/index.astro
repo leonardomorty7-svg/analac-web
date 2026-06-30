@@ -1,0 +1,215 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import DirectorySearchGrid from '../../../components/directorio/DirectorySearchGrid';
+
+// SEO Title & Description
+const title = "Directorio del Ecosistema Lácteo Colombiano | ANALAC";
+const description = "Encuentra proveedores, empresas transformadoras, aliados y organizaciones del sector lácteo en Colombia. Directorio oficial de ANALAC.";
+---
+
+<BaseLayout title={title} description={description}>
+  
+  <div class="page-ambient-bg"></div>
+
+  <!-- Hero AEO/SEO -->
+  <header class="directory-hero">
+    <div class="directory-hero-bg"></div>
+    <div class="container relative z-10 text-center">
+      <div class="breadcrumb reveal">
+        <a href="/">Inicio</a> <span class="separator">/</span> 
+        <a href="/asociados-aliados">Asociados y Aliados</a> <span class="separator">/</span> 
+        <span>Directorio</span>
+      </div>
+      
+      <h1 class="directory-title reveal" style="transition-delay: 50ms;">
+        Directorio del Ecosistema Lácteo Colombiano
+      </h1>
+      
+      {/* Resumen AEO */}
+      <p class="directory-summary reveal" style="transition-delay: 100ms;">
+        El Directorio Inteligente de ANALAC es la base de conocimiento verificable del sector lechero en Colombia. 
+        Aquí puedes explorar el perfil de <strong>empresas transformadoras, productores, proveedores y aliados estratégicos</strong>, 
+        conocer sus productos, certificaciones y regiones de cobertura para generar conexiones comerciales seguras.
+      </p>
+
+      <div class="directory-actions reveal" style="transition-delay: 150ms;">
+        <a href="#buscar" class="btn btn--accent">Buscar empresas</a>
+        <a href="/portal-aliados/directorio" class="btn btn--outline-white">Publicar mi empresa</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- React Island: Search, Filters & Grid -->
+  <section id="buscar" class="directory-search-section">
+    <div class="container-fluid">
+      <DirectorySearchGrid client:load />
+    </div>
+  </section>
+
+  <!-- AEO Block: Preguntas Frecuentes del Directorio -->
+  <section class="directory-faqs">
+    <div class="container" style="max-width: 800px;">
+      <div class="text-center mb-12">
+        <h2 class="h2">¿Qué encontrarás en este directorio?</h2>
+      </div>
+      
+      <div class="faq-list">
+        <div class="faq-item">
+          <h3 class="faq-question">¿Qué empresas hacen parte del ecosistema lácteo colombiano?</h3>
+          <p class="faq-answer">
+            El ecosistema está conformado por miles de actores. En este directorio oficial de ANALAC encontrarás productores, 
+            cooperativas, empresas transformadoras, proveedores de maquinaria, laboratorios de sanidad animal y tecnología especializada.
+          </p>
+        </div>
+        
+        <div class="faq-item">
+          <h3 class="faq-question">¿Cómo encontrar proveedores confiables para el sector lácteo?</h3>
+          <p class="faq-answer">
+            Utiliza el buscador superior filtrando por <strong>Categoría</strong> (ej. Nutrición Animal, Equipos de Ordeño) 
+            y <strong>Región</strong>. Los perfiles con el "Sello de Verificación" han validado su identidad y documentación con ANALAC.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <h3 class="faq-question">¿Cómo aparecer en el directorio de ANALAC?</h3>
+          <p class="faq-answer">
+            Si eres una empresa del sector, puedes crear tu perfil a través de la sección "Publicar mi empresa". 
+            Los perfiles son revisados y moderados por el equipo de ANALAC antes de ser publicados públicamente para garantizar la integridad del ecosistema.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  body {
+    background-color: #fcfcfc;
+    position: relative;
+  }
+
+  .page-ambient-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle at 50% 0%, rgba(109, 181, 109, 0.03) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  /* Hero */
+  .directory-hero {
+    position: relative;
+    padding: 160px 20px 100px;
+    color: #fff;
+    min-height: 500px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    overflow: hidden;
+  }
+  
+  .directory-hero-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(6, 20, 10, 0.95) 0%, rgba(26, 74, 42, 0.85) 100%), url('/images/colombia-dairy-bg-v2.jpg');
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+  }
+
+  .breadcrumb {
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.7);
+    margin-bottom: 24px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .breadcrumb a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .breadcrumb a:hover {
+    color: var(--c-green);
+  }
+  .breadcrumb .separator {
+    margin: 0 10px;
+    color: rgba(255,255,255,0.4);
+  }
+
+  .directory-title {
+    font-size: clamp(40px, 5vw, 64px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -1.5px;
+    margin-bottom: 24px;
+    text-wrap: balance;
+  }
+
+  .directory-summary {
+    max-width: 800px;
+    margin: 0 auto 40px;
+    color: rgba(255,255,255,0.9);
+    font-size: 18px;
+    line-height: 1.6;
+    font-weight: 400;
+    text-wrap: balance;
+  }
+
+  .directory-actions {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    padding: 16px 32px;
+    border-radius: 100px;
+    font-weight: 600;
+    font-size: 16px;
+    transition: all 0.3s ease;
+  }
+
+  /* Secciones Inferiores */
+  .directory-search-section {
+    padding: 40px 0;
+  }
+
+  .directory-faqs {
+    padding: 80px 0 120px;
+    background-color: transparent;
+  }
+
+  .faq-list {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .faq-item {
+    background: #fff;
+    padding: 32px;
+    border-radius: 20px;
+    border: 1px solid rgba(0,0,0,0.05);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.02);
+  }
+
+  .faq-question {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--color-text-main);
+    margin-bottom: 12px;
+  }
+
+  .faq-answer {
+    font-size: 16px;
+    color: var(--color-text-sub);
+    line-height: 1.6;
+  }
+</style>

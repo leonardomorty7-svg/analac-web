@@ -1,0 +1,68 @@
+---
+import PortalLayout from '../../../layouts/PortalLayout.astro';
+import ProfileEditor from '../../../components/portal/ProfileEditor';
+import { getActiveRevision, createRevisionFromPublished } from '../../../services/portal/revisions';
+
+export const prerender = false;
+
+const user = Astro.locals.user;
+const supabase = Astro.locals.supabase;
+
+if (!user) {
+  return Astro.redirect('/portal-aliados/iniciar-sesion');
+}
+
+// 1. Obtener organización
+const { data: orgUser } = await supabase
+  .from('organization_users')
+  .select(`
+    role,
+    organization_id,
+    organizations ( id, name )
+  `)
+  .eq('user_id', user.id)
+  .single();
+
+if (!orgUser || !orgUser.organizations) {
+  return Astro.redirect('/portal-aliados');
+}
+
+const org = Array.isArray(orgUser.organizations) ? orgUser.organizations[0] : orgUser.organizations;
+
+// 2. Obtener Revisión Activa o Crear Borrador
+let activeRevision = await getActiveRevision(supabase, user.id);
+
+if (!activeRevision) {
+  try {
+    activeRevision = await createRevisionFromPublished(supabase, user.id);
+  } catch (error) {
+    // Si falla, redirigir
+    return Astro.redirect('/portal-aliados');
+  }
+}
+
+const initialData = activeRevision.revision_data || {};
+const revisionStatus = activeRevision.status;
+---
+
+<PortalLayout 
+  title="Editar Perfil Empresarial" 
+  userEmail={user.email} 
+  orgName={org.name} 
+  role={orgUser.role}
+>
+  <div style="margin-bottom: 24px;">
+    <h1 style="font-size: 24px; font-weight: 700; margin-bottom: 8px;">Editor de Perfil</h1>
+    <p style="color: var(--p-text-sub); font-size: 15px;">
+      Los cambios que realices aquí se guardarán automáticamente como un borrador. 
+      Al finalizar, envíalo a revisión para que nuestro equipo editorial lo publique.
+    </p>
+  </div>
+
+  <ProfileEditor 
+    client:load 
+    revisionId={activeRevision.id}
+    initialData={initialData}
+    revisionStatus={revisionStatus}
+  />
+</PortalLayout>

@@ -1,0 +1,58 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import OrganizationProfile from '../../../components/directory/OrganizationProfile.astro';
+import { getActiveRevision } from '../../../services/portal/revisions';
+
+export const prerender = false;
+
+const user = Astro.locals.user;
+const supabase = Astro.locals.supabase;
+
+if (!user) {
+  return Astro.redirect('/portal-aliados/iniciar-sesion');
+}
+
+const activeRevision = await getActiveRevision(supabase, user.id);
+
+if (!activeRevision) {
+  return Astro.redirect('/portal-aliados/directorio/editar');
+}
+
+// Transformar el borrador JSON al formato de OrganizationDTO esperado por OrganizationProfile
+const data = activeRevision.revision_data || {};
+const mockOrg = {
+  id: 'preview',
+  slug: 'preview',
+  name: data.basicInfo?.name || 'Nombre de la Organización',
+  org_type: 'Vista Previa',
+  summary: data.summaryData?.summary || 'Resumen no proporcionado...',
+  description: data.descriptionData?.description || 'Descripción no proporcionada...',
+  foundation_year: data.basicInfo?.foundation_year || new Date().getFullYear(),
+  logo_url: data.basicInfo?.logo_url || null,
+  cover_url: data.basicInfo?.cover_url || null,
+  contacts: data.contactData?.email || data.contactData?.phone || data.contactData?.website ? [
+    { 
+      email: data.contactData.email, 
+      phone: data.contactData.phone, 
+      website: data.contactData.website 
+    }
+  ] : [],
+  locations: data.locationData?.department ? [
+    { 
+      department: data.locationData.department, 
+      city: data.locationData.city, 
+      address: data.locationData.address 
+    }
+  ] : [],
+  faqs: data.faqs || [],
+  social_links: data.socialLinks || []
+};
+---
+
+<BaseLayout title={`Vista Previa: ${mockOrg.name} | ANALAC`}>
+  <div style="background: #fef3c7; color: #92400e; padding: 12px; text-align: center; font-weight: 600; font-size: 14px; position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid #fcd34d;">
+    ⚠️ VISTA PREVIA DEL BORRADOR ⚠️ - Este perfil aún no es público. <a href="/portal-aliados/directorio/editar" style="color: #92400e; text-decoration: underline; margin-left: 12px;">Volver al Editor</a>
+  </div>
+
+  <OrganizationProfile organization={mockOrg} />
+</BaseLayout>

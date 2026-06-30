@@ -1,0 +1,96 @@
+---
+import '../../styles/global.css';
+export const prerender = false;
+
+const { user } = Astro.locals;
+if (user) {
+  const supabase = Astro.locals.supabase;
+  const { data: admin } = await supabase
+    .from('admin_users')
+    .select('role')
+    .eq('id', user.id)
+    .single();
+
+  if (admin) {
+    return Astro.redirect('/admin-analac');
+  } else {
+    // Es un usuario normal que intentó entrar aquí
+    return Astro.redirect('/portal-aliados');
+  }
+}
+
+let error = '';
+
+if (Astro.request.method === 'POST') {
+  const formData = await Astro.request.formData();
+  const email = formData.get('email') as string;
+  const password = formData.get('password') as string;
+
+  if (email && password) {
+    const supabase = Astro.locals.supabase;
+    const { data, error: signInError } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+
+    if (signInError) {
+      error = 'Credenciales inválidas.';
+    } else {
+      // Validate role
+      const { data: admin } = await supabase
+        .from('admin_users')
+        .select('role')
+        .eq('id', data.user.id)
+        .single();
+      
+      if (admin) {
+        return Astro.redirect('/admin-analac');
+      } else {
+        error = 'No tienes permisos administrativos.';
+        await supabase.auth.signOut();
+      }
+    }
+  }
+}
+---
+
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>Acceso Administrativo | ANALAC</title>
+    <meta name="robots" content="noindex, nofollow" />
+  </head>
+  <body style="background: #0f172a; margin: 0; font-family: 'Inter', system-ui, sans-serif; display: flex; align-items: center; justify-content: center; height: 100vh;">
+    
+    <div style="background: white; padding: 40px; border-radius: 16px; width: 100%; max-width: 400px; box-shadow: 0 20px 40px rgba(0,0,0,0.4); box-sizing: border-box;">
+      <div style="text-align: center; margin-bottom: 32px;">
+        <h1 style="font-size: 24px; font-weight: 800; color: #0f172a; margin-bottom: 8px;">Portal Moderador</h1>
+        <p style="color: #64748b; font-size: 14px;">Solo para staff autorizado de ANALAC</p>
+      </div>
+
+      {error && (
+        <div style="background: #fee2e2; color: #b91c1c; padding: 12px; border-radius: 8px; margin-bottom: 24px; font-size: 14px; text-align: center;">
+          {error}
+        </div>
+      )}
+
+      <form method="POST">
+        <div style="margin-bottom: 20px;">
+          <label for="email" style="display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; color: #334155;">Correo Corporativo</label>
+          <input type="email" name="email" id="email" required style="width: 100%; padding: 12px 16px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; outline: none; box-sizing: border-box;" />
+        </div>
+        <div style="margin-bottom: 24px;">
+          <label for="password" style="display: block; font-size: 14px; font-weight: 600; margin-bottom: 8px; color: #334155;">Contraseña</label>
+          <input type="password" name="password" id="password" required style="width: 100%; padding: 12px 16px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 15px; outline: none; box-sizing: border-box;" />
+        </div>
+
+        <button type="submit" style="width: 100%; background: #38bdf8; color: #0f172a; border: none; padding: 14px; border-radius: 8px; font-size: 16px; font-weight: 700; cursor: pointer; transition: background 0.2s;">
+          Entrar al Sistema
+        </button>
+      </form>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,163 @@
+[
+  {
+    "id": "1",
+    "slug": "lacteos-del-valle",
+    "name": "Lácteos del Valle S.A.",
+    "type": "Empresa transformadora",
+    "category": "Procesamiento",
+    "status": "Asociado ANALAC",
+    "verified": true,
+    "logo": "https://placehold.co/150x150/1a4a2a/ffffff?text=LDV",
+    "location": {
+      "city": "Cali",
+      "department": "Valle del Cauca"
+    },
+    "summary": "Lácteos del Valle S.A. es una empresa transformadora ubicada en Cali, especializada en el procesamiento de derivados lácteos de alta calidad para el mercado nacional.",
+    "description": "Con más de 20 años de experiencia, procesamos leche cruda proveniente de ganaderías sostenibles de la región, garantizando productos frescos y nutritivos bajo los más altos estándares de calidad técnica y sanitaria.",
+    "foundationYear": 2004,
+    "coverage": ["Valle del Cauca", "Cauca", "Eje Cafetero"],
+    "products": [
+      "Quesos madurados y frescos",
+      "Leche UHT entera y deslactosada",
+      "Yogures con probióticos"
+    ],
+    "certifications": [
+      "HACCP",
+      "BPM (Buenas Prácticas de Manufactura)",
+      "Sello de Calidad Láctea ANALAC"
+    ],
+    "contacts": {
+      "email": "contacto@lacteosdelvalle.com.co",
+      "phone": "+57 300 123 4567",
+      "website": "www.lacteosdelvalle.com.co"
+    },
+    "faqs": [
+      {
+        "question": "¿Cuáles son las regiones de distribución de sus productos?",
+        "answer": "Distribuimos nuestros productos principalmente en el Valle del Cauca, Cauca y la región del Eje Cafetero, con despachos programados dos veces por semana."
+      },
+      {
+        "question": "¿Cuentan con venta directa para mayoristas?",
+        "answer": "Sí, disponemos de un canal especializado para atención a mayoristas e instituciones con precios preferenciales."
+      }
+    ]
+  },
+  {
+    "id": "2",
+    "slug": "agrovet-innovacion",
+    "name": "Agrovet Innovación",
+    "type": "Proveedor",
+    "category": "Sanidad Animal",
+    "status": "Aliado Estratégico",
+    "verified": true,
+    "logo": "https://placehold.co/150x150/f8fcf9/1a4a2a?text=AGV",
+    "location": {
+      "city": "Bogotá",
+      "department": "Cundinamarca"
+    },
+    "summary": "Agrovet Innovación es un proveedor líder a nivel nacional de insumos y soluciones de sanidad animal, especializado en ganadería lechera especializada.",
+    "description": "Proveemos soluciones integrales para mejorar la salud y productividad del hato lechero, acompañando al productor con asesoría técnica veterinaria directa en finca.",
+    "foundationYear": 2012,
+    "coverage": ["Nacional"],
+    "products": [
+      "Vacunas y biológicos",
+      "Suplementos vitamínicos",
+      "Kits de diagnóstico de mastitis"
+    ],
+    "certifications": [
+      "Registro ICA",
+      "ISO 9001:2015"
+    ],
+    "contacts": {
+      "email": "ventas@agrovet-innovacion.co",
+      "phone": "+57 310 987 6543",
+      "website": "www.agrovet-innovacion.co"
+    },
+    "faqs": [
+      {
+        "question": "¿Ofrecen asesoría veterinaria en finca?",
+        "answer": "Sí, nuestros clientes frecuentes cuentan con un programa de acompañamiento veterinario presencial sin costo adicional."
+      }
+    ]
+  },
+  {
+    "id": "3",
+    "slug": "cooperativa-lechera-del-norte",
+    "name": "Cooperativa Lechera del Norte",
+    "type": "Cooperativa",
+    "category": "Acopio y Comercialización",
+    "status": "Asociado ANALAC",
+    "verified": true,
+    "logo": "https://placehold.co/150x150/6db56d/ffffff?text=CLN",
+    "location": {
+      "city": "San Pedro de los Milagros",
+      "department": "Antioquia"
+    },
+    "summary": "La Cooperativa Lechera del Norte agrupa a más de 500 pequeños y medianos productores del norte de Antioquia, garantizando un acopio formal, pago justo y asistencia integral.",
+    "description": "Nuestra misión es fortalecer el tejido productivo regional. Recolectamos la leche diariamente con altos estándares de frío y calidad, y la comercializamos con las grandes industrias procesadoras, asegurando el sustento de las familias campesinas.",
+    "foundationYear": 1995,
+    "coverage": ["Antioquia (Norte)"],
+    "products": [
+      "Leche cruda de alta calidad higiénica",
+      "Asistencia técnica agropecuaria para asociados",
+      "Crédito rotativo de insumos"
+    ],
+    "certifications": [
+      "Certificación Buenas Prácticas Ganaderas (BPG) de sus asociados principales",
+      "Sello Cooperativo Solidario"
+    ],
+    "contacts": {
+      "email": "gerencia@coopnorte.com.co",
+      "phone": "+57 604 888 2233",
+      "website": "www.coopnorte.com.co"
+    },
+    "faqs": [
+      {
+        "question": "¿Cómo puede un productor afiliarse a la cooperativa?",
+        "answer": "Para afiliarse, el productor debe tener un predio en la región norte de Antioquia, certificar estatus sanitario ante el ICA y solicitar la visita técnica de acopio."
+      },
+      {
+        "question": "¿Venden leche al detal?",
+        "answer": "No, nuestra operación se centra en el acopio de altos volúmenes para la venta exclusiva a industrias procesadoras a nivel nacional."
+      }
+    ]
+  },
+  {
+    "id": "4",
+    "slug": "tecnofrio-andina",
+    "name": "Tecnofrío Andina",
+    "type": "Proveedor",
+    "category": "Cadena de frío y Maquinaria",
+    "status": "Aliado Comercial",
+    "verified": false,
+    "logo": "https://placehold.co/150x150/e0e0e0/333333?text=TFA",
+    "location": {
+      "city": "Medellín",
+      "department": "Antioquia"
+    },
+    "summary": "Tecnofrío Andina diseña, instala y realiza mantenimiento de tanques de enfriamiento y sistemas de refrigeración industrial para el sector ganadero.",
+    "description": "Somos expertos en la preservación de la calidad de la leche cruda. Nuestros equipos aseguran un enfriamiento rápido y sostenido, cumpliendo las normativas técnicas exigidas por la industria.",
+    "foundationYear": 2010,
+    "coverage": ["Antioquia", "Eje Cafetero", "Cundinamarca", "Boyacá"],
+    "products": [
+      "Tanques de enfriamiento de leche (500L - 10,000L)",
+      "Sistemas de recuperación de calor",
+      "Mantenimiento preventivo y correctivo"
+    ],
+    "certifications": [
+      "ISO 9001:2015",
+      "Distribuidor Autorizado de compresores europeos"
+    ],
+    "contacts": {
+      "email": "info@tecnofrioandina.com",
+      "phone": "+57 320 555 4444",
+      "website": "www.tecnofrioandina.com"
+    },
+    "faqs": [
+      {
+        "question": "¿Realizan instalaciones en zonas rurales de difícil acceso?",
+        "answer": "Sí, contamos con un equipo técnico motorizado y especializado en logística para llegar a predios ubicados en zonas alejadas de los cascos urbanos."
+      }
+    ]
+  }
+]

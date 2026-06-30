@@ -1,0 +1,507 @@
+---
+export interface Props {
+  org: {
+    name: string;
+    logo: string;
+    status: string;
+    category: string;
+    verified: boolean;
+    location: {
+      city: string;
+      department: string;
+    };
+    contacts: {
+      email: string;
+      website: string;
+      phone?: string;
+    };
+    summary: string;
+    description: string;
+    products: string[];
+    faqs: { question: string; answer: string }[];
+    foundationYear: number;
+    coverage: string[];
+    type: string;
+    certifications: string[];
+  };
+}
+
+const { org } = Astro.props;
+---
+
+<div class="page-ambient-bg"></div>
+
+<!-- Profile Hero / Header -->
+<header class="profile-header">
+  <div class="container relative z-10">
+    
+    <div class="breadcrumb reveal">
+      <a href="/">Inicio</a> <span class="separator">/</span> 
+      <a href="/asociados-y-aliados/directorio">Directorio</a> <span class="separator">/</span> 
+      <span>{org.name}</span>
+    </div>
+
+    <div class="profile-main fade-up">
+      <div class="profile-logo-box">
+        <img src={org.logo} alt={`Logo ${org.name}`} />
+      </div>
+      <div class="profile-info">
+        <div class="profile-badges">
+          <span class="badge badge--green">{org.status}</span>
+          <span class="badge badge--outline">{org.category}</span>
+          {org.verified && (
+            <span class="badge badge--verified">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+              Perfil Verificado
+            </span>
+          )}
+        </div>
+        <h1 class="profile-title">{org.name}</h1>
+        <p class="profile-location">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          {org.location.city}, {org.location.department}
+        </p>
+      </div>
+      <div class="profile-actions">
+        <a href={`mailto:${org.contacts.email}`} class="btn btn--accent">Contactar empresa</a>
+        <a href={`https://${org.contacts.website}`} target="_blank" rel="noopener noreferrer" class="btn btn--outline-dark">Visitar sitio web</a>
+      </div>
+    </div>
+
+  </div>
+</header>
+
+<div class="container profile-layout">
+  
+  <!-- Main Column -->
+  <main class="profile-content fade-up">
+    
+    <!-- AEO Summary Block -->
+    <section class="content-section aeo-block">
+      <h2 class="section-title">Resumen Institucional</h2>
+      <p class="aeo-summary">
+        <strong>¿Quiénes somos?</strong> {org.summary}
+      </p>
+      <p class="content-text">{org.description}</p>
+    </section>
+
+    <!-- Products/Services -->
+    <section class="content-section">
+      <h2 class="section-title">Nuestros Productos y Servicios</h2>
+      <ul class="products-list">
+        {org.products.map(product => (
+          <li>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--c-green)" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            {product}
+          </li>
+        ))}
+      </ul>
+    </section>
+
+    <!-- AEO FAQs -->
+    {org.faqs.length > 0 && (
+      <section class="content-section">
+        <h2 class="section-title">Preguntas Frecuentes sobre {org.name}</h2>
+        <div class="faq-accordion">
+          {org.faqs.map(faq => (
+            <div class="faq-item">
+              <h3 class="faq-q">{faq.question}</h3>
+              <p class="faq-a">{faq.answer}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    )}
+
+  </main>
+
+  <!-- Sidebar -->
+  <aside class="profile-sidebar fade-up" style="transition-delay: 100ms;">
+    
+    <!-- Fact Sheet -->
+    <div class="sidebar-card">
+      <h3 class="sidebar-title">Ficha Técnica</h3>
+      <ul class="fact-list">
+        <li>
+          <span class="fact-label">Año de fundación</span>
+          <span class="fact-value">{org.foundationYear}</span>
+        </li>
+        <li>
+          <span class="fact-label">Cobertura</span>
+          <span class="fact-value">{org.coverage.join(', ')}</span>
+        </li>
+        <li>
+          <span class="fact-label">Tipo de entidad</span>
+          <span class="fact-value">{org.type}</span>
+        </li>
+      </ul>
+    </div>
+
+    <!-- Certifications -->
+    <div class="sidebar-card">
+      <h3 class="sidebar-title">Certificaciones</h3>
+      <ul class="cert-list">
+        {org.certifications.map(cert => (
+          <li>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15l-2 5l9-5l-9-5l2 5z"></path><circle cx="12" cy="8" r="6"></circle></svg>
+            {cert}
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- Contact -->
+    <div class="sidebar-card">
+      <h3 class="sidebar-title">Información de Contacto</h3>
+      <ul class="contact-list">
+        <li>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+          <a href={`mailto:${org.contacts.email}`}>{org.contacts.email}</a>
+        </li>
+        <li>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+          {org.contacts.phone}
+        </li>
+        <li>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+          <a href={`https://${org.contacts.website}`} target="_blank" rel="noopener noreferrer">{org.contacts.website}</a>
+        </li>
+      </ul>
+    </div>
+
+  </aside>
+
+</div>
+
+<style>
+  body {
+    background-color: #fcfcfc;
+  }
+
+  .page-ambient-bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: radial-gradient(circle at 50% 0%, rgba(109, 181, 109, 0.03) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: -1;
+  }
+
+  /* Header */
+  .profile-header {
+    background: #fff;
+    border-bottom: 1px solid rgba(0,0,0,0.06);
+    padding: 160px 0 60px;
+    position: relative;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+  }
+
+  .breadcrumb {
+    font-size: 13px;
+    font-weight: 500;
+    color: #888;
+    margin-bottom: 32px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .breadcrumb a {
+    color: var(--c-green-deep);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .breadcrumb a:hover {
+    color: var(--c-green);
+  }
+  .breadcrumb .separator {
+    margin: 0 10px;
+    color: #ccc;
+  }
+
+  .profile-main {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+  }
+
+  .profile-logo-box {
+    width: 120px;
+    height: 120px;
+    border-radius: 24px;
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.08);
+    padding: 8px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+    flex-shrink: 0;
+  }
+
+  .profile-logo-box img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 16px;
+  }
+
+  .profile-info {
+    flex-grow: 1;
+  }
+
+  .profile-badges {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+  }
+
+  .badge {
+    padding: 4px 12px;
+    border-radius: 100px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  .badge--green {
+    background: rgba(109, 181, 109, 0.1);
+    color: var(--c-green);
+  }
+
+  .badge--outline {
+    border: 1px solid #ddd;
+    color: #666;
+  }
+
+  .badge--verified {
+    background: #eaf5ea;
+    color: #4CAF50;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+
+  .profile-title {
+    font-size: clamp(32px, 4vw, 42px);
+    font-weight: 800;
+    color: var(--c-green-deep);
+    margin-bottom: 8px;
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+  }
+
+  .profile-location {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: #666;
+    font-size: 15px;
+  }
+
+  .profile-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+
+  .btn {
+    padding: 14px 28px;
+    border-radius: 100px;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .btn--outline-dark {
+    border: 1px solid #ddd;
+    color: #333;
+    background: #fff;
+  }
+  .btn--outline-dark:hover {
+    background: #f9f9f9;
+    border-color: #ccc;
+  }
+
+  /* Layout */
+  .profile-layout {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 40px;
+    padding: 60px 20px 120px;
+  }
+
+  /* Content Sections */
+  .content-section {
+    margin-bottom: 60px;
+  }
+
+  .section-title {
+    font-size: 24px;
+    font-weight: 700;
+    color: var(--c-green-deep);
+    margin-bottom: 24px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+
+  .aeo-block {
+    background: #fff;
+    padding: 40px;
+    border-radius: 20px;
+    border: 1px solid rgba(109, 181, 109, 0.2);
+    box-shadow: 0 8px 30px rgba(109, 181, 109, 0.05);
+  }
+
+  .aeo-block .section-title {
+    border-bottom: none;
+    padding-bottom: 0;
+    margin-bottom: 16px;
+  }
+
+  .aeo-summary {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--c-green-deep);
+    margin-bottom: 20px;
+  }
+
+  .content-text {
+    font-size: 16px;
+    color: #555;
+    line-height: 1.8;
+  }
+
+  .products-list {
+    list-style: none;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 16px;
+  }
+
+  .products-list li {
+    background: #fff;
+    padding: 16px 20px;
+    border-radius: 12px;
+    border: 1px solid #eaeaea;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 500;
+    color: #444;
+  }
+
+  .faq-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .faq-item {
+    background: #fff;
+    padding: 24px;
+    border-radius: 16px;
+    border: 1px solid #eaeaea;
+  }
+
+  .faq-q {
+    font-size: 17px;
+    font-weight: 700;
+    color: #333;
+    margin-bottom: 12px;
+  }
+
+  .faq-a {
+    font-size: 15px;
+    color: #666;
+    line-height: 1.6;
+  }
+
+  /* Sidebar */
+  .profile-sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .sidebar-card {
+    background: #fff;
+    padding: 32px;
+    border-radius: 20px;
+    border: 1px solid rgba(0,0,0,0.05);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.02);
+  }
+
+  .sidebar-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: var(--c-green-deep);
+    margin-bottom: 20px;
+  }
+
+  .fact-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  .fact-list li {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px 0;
+    border-bottom: 1px dashed #eee;
+  }
+  .fact-list li:last-child { border-bottom: none; }
+
+  .fact-label { color: #777; font-size: 14px; }
+  .fact-value { font-weight: 600; color: #333; font-size: 14px; text-align: right; }
+
+  .cert-list, .contact-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .cert-list li, .contact-list li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-size: 15px;
+    color: #555;
+    font-weight: 500;
+  }
+
+  .contact-list a {
+    color: var(--c-green);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .contact-list a:hover {
+    text-decoration: underline;
+  }
+
+  /* Responsive */
+  @media (max-width: 992px) {
+    .profile-layout {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .profile-main {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 20px;
+    }
+    .profile-actions {
+      width: 100%;
+      flex-direction: row;
+    }
+    .btn {
+      flex: 1;
+    }
+  }
+</style>

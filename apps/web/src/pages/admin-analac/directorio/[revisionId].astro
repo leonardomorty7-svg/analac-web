@@ -1,0 +1,254 @@
+---
+import AdminLayout from '../../../layouts/AdminLayout.astro';
+import VersionComparator from '../../../components/admin/VersionComparator';
+import { evaluateProfileSeoAeoQuality } from '../../../services/admin/evaluateAeo';
+
+export const prerender = false;
+
+const { user, supabase } = Astro.locals;
+if (!user) return Astro.redirect('/admin-analac/iniciar-sesion');
+
+const { data: admin } = await supabase.from('admin_users').select('*').eq('id', user.id).single();
+if (!admin) return Astro.redirect('/admin-analac/iniciar-sesion');
+
+const { revisionId } = Astro.params;
+
+// Obtener la revisión
+const { data: revision, error: revError } = await supabase
+  .from('profile_revisions')
+  .select(`
+    *,
+    organization_profiles (
+      id,
+      name,
+      slug,
+      status,
+      created_at
+    )
+  `)
+  .eq('id', revisionId)
+  .single();
+
+if (revError || !revision) {
+  return Astro.redirect('/admin-analac/directorio/pendientes');
+}
+
+// Obtener notas de moderación previas
+const { data: notes } = await supabase
+  .from('moderation_notes')
+  .select('*')
+  .eq('revision_id', revisionId)
+  .order('created_at', { ascending: false });
+
+const orgProfile = revision.organization_profiles;
+const isDraft = revision.status === 'draft';
+const isPending = revision.status === 'pending_review';
+const isApproved = revision.status === 'approved';
+
+// Evaluación SEO / AEO
+const aeoEvaluation = evaluateProfileSeoAeoQuality(revision.revision_data);
+
+---
+
+<AdminLayout title={`Revisión: ${orgProfile?.name || 'Organización'}`} adminName={admin.name} adminRole={admin.role}>
+  
+  <!-- Header de Acciones -->
+  <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px;">
+    <div>
+      <span style="display: inline-block; background: #e2e8f0; color: #475569; padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-bottom: 8px;">
+        ESTADO: {revision.status.toUpperCase()}
+      </span>
+      <p style="margin: 0; color: #64748b; font-size: 14px;">Enviado el {revision.submitted_at ? new Date(revision.submitted_at).toLocaleString() : 'N/A'}</p>
+    </div>
+    
+    <div style="display: flex; gap: 12px;" id="action-buttons" data-revision-id={revision.id} data-admin-role={admin.role}>
+      {isPending && (
+        <>
+          <button id="btn-request-changes" style="background: white; border: 1px solid #cbd5e1; color: #475569; padding: 10px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.2s;">
+            Solicitar Ajustes
+          </button>
+          <button id="btn-approve" style="background: #10b981; border: none; color: white; padding: 10px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.2s;">
+            Aprobar Revisión
+          </button>
+        </>
+      )}
+      
+      {isApproved && (admin.role === 'analac_admin' || admin.role === 'super_admin') && (
+        <button id="btn-publish" style="background: #6366f1; border: none; color: white; padding: 10px 16px; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.2s;">
+          Publicar en Directorio
+        </button>
+      )}
+
+      {(!isApproved && !isPending && revision.status !== 'published') && (
+        <div style="color: #64748b; font-size: 14px; font-style: italic;">
+          No hay acciones disponibles para este estado.
+        </div>
+      )}
+    </div>
+  </div>
+
+  <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 24px;">
+    
+    <!-- Lado Izquierdo: Comparador -->
+    <div style="display: flex; flex-direction: column; gap: 24px;">
+      
+      {/* Widget AEO / SEO */}
+      <div style="background: white; border-radius: 12px; border: 1px solid #e2e8f0; padding: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px;">
+          <h3 style="margin: 0; font-size: 16px;">Evaluación SEO & AEO</h3>
+          <span style={`font-size: 16px; font-weight: 800; color: ${aeoEvaluation.score >= 80 ? '#10b981' : (aeoEvaluation.score >= 50 ? '#f59e0b' : '#ef4444')}`}>
+            {aeoEvaluation.score} / 100
+          </span>
+        </div>
+        
+        {aeoEvaluation.errors.length > 0 && (
+          <div style="margin-bottom: 12px;">
+            <strong style="font-size: 12px; color: #ef4444; text-transform: uppercase;">Críticos</strong>
+            <ul style="margin: 4px 0 0 0; padding-left: 20px; font-size: 13px; color: #475569;">
+              {aeoEvaluation.errors.map(err => <li>{err}</li>)}
+            </ul>
+          </div>
+        )}
+        
+        {aeoEvaluation.warnings.length > 0 && (
+          <div style="margin-bottom: 12px;">
+            <strong style="font-size: 12px; color: #f59e0b; text-transform: uppercase;">Advertencias</strong>
+            <ul style="margin: 4px 0 0 0; padding-left: 20px; font-size: 13px; color: #475569;">
+              {aeoEvaluation.warnings.map(warn => <li>{warn}</li>)}
+            </ul>
+          </div>
+        )}
+
+        {aeoEvaluation.recommendations.length > 0 && (
+          <div>
+            <strong style="font-size: 12px; color: #3b82f6; text-transform: uppercase;">Recomendaciones (Opcional)</strong>
+            <ul style="margin: 4px 0 0 0; padding-left: 20px; font-size: 13px; color: #475569;">
+              {aeoEvaluation.recommendations.map(rec => <li>{rec}</li>)}
+            </ul>
+          </div>
+        )}
+      </div>
+
+      {/* Comparador Principal */}
+      <div style="background: white; border-radius: 12px; border: 1px solid #e2e8f0; padding: 24px;">
+        <h3 style="margin-top: 0; margin-bottom: 24px; font-size: 18px;">Comparador de Versiones (Borrador enviado)</h3>
+        <VersionComparator client:load revisionData={revision.revision_data} publicData={orgProfile} />
+      </div>
+
+    </div>
+
+    <!-- Panel Lateral: Notas -->
+    <div style="display: flex; flex-direction: column; gap: 24px;">
+      
+      {/* Formulario de Notas */}
+      <div style="background: white; border-radius: 12px; border: 1px solid #e2e8f0; padding: 20px;">
+        <h3 style="margin-top: 0; margin-bottom: 16px; font-size: 16px;">Agregar Observación</h3>
+        <textarea id="note-content" placeholder="Escribe tu observación o motivo de rechazo..." style="width: 100%; min-height: 100px; padding: 12px; border: 1px solid #cbd5e1; border-radius: 6px; outline: none; margin-bottom: 12px; resize: vertical; box-sizing: border-box; font-family: inherit; font-size: 14px;"></textarea>
+        
+        <div style="display: flex; gap: 12px; align-items: center; margin-bottom: 16px;">
+          <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; cursor: pointer;">
+            <input type="radio" name="note_visibility" value="false" checked />
+            Nota Interna
+          </label>
+          <label style="display: flex; align-items: center; gap: 6px; font-size: 13px; cursor: pointer;">
+            <input type="radio" name="note_visibility" value="true" />
+            Visible para Empresa
+          </label>
+        </div>
+
+        <button id="btn-add-note" style="width: 100%; background: #0f172a; color: white; border: none; padding: 10px; border-radius: 6px; font-weight: 600; cursor: pointer;">
+          Guardar Nota
+        </button>
+      </div>
+
+      {/* Historial de Notas */}
+      <div style="background: white; border-radius: 12px; border: 1px solid #e2e8f0; padding: 20px;">
+        <h3 style="margin-top: 0; margin-bottom: 16px; font-size: 16px;">Historial de Notas</h3>
+        {notes && notes.length > 0 ? (
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            {notes.map((n: any) => (
+              <div style={`padding: 12px; border-radius: 8px; border: 1px solid ${n.is_visible_to_company ? '#bfdbfe' : '#fef08a'}; background: ${n.is_visible_to_company ? '#eff6ff' : '#fefce8'};`}>
+                <div style="display: flex; justify-content: space-between; margin-bottom: 8px;">
+                  <span style={`font-size: 11px; font-weight: 700; padding: 2px 6px; border-radius: 4px; ${n.is_visible_to_company ? 'background:#3b82f6;color:white;' : 'background:#ca8a04;color:white;'}`}>
+                    {n.is_visible_to_company ? 'EMPRESA' : 'INTERNA'}
+                  </span>
+                  <span style="font-size: 11px; color: #64748b;">{new Date(n.created_at).toLocaleString()}</span>
+                </div>
+                <p style="margin: 0; font-size: 13px; color: #334155;">{n.content}</p>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p style="font-size: 13px; color: #94a3b8; text-align: center;">No hay notas registradas.</p>
+        )}
+      </div>
+
+    </div>
+  </div>
+</AdminLayout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const actionContainer = document.getElementById('action-buttons');
+    if (!actionContainer) return;
+    
+    const revisionId = actionContainer.dataset.revisionId;
+    
+    const btnApprove = document.getElementById('btn-approve');
+    const btnRequestChanges = document.getElementById('btn-request-changes');
+    const btnPublish = document.getElementById('btn-publish');
+    const btnAddNote = document.getElementById('btn-add-note');
+
+    const handleAction = async (action: string) => {
+      if (!confirm(`¿Estás seguro de querer ${action} esta revisión?`)) return;
+      
+      try {
+        const res = await fetch(`/api/admin/revisions/${action}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ revisionId })
+        });
+        
+        if (!res.ok) {
+          const err = await res.json();
+          throw new Error(err.error || 'Error al ejecutar acción');
+        }
+        
+        window.location.reload();
+      } catch (err: any) {
+        alert(err.message);
+      }
+    };
+
+    if (btnApprove) btnApprove.addEventListener('click', () => handleAction('approve'));
+    if (btnRequestChanges) btnRequestChanges.addEventListener('click', () => handleAction('request_changes'));
+    if (btnPublish) btnPublish.addEventListener('click', () => handleAction('publish'));
+
+    if (btnAddNote) {
+      btnAddNote.addEventListener('click', async () => {
+        const content = (document.getElementById('note-content') as HTMLTextAreaElement).value;
+        const isVisible = (document.querySelector('input[name="note_visibility"]:checked') as HTMLInputElement).value === 'true';
+        
+        if (!content.trim()) {
+          alert('La nota no puede estar vacía');
+          return;
+        }
+
+        try {
+          btnAddNote.innerText = 'Guardando...';
+          const res = await fetch(`/api/admin/revisions/note`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ revisionId, content, isVisible })
+          });
+          
+          if (!res.ok) throw new Error('Error guardando nota');
+          window.location.reload();
+        } catch (err: any) {
+          alert(err.message);
+          btnAddNote.innerText = 'Guardar Nota';
+        }
+      });
+    }
+  });
+</script>

@@ -1,0 +1,99 @@
+---
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import OrganizationProfile from '../../../components/directory/OrganizationProfile.astro';
+import { getOrganizations } from '../../../services/directory/getOrganizations';
+import { getOrganizationBySlug } from '../../../services/directory/getOrganizationBySlug';
+
+export async function getStaticPaths() {
+  // Obtenemos todos los slugs publicados para pre-renderizarlos
+  const response = await getOrganizations({ page: 1, pageSize: 1000 });
+  return response.data.map((org: any) => ({
+    params: { slug: org.slug }
+  }));
+}
+
+const { slug } = Astro.params;
+const org = await getOrganizationBySlug(slug!);
+
+// Si por alguna razón el perfil fue suspendido entre builds o no existe
+if (!org) {
+  return Astro.redirect('/404');
+}
+
+// SEO AEO Logic
+const title = `${org.name} | Directorio del ecosistema lácteo | ANALAC`;
+const description = `Conoce a ${org.name}, organización ubicada en ${org.location?.city || 'Colombia'} que ofrece soluciones para el sector lácteo colombiano. ${org.summary || ''}`.substring(0, 160);
+
+// Construcción del Schema AEO/GEO
+const schemaPayload: any = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `https://analac.com/asociados-y-aliados/directorio/${org.slug}#organization`,
+      "name": org.name,
+      "url": org.contacts?.website || `https://analac.com/asociados-y-aliados/directorio/${org.slug}`,
+      "logo": org.logo || "https://analac.com/logo.svg",
+      "image": org.cover || org.logo || "https://analac.com/og-analac.jpg",
+      "description": org.description || org.summary,
+      "memberOf": {
+        "@type": "Organization",
+        "name": "ANALAC",
+        "url": "https://analac.com"
+      }
+    }
+  ]
+};
+
+if (org.foundationYear) {
+  schemaPayload["@graph"][0]["foundingDate"] = org.foundationYear.toString();
+}
+
+if (org.location?.city || org.location?.department) {
+  schemaPayload["@graph"][0]["address"] = {
+    "@type": "PostalAddress",
+    "addressCountry": "CO",
+    "addressLocality": org.location.city,
+    "addressRegion": org.location.department,
+    "streetAddress": org.location.address
+  };
+}
+
+if (org.contacts?.phone || org.contacts?.email) {
+  schemaPayload["@graph"][0]["contactPoint"] = {
+    "@type": "ContactPoint",
+    "telephone": org.contacts.phone,
+    "email": org.contacts.email,
+    "contactType": "customer service"
+  };
+}
+
+// FAQ Schema
+if (org.faqs && org.faqs.length > 0) {
+  schemaPayload["@graph"].push({
+    "@type": "FAQPage",
+    "mainEntity": org.faqs.map((faq: any) => ({
+      "@type": "Question",
+      "name": faq.question,
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": faq.answer
+      }
+    }))
+  });
+}
+
+const customSchema = JSON.stringify(schemaPayload);
+const canonical = `https://analac.com/asociados-y-aliados/directorio/${org.slug}`;
+
+---
+
+<BaseLayout 
+  title={title} 
+  description={description} 
+  ogImage={org.cover || org.logo || '/og-analac.jpg'}
+  customSchema={customSchema}
+  customCanonical={canonical}
+>
+  <OrganizationProfile org={org} />
+</BaseLayout>

@@ -14,8 +14,16 @@
     </div>
 
     <div class="nav-cta">
-      <a href="#" class="nav-btn-discreet">Portal Afiliados</a>
-      <a href="#" class="nav-btn-discreet">Portal Aliados</a>
+      <div class="nav-dropdown">
+        <button class="nav-btn-discreet dropdown-toggle" aria-haspopup="true" aria-expanded="false">
+          Portal 
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left: 6px;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+        </button>
+        <div class="dropdown-menu">
+          <a href="/portal?perfil=afiliado">Portal Afiliados</a>
+          <a href="/portal?perfil=aliado">Portal Aliados</a>
+        </div>
+      </div>
       <a href="#" class="nav-btn-discreet">Academia</a>
       <a href="/afiliate" class="nav-btn">Hazte afiliado →</a>
     </div>
@@ -35,8 +43,16 @@
     <a href="/noticias">Noticias</a>
   </div>
   <div class="mobile-cta">
-    <a href="#" class="nav-btn-discreet">Portal Afiliados</a>
-    <a href="#" class="nav-btn-discreet">Portal Aliados</a>
+    <div class="mobile-dropdown">
+      <button class="nav-btn-discreet dropdown-toggle w-full flex-center" id="mobile-portal-btn">
+        Portal 
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left: 6px;"><polyline points="6 9 12 15 18 9"></polyline></svg>
+      </button>
+      <div class="mobile-dropdown-menu" id="mobile-portal-menu">
+        <a href="/portal?perfil=afiliado" class="nav-btn-discreet w-full">Portal Afiliados</a>
+        <a href="/portal?perfil=aliado" class="nav-btn-discreet w-full">Portal Aliados</a>
+      </div>
+    </div>
     <a href="#" class="nav-btn-discreet">Academia</a>
     <a href="/afiliate" class="nav-btn">Hazte afiliado →</a>
   </div>
@@ -70,6 +86,13 @@
       } else {
         nav?.classList.remove('scrolled');
       }
+    });
+
+    // Mobile Dropdown Logic
+    const mobilePortalBtn = document.getElementById('mobile-portal-btn');
+    const mobilePortalMenu = document.getElementById('mobile-portal-menu');
+    mobilePortalBtn?.addEventListener('click', () => {
+      mobilePortalMenu?.classList.toggle('is-open');
     });
   });
 </script>
@@ -177,6 +200,57 @@
     color: #fff !important;
   }
 
+  /* Dropdown Desktop */
+  .nav-dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(12px);
+    background: rgba(6, 15, 7, 0.95);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    padding: 8px;
+    min-width: 170px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    box-shadow: 0 16px 32px rgba(0,0,0,0.3);
+    z-index: 100;
+  }
+
+  .nav-dropdown:hover .dropdown-menu,
+  .nav-dropdown:focus-within .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(8px);
+  }
+
+  .dropdown-menu a {
+    display: block;
+    padding: 10px 16px;
+    color: rgba(255, 255, 255, 0.85);
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+    text-align: center;
+    white-space: nowrap;
+  }
+
+  .dropdown-menu a:hover, .dropdown-menu a:focus {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+    outline: none;
+  }
+
   .nav-hamburger {
     display: none;
     flex-direction: column;
@@ -271,6 +345,31 @@
   .mobile-cta .nav-btn, .mobile-cta .nav-btn-discreet {
     font-size: 16px;
     padding: 14px 24px;
+  }
+  
+  .w-full { width: 100%; display: block; }
+  .flex-center { display: flex; align-items: center; justify-content: center; }
+
+  /* Mobile Dropdown */
+  .mobile-dropdown {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .mobile-dropdown-menu {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .mobile-dropdown-menu.is-open {
+    max-height: 150px; /* Suficiente para 2 botones */
+    opacity: 1;
+    margin-top: 4px;
+    margin-bottom: 8px;
   }
 
   @media (max-width: 900px) {
