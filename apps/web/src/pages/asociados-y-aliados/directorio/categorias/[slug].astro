@@ -65,9 +65,21 @@ const publishedOrgs = orgsData?.map((item: any) => {
   };
 }) || [];
 
-// Regla SEO: Si hay menos de 2 empresas, lanzar 404 (Thin Content)
-if (publishedOrgs.length < 2) {
+// Regla SEO (Thin Content): Evaluar indexabilidad
+let shouldNoIndex = false;
+
+if (publishedOrgs.length === 0) {
   return Astro.redirect('/404');
+}
+
+const hasRichContext = category.description && category.description.trim().length > 100;
+
+if (publishedOrgs.length === 1 && !hasRichContext) {
+  shouldNoIndex = true;
+} else if (publishedOrgs.length > 1 && !hasRichContext) {
+  // Opcional: si hay varias pero cero contexto, podríamos no indexar.
+  // Pero generalmente 2+ tarjetas sí aportan listado válido. Lo dejaremos como indexable pero documentaremos.
+  shouldNoIndex = false; 
 }
 
 // SEO Props
@@ -97,6 +109,7 @@ const customSchema = JSON.stringify({
   description={description} 
   customSchema={customSchema}
   customCanonical={`https://analac.com/asociados-y-aliados/directorio/categorias/${slug}`}
+  noIndex={shouldNoIndex}
 >
   <div style="background: #f8fafc; padding: 40px 20px;">
     <div style="max-width: 1200px; margin: 0 auto;">

@@ -76,13 +76,18 @@ export async function createRevisionFromPublished(supabase: SupabaseClient, user
 
   // Leer otras relaciones (Simplificado para Fase 5B inicial)
   // Aquí construiríamos el JSON inicial
-  const revisionData = {
-    basicInfo: {
-      name: profile.organizations?.name || '',
-      foundation_year: profile.foundation_year || null,
-      logo_url: profile.logo_url || '',
-      cover_url: profile.cover_url || ''
-    },
+    const orgName = (() => {
+      const orgs = profile.organizations as any;
+      return (Array.isArray(orgs) ? orgs[0]?.name : orgs?.name) || '';
+    })();
+
+    const revisionData = {
+      basicInfo: {
+        name: orgName || '',
+        foundation_year: profile.foundation_year || null,
+        logo_url: profile.logo_url || '',
+        cover_url: profile.cover_url || ''
+      },
     summaryData: {
       summary: profile.summary || ''
     },

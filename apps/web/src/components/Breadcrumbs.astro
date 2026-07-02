@@ -1,0 +1,73 @@
+---
+// src/components/Breadcrumbs.astro
+interface Props {
+  paths: {
+    label: string;
+    url?: string;
+  }[];
+}
+
+const { paths } = Astro.props;
+---
+<nav aria-label="Breadcrumb" class="breadcrumbs">
+  <ol>
+    <li>
+      <a href="/">Inicio</a>
+      {paths.length > 0 && <span class="separator" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></span>}
+    </li>
+    {paths.map((path, index) => {
+      const isLast = index === paths.length - 1;
+      return (
+        <li>
+          {isLast || !path.url ? (
+            <span class="current" aria-current={isLast ? "page" : undefined}>{path.label}</span>
+          ) : (
+            <>
+              <a href={path.url}>{path.label}</a>
+              <span class="separator" aria-hidden="true"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"></polyline></svg></span>
+            </>
+          )}
+        </li>
+      );
+    })}
+  </ol>
+</nav>
+
+<style>
+  .breadcrumbs {
+    padding: 16px 0;
+    font-size: 13px;
+    font-weight: 500;
+  }
+  .breadcrumbs ol {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 8px;
+  }
+  .breadcrumbs li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .breadcrumbs a {
+    color: var(--c-green);
+    text-decoration: none;
+    transition: color 0.2s ease;
+  }
+  .breadcrumbs a:hover {
+    color: var(--c-green-deep);
+    text-decoration: underline;
+  }
+  .breadcrumbs .separator {
+    color: #999;
+    display: flex;
+    align-items: center;
+  }
+  .breadcrumbs .current {
+    color: var(--c-muted);
+  }
+</style>

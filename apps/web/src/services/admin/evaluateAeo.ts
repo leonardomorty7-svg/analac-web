@@ -8,10 +8,10 @@ export function evaluateProfileSeoAeoQuality(data: any) {
   const summary = data.summaryData?.summary || '';
   if (!summary) {
     score -= 30;
-    errors.push('Falta el resumen AEO. Es obligatorio para la comprensión de motores de respuesta.');
+    errors.push('Falta el resumen. Es importante para la comprensión estructurada de la información.');
   } else if (summary.length < 50) {
     score -= 10;
-    warnings.push('El resumen es muy corto. Debería tener al menos 50 caracteres para ser un buen fragmento de respuesta.');
+    warnings.push('El resumen es muy corto. Debería tener al menos 50 caracteres para aportar un contexto útil.');
   } else if (summary.length > 300) {
     score -= 5;
     warnings.push('El resumen supera los 300 caracteres, podría ser truncado por Google.');
@@ -34,7 +34,7 @@ export function evaluateProfileSeoAeoQuality(data: any) {
   
   if (!hasProducts) {
     score -= 10;
-    warnings.push('No se han listado productos. Los motores de respuesta priorizan perfiles con ofertas detalladas.');
+    warnings.push('No se han listado productos. Los datos estructurados de ofertas detalladas ayudan a contextualizar la empresa.');
   }
 
   // 4. Medios Visuales (Schema ImageObject)
@@ -51,9 +51,9 @@ export function evaluateProfileSeoAeoQuality(data: any) {
 
   // 6. FAQs (Schema FAQPage)
   if (!data.faqs || data.faqs.length === 0) {
-    recommendations.push('Añadir Preguntas Frecuentes (FAQs) habilitaría el rich snippet de FAQPage en los resultados de Google.');
+    recommendations.push('Añadir Preguntas Frecuentes (FAQs) legibles podría facilitar la comprensión y la potencial indexación de un FAQPage Schema.');
   } else if (data.faqs.length < 2) {
-    warnings.push('Recomendamos tener al menos 2 o 3 FAQs para maximizar el espacio en la SERP (Resultados de Búsqueda).');
+    warnings.push('Si se incluyen FAQs, recomendamos aportar al menos 2 o 3 para dar un contexto valioso al usuario.');
   }
 
   return {

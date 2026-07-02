@@ -12,16 +12,54 @@ const recipes = [
 ---
 
 <BaseLayout
-  title="Consumo Lácteo | ANALAC"
-  description="Beneficios nutricionales, recetas, vitaminas y mitos sobre el consumo de leche en Colombia."
+  title="Consumo lácteo, nutrición y bienestar | ANALAC"
+  description="Consulta información, evidencia, recetas y recursos educativos sobre leche, productos lácteos, nutrición y bienestar."
 >
+  <Fragment slot="head">
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Article",
+      "headline": "Consumo lácteo, nutrición y bienestar",
+      "description": "Consulta información, evidencia, recetas y recursos educativos sobre leche, productos lácteos, nutrición y bienestar.",
+      "author": {
+        "@type": "Organization",
+        "name": "ANALAC"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "ANALAC"
+      }
+    })} />
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      "mainEntity": [
+        {
+          "@type": "Question",
+          "name": "¿Cuántas porciones de lácteos se recomiendan al día?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "Los especialistas recomiendan entre 2 y 3 porciones diarias (vaso de leche, trozo de queso o un yogurt) para asegurar el aporte necesario de calcio y proteínas."
+          }
+        },
+        {
+          "@type": "Question",
+          "name": "¿La leche entera engorda?",
+          "acceptedAnswer": {
+            "@type": "Answer",
+            "text": "No de forma aislada. Su consumo dentro de una dieta balanceada no está asociado al aumento de peso perjudicial."
+          }
+        }
+      ]
+    })} />
+  </Fragment>
   <!-- 1. Hero institucional -->
   <section class="page-hero hero-dark fade-up" style="position: relative; padding: 200px 0 140px; min-height: 70vh; display: flex; align-items: center; background-color: var(--c-green-deep);">
     <div style="position: absolute; inset: 0; background-image: linear-gradient(rgba(10, 26, 12, 0.5), rgba(10, 26, 12, 0.85)), url('/images/hero-gastronomia.jpg'); background-size: cover; background-position: center; z-index: 0;"></div>
     <div class="container" style="position: relative; z-index: 1; max-width: 900px; text-align: center; margin: 0 auto;">
       <p class="overline" style="color: var(--c-green-light); border-color: rgba(255,255,255,0.2); display: inline-block; margin-bottom: 24px;">Nutrición y Bienestar</p>
       <h1 style="font-size: clamp(40px, 6vw, 64px); font-weight: 400; line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 24px; color: #ffffff; text-wrap: balance;">
-        La importancia del <span style="color: var(--c-green-light);">consumo lácteo</span>
+        Consumo lácteo, <span style="color: var(--c-green-light);">nutrición y bienestar</span>
       </h1>
       <p style="font-size: 19px; color: rgba(255, 255, 255, 0.8); line-height: 1.6; max-width: 700px; margin: 0 auto; text-wrap: balance;">
         Descubre cómo la leche y sus derivados impulsan el desarrollo integral en todas las etapas de la vida, apoyando al mismo tiempo a las familias productoras colombianas.
@@ -65,7 +103,7 @@ const recipes = [
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
           </div>
           <h3 class="h3" style="margin-bottom: 16px; font-weight: 400;">Proteína de alta calidad</h3>
-          <p style="color: var(--color-text-sub); font-size: 17px; line-height: 1.7;">Aporta todos los aminoácidos esenciales requeridos para la construcción y reparación muscular en todas las edades.</p>
+          <p style="color: var(--color-text-sub); font-size: 17px; line-height: 1.7;">Contribuye al mantenimiento y construcción muscular gracias a su aporte de aminoácidos esenciales.</p>
           <div style="margin-top: 40px; border-bottom: 1px solid rgba(0,0,0,0.06);"></div>
         </div>
 
@@ -75,7 +113,7 @@ const recipes = [
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"></path></svg>
           </div>
           <h3 class="h3" style="margin-bottom: 16px; font-weight: 400;">Energía Sostenida</h3>
-          <p style="color: var(--color-text-sub); font-size: 17px; line-height: 1.7;">Sus carbohidratos naturales proveen la vitalidad necesaria para potenciar el rendimiento físico y mental diario.</p>
+          <p style="color: var(--color-text-sub); font-size: 17px; line-height: 1.7;">Aporta nutrientes y carbohidratos que apoyan la vitalidad y el rendimiento físico dentro de una dieta equilibrada.</p>
           <div style="margin-top: 40px; border-bottom: 1px solid rgba(0,0,0,0.06);"></div>
         </div>
         
@@ -85,7 +123,7 @@ const recipes = [
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path></svg>
           </div>
           <h3 class="h3" style="margin-bottom: 16px; font-weight: 400;">Fortaleza Ósea</h3>
-          <p style="color: var(--color-text-sub); font-size: 17px; line-height: 1.7;">Proporciona el calcio más biodisponible, fundamental para consolidar la estructura ósea y prevenir la osteoporosis.</p>
+          <p style="color: var(--color-text-sub); font-size: 17px; line-height: 1.7;">El calcio, la proteína y la vitamina D contribuyen al mantenimiento de los huesos dentro de una alimentación equilibrada.</p>
         </div>
 
         <!-- Columna Derecha, Fila 2 -->
@@ -93,8 +131,8 @@ const recipes = [
           <div style="color: var(--color-green-dark); margin-bottom: 24px;">
             <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"></circle><path d="M12 8v8M8 12h8"></path></svg>
           </div>
-          <h3 class="h3" style="margin-bottom: 16px; font-weight: 400;">Inmunidad Fuerte</h3>
-          <p style="color: var(--color-text-sub); font-size: 17px; line-height: 1.7;">Las vitaminas A, D y el zinc presentes en los lácteos fortalecen las defensas del organismo de forma natural.</p>
+          <h3 class="h3" style="margin-bottom: 16px; font-weight: 400;">Apoyo Inmunitario</h3>
+          <p style="color: var(--color-text-sub); font-size: 17px; line-height: 1.7;">Contiene vitaminas A, D y Zinc, nutrientes que contribuyen al funcionamiento normal del sistema inmunitario.</p>
         </div>
       </div>
     </div>
@@ -107,11 +145,14 @@ const recipes = [
       <div class="grid-2 fade-up" style="display: grid; grid-template-columns: 1fr 1fr; gap: 64px;">
         <!-- Columna Izquierda: Contenido -->
         <div style="max-width: 600px;">
-          <p class="overline" style="color: var(--c-green-light); border-color: rgba(255,255,255,0.2); display: inline-block; margin-bottom: 24px;">Evidencia Científica</p>
+          <p class="overline" style="color: var(--c-green-light); border-color: rgba(255,255,255,0.2); display: inline-block; margin-bottom: 24px;">Ciencia y Evidencia</p>
           <h2 class="h2" style="color: white; margin-bottom: 24px;">Perfil de Micronutrientes</h2>
-          <p style="font-size: 19px; color: rgba(255,255,255,0.8); margin-bottom: 64px; line-height: 1.6;">
+          <p style="font-size: 19px; color: rgba(255,255,255,0.8); margin-bottom: 32px; line-height: 1.6;">
             El consumo regular de lácteos aporta una sinergia perfecta de vitaminas y minerales. Los estudios demuestran que su matriz biológica asegura la máxima eficiencia en la absorción de cada nutriente.
           </p>
+          <a href="/informacion-sectorial" style="display: inline-flex; align-items: center; gap: 8px; color: var(--c-green-light); font-weight: 500; font-size: 15px; margin-bottom: 64px; text-decoration: none;">
+            Ver estadísticas de acopio en el Observatorio <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+          </a>
           
           <div class="grid-2" style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px 64px;">
             <div class="micro-indicator" style="display: flex; align-items: center; gap: 20px; cursor: pointer;">
@@ -238,7 +279,7 @@ const recipes = [
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="20 6 9 17 4 12"></polyline></svg>
             </div>
             <div style="font-weight: 600; font-size: 12px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-sub); margin-bottom: 12px;">Realidad</div>
-            <p style="color: var(--color-text-sub); line-height: 1.6;">La matriz láctea natural no puede replicarse. Las bebidas vegetales carecen del perfil completo de aminoácidos y su calcio añadido tiene menor absorción real.</p>
+            <p style="color: var(--color-text-sub); line-height: 1.6;">A diferencia de las alternativas vegetales, la leche aporta de forma natural un perfil completo de aminoácidos esenciales y calcio con alta biodisponibilidad.</p>
           </div>
         </div>
       </div>
@@ -285,7 +326,7 @@ const recipes = [
           <p class="overline" style="color: var(--c-green-light); border-color: rgba(255,255,255,0.2); display: inline-block; margin-bottom: 24px;">Campaña Activa</p>
           <h3 class="h2" style="color: white; margin-bottom: 24px;">Tómate la vida con leche</h3>
           <p style="color: rgba(255,255,255,0.8); font-size: 19px; max-width: 600px; margin: 0 auto 40px; line-height: 1.6;">Descubre nuestra nueva iniciativa nacional enfocada en promover los beneficios reales del consumo de lácteos para la salud integral de las familias.</p>
-          <a href="/noticias" class="btn btn--accent" style="padding: 12px 28px;">Ver campaña completa</a>
+          <a href="/noticias?categoria=Campañas" class="btn btn--accent" style="padding: 12px 28px;">Ver campaña completa</a>
         </div>
       </div>
     </div>
@@ -326,6 +367,19 @@ const recipes = [
             <p style="color: var(--color-text-sub); line-height: 1.6;">No necesariamente. Existen productos deslactosados, y los quesos maduros o yogures naturales tienen niveles ínfimos de lactosa, permitiéndote disfrutar de sus beneficios sin malestar.</p>
           </div>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Aclaratoria Médica -->
+  <section style="padding: 40px 0; background: #f8fafc; border-top: 1px solid #e2e8f0;">
+    <div class="container text-center" style="max-width: 800px;">
+      <p style="font-size: 13px; color: #64748b; line-height: 1.6; margin: 0;">
+        <strong>Aviso importante:</strong> El contenido de esta página es informativo y divulgativo. No reemplaza bajo ninguna circunstancia la orientación, diagnóstico o tratamiento prescrito por profesionales de la salud. Consulta siempre a tu médico o nutricionista antes de realizar cambios significativos en tu dieta.
+      </p>
+      <div style="margin-top: 16px; font-size: 12px; color: #94a3b8; display: flex; justify-content: center; gap: 24px; flex-wrap: wrap;">
+        <span><strong>Última revisión:</strong> Mayo 2026</span>
+        <span><strong>Comité Editorial:</strong> Conocimiento y Ciencia ANALAC</span>
       </div>
     </div>
   </section>

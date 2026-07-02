@@ -1,0 +1,435 @@
+---
+// src/pages/noticias/eventos/[slug].astro
+import BaseLayout from '../../../layouts/BaseLayout.astro'
+
+export function getStaticPaths() {
+  return [
+    { params: { slug: 'seminario-cadena-lactea-2025' } },
+    { params: { slug: 'seminario-cadena-lactea-2024' } },
+    { params: { slug: 'encuentro-productores-narino-2023' } },
+    { params: { slug: 'encuentro-jovenes-ganaderos-2023' } }
+  ]
+}
+
+const { slug } = Astro.params;
+
+// MOCK DATA PARA LA PLANTILLA (En un caso real, esto se consulta a CMS o DB filtrando por slug)
+const isSeminario = slug.includes('seminario')
+const title = isSeminario ? 'Seminario Presente y Futuro de la Cadena Láctea (Ejemplo)' : 'Encuentro de Productores de Leche (Ejemplo)'
+const year = slug.includes('2025') ? '2025' : (slug.includes('2024') ? '2024' : '2023')
+const edition = 'Edición de Demostración'
+const location = 'Sede del Evento'
+const dateStr = `Fecha a definir - ${year}`
+---
+
+<BaseLayout
+  title={`${title} ${year} | Memoria de Evento | ANALAC`}
+  description={`Memorias, videos y presentaciones del ${title} ${year} organizado por ANALAC.`}
+>
+  <Fragment slot="head">
+    <meta name="robots" content="noindex" />
+    <!-- Schema Markup AEO/SEO de Evento Pasado y Video -->
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Event",
+      "name": `${title} ${year}`,
+      "startDate": `${year}-11-15T08:00:00-05:00`,
+      "endDate": `${year}-11-15T18:00:00-05:00`,
+      "eventAttendanceMode": "https://schema.org/OfflineEventAttendanceMode",
+      "eventStatus": "https://schema.org/EventScheduled",
+      "location": {
+        "@type": "Place",
+        "name": location,
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Colombia",
+          "addressCountry": "CO"
+        }
+      },
+      "description": `Memorias del evento institucional organizado por ANALAC en ${year}.`,
+      "organizer": {
+        "@type": "Organization",
+        "name": "ANALAC",
+        "url": "https://analac.org"
+      }
+    })}></script>
+  </Fragment>
+
+  <!-- Navegación Breadcrumb -->
+  <div style="background: #fdfdfc; padding: 24px 0; border-bottom: 1px solid rgba(0,0,0,0.05); margin-top: 104px;">
+    <div class="container" style="font-size: 13px; color: var(--c-muted); display: flex; gap: 8px;">
+      <a href="/" style="color: inherit; text-decoration: none;">Inicio</a> /
+      <a href="/noticias" style="color: inherit; text-decoration: none;">Conocimiento</a> /
+      <a href="/noticias/eventos" style="color: inherit; text-decoration: none;">Eventos y Memorias</a> /
+      <span style="color: var(--c-green-deep); font-weight: 500;">{title} {year}</span>
+    </div>
+  </div>
+
+  <!-- Hero Evento -->
+  <section class="section fade-up" style="padding: 64px 0 80px; background: #fff;">
+    <div class="container" style="max-width: 1000px; text-align: center;">
+      <span class="tag" style="background: rgba(109,181,109,0.1); color: var(--color-green-dark); margin-bottom: 24px; display: inline-block;">Contenido de demostración</span>
+      <p class="overline" style="color: var(--c-muted); margin-bottom: 16px;">{edition}</p>
+      <h1 class="h1" style="font-size: clamp(36px, 5vw, 64px); margin-bottom: 24px; color: var(--color-text-main); line-height: 1.1; letter-spacing: -0.02em;">
+        {title} <span style="color: var(--color-green-dark);">{year}</span>
+      </h1>
+      <p style="font-size: 18px; color: var(--color-text-sub); line-height: 1.6; max-width: 800px; margin: 0 auto 32px;">
+        Este es un marcador de posición para las memorias de un evento de ANALAC. Contiene la estructura aprobada para albergar ponencias, descargas y videos.
+      </p>
+      
+      <div style="display: flex; gap: 32px; justify-content: center; align-items: center; font-size: 15px; color: var(--c-text); background: var(--c-cream); padding: 16px 32px; border-radius: 100px; width: fit-content; margin: 0 auto;">
+        <span style="display: flex; align-items: center; gap: 8px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          {dateStr}
+        </span>
+        <span style="display: flex; align-items: center; gap: 8px;">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+          {location}
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Video Principal Canónico -->
+  <section class="section" style="padding: 0 0 80px;">
+    <div class="container" style="max-width: 1000px;">
+      <div class="video-preview-card" id="open-video-btn" role="button" tabindex="0" aria-label="Reproducir video oficial del evento">
+        <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=1200&q=80&auto=format&fit=crop" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.5;" alt="Cover" />
+        <button class="video-play-button" tabindex="-1">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="currentColor" stroke="none"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+        </button>
+      </div>
+      <p style="text-align: center; font-size: 13px; color: var(--c-muted); margin-top: 16px;">
+        Grabación oficial de demostración. Duración: 00:00:00
+      </p>
+    </div>
+  </section>
+
+  <!-- Temas, Agenda y Presentaciones -->
+  <section class="section" style="padding: 80px 0; background: #faf9f7; border-top: 1px solid rgba(0,0,0,0.05);">
+    <div class="container" style="max-width: 1000px;">
+      
+      <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 64px;">
+        <!-- Contenido principal: Agenda y PDFs -->
+        <div>
+          <h2 class="h2" style="font-size: 28px; margin-bottom: 32px;">Memorias y Presentaciones</h2>
+          <p style="font-size: 16px; color: var(--c-muted); line-height: 1.6; margin-bottom: 40px;">Descarga el material expuesto por nuestros conferencistas invitados. Los derechos de cada presentación pertenecen a sus autores.</p>
+          
+          <div style="display: flex; flex-direction: column; gap: 24px;">
+            <!-- Componente de archivo descargable -->
+            {[1, 2, 3].map((i) => (
+              <div style="display: flex; justify-content: space-between; align-items: center; padding: 24px; background: #fff; border: 1px solid rgba(0,0,0,0.05); border-radius: 16px;">
+                <div>
+                  <h4 style="font-size: 16px; font-weight: 500; color: var(--c-text); margin-bottom: 8px;">Panel de demostración {i}</h4>
+                  <p style="font-size: 14px; color: var(--c-muted);">Conferencista Invitado</p>
+                </div>
+                <a href="#" class="btn btn--primary" style="background: var(--c-cream); color: var(--c-green-deep); border: 1px solid rgba(109,181,109,0.2);">
+                  Descargar PDF
+                </a>
+              </div>
+            ))}
+          </div>
+
+          <h2 class="h2" style="font-size: 28px; margin-top: 64px; margin-bottom: 32px;">Conclusiones y Takeaways</h2>
+          <ul style="padding-left: 20px; font-size: 16px; color: var(--c-muted); line-height: 1.8;">
+            <li>(Contenido reservado para las conclusiones oficiales de este seminario).</li>
+            <li>(Contenido reservado para el resumen ejecutivo).</li>
+            <li>(Contenido reservado para compromisos futuros).</li>
+          </ul>
+        </div>
+
+        <!-- Sidebar transversal: Aliados, Conferencistas -->
+        <div>
+          <!-- Relación con La Red (Person) -->
+          <h3 style="font-size: 18px; font-weight: 500; margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid rgba(0,0,0,0.1);">Conferencistas Principales</h3>
+          <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 48px;">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div style="width: 48px; height: 48px; border-radius: 50%; background: #ccc; overflow: hidden;">
+                <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80" alt="Avatar" style="width:100%;height:100%;object-fit:cover;" />
+              </div>
+              <div>
+                <h4 style="font-size: 15px; font-weight: 500;">Ponente Demo 1</h4>
+                <p style="font-size: 13px; color: var(--c-muted);">Cargo Demostrativo</p>
+              </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <div style="width: 48px; height: 48px; border-radius: 50%; background: #ccc; overflow: hidden;">
+                <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&q=80" alt="Avatar" style="width:100%;height:100%;object-fit:cover;" />
+              </div>
+              <div>
+                <h4 style="font-size: 15px; font-weight: 500;">Ponente Demo 2</h4>
+                <p style="font-size: 13px; color: var(--c-muted);">Institución Invitada</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Relación con La Red (Organization) -->
+          <h3 style="font-size: 18px; font-weight: 500; margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid rgba(0,0,0,0.1);">Aliados y Patrocinadores</h3>
+          <div style="display: flex; flex-direction: column; gap: 16px; margin-bottom: 48px;">
+            <a href="/asociados-y-aliados/directorio/lacteos-del-valle" style="display: flex; align-items: center; gap: 12px; text-decoration: none; color: inherit;">
+              <div style="width: 40px; height: 40px; border-radius: 8px; border: 1px solid rgba(0,0,0,0.05); background: #fff; padding: 4px;">
+                 <div style="width: 100%; height: 100%; background: #eee; border-radius: 4px;"></div>
+              </div>
+              <h4 style="font-size: 14px; font-weight: 500;">Organización en el Directorio</h4>
+            </a>
+          </div>
+
+          <!-- Relación con Observatorio -->
+          <h3 style="font-size: 18px; font-weight: 500; margin-bottom: 24px; padding-bottom: 12px; border-bottom: 1px solid rgba(0,0,0,0.1);">Datos relacionados</h3>
+          <a href="/informacion-sectorial" style="display: block; padding: 16px; background: rgba(109,181,109,0.05); border: 1px solid rgba(109,181,109,0.1); border-radius: 12px; text-decoration: none; color: var(--c-text);">
+            <h4 style="font-size: 14px; font-weight: 600; color: var(--c-green-deep); margin-bottom: 8px;">Indicadores de Precios</h4>
+            <p style="font-size: 13px; color: var(--c-muted); line-height: 1.4;">Revisa el histórico de precios debatido en el panel de mercados del seminario.</p>
+          </a>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Galería Fotográfica -->
+  <section class="section" style="padding: 80px 0; background: #fff;">
+    <div class="container" style="max-width: 1000px;">
+      <h2 class="h2" style="font-size: 28px; margin-bottom: 40px;">Galería del Evento</h2>
+      <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;">
+        <div style="aspect-ratio: 4/3; background: #eee; border-radius: 12px; overflow: hidden;">
+           <img src="https://images.unsplash.com/photo-1515187029135-18ee286d815b?w=400&q=80" style="width:100%;height:100%;object-fit:cover;" />
+        </div>
+        <div style="aspect-ratio: 4/3; background: #eee; border-radius: 12px; overflow: hidden;">
+           <img src="https://images.unsplash.com/photo-1544928147-79a2dbc1f389?w=400&q=80" style="width:100%;height:100%;object-fit:cover;" />
+        </div>
+        <div style="aspect-ratio: 4/3; background: #eee; border-radius: 12px; overflow: hidden;">
+           <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?w=400&q=80" style="width:100%;height:100%;object-fit:cover;" />
+        </div>
+      </div>
+      
+      <div style="margin-top: 64px; text-align: center; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 32px; font-size: 13px; color: var(--c-muted);">
+        <p>Contenido Demo. <br/>Créditos de fotografía y video: Equipo de Comunicaciones ANALAC.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Modal de Video Funcional -->
+  <dialog id="video-modal" class="video-modal" aria-labelledby="video-title">
+    <div class="video-modal-backdrop" id="video-modal-backdrop"></div>
+    <div class="video-modal-content">
+      <div class="video-modal-header">
+        <h2 id="video-title" class="sr-only">Reproducción del Seminario</h2>
+        <button id="close-video-btn" class="video-close-btn" aria-label="Cerrar video">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+        </button>
+      </div>
+      <div class="video-modal-body">
+        <div class="iframe-container">
+          <!-- Video Embed de Demostración (YouTube oficial de ANALAC si existiera, o genérico libre) -->
+          <iframe 
+            id="event-video-iframe"
+            width="100%" 
+            height="100%" 
+            src="" 
+            title="Grabación Oficial del Seminario" 
+            frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+          </iframe>
+        </div>
+      </div>
+    </div>
+  </dialog>
+
+</BaseLayout>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const openBtn = document.getElementById('open-video-btn');
+    const closeBtn = document.getElementById('close-video-btn');
+    const modal = document.getElementById('video-modal') as HTMLDialogElement;
+    const backdrop = document.getElementById('video-modal-backdrop');
+    const iframe = document.getElementById('event-video-iframe') as HTMLIFrameElement;
+    
+    // Demo video URL (can be changed later by CMS)
+    const videoUrl = 'https://www.youtube.com/embed/ScMzIvxBSi4?autoplay=1';
+
+    const openModal = () => {
+      iframe.src = videoUrl;
+      modal.showModal();
+      document.body.style.overflow = 'hidden';
+      // Hide external widgets if necessary to prevent them covering the modal
+      const pse = document.getElementById('payment-pill');
+      if (pse) pse.style.display = 'none';
+    };
+
+    const closeModal = () => {
+      modal.close();
+      iframe.src = ''; // Detiene la reproducción
+      document.body.style.overflow = '';
+      const pse = document.getElementById('payment-pill');
+      if (pse) pse.style.display = 'flex';
+    };
+
+    openBtn?.addEventListener('click', openModal);
+    openBtn?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        openModal();
+      }
+    });
+
+    closeBtn?.addEventListener('click', closeModal);
+    backdrop?.addEventListener('click', closeModal);
+
+    // Close on Escape is handled natively by HTMLDialogElement, but we need to reset body scroll and iframe src
+    modal?.addEventListener('close', () => {
+      iframe.src = '';
+      document.body.style.overflow = '';
+      const pse = document.getElementById('payment-pill');
+      if (pse) pse.style.display = 'flex';
+    });
+  });
+</script>
+
+<style>
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
+
+  .video-preview-card {
+    aspect-ratio: 16/9; 
+    background: #000; 
+    border-radius: 24px; 
+    overflow: hidden; 
+    position: relative; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .video-preview-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(0,0,0,0.1);
+  }
+
+  .video-preview-card:focus-visible {
+    outline: 4px solid var(--c-green);
+    outline-offset: 4px;
+  }
+
+  .video-play-button {
+    position: relative; 
+    width: 80px; 
+    height: 80px; 
+    border-radius: 50%; 
+    background: var(--c-green-deep); 
+    border: none; 
+    color: white; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    cursor: pointer; 
+    transition: transform 0.2s;
+  }
+
+  .video-preview-card:hover .video-play-button {
+    transform: scale(1.1);
+    background: var(--c-green);
+  }
+
+  /* Modal de Video */
+  .video-modal {
+    padding: 0;
+    border: none;
+    border-radius: 16px;
+    background: transparent;
+    max-width: 100%;
+    max-height: 100%;
+    width: 100vw;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .video-modal::backdrop {
+    background: rgba(0, 0, 0, 0.9);
+    backdrop-filter: blur(4px);
+  }
+
+  .video-modal-backdrop {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+  }
+
+  .video-modal-content {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    padding: 24px;
+  }
+
+  .video-modal-header {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 24px;
+  }
+
+  .video-close-btn {
+    background: rgba(255,255,255,0.1);
+    border: none;
+    color: white;
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s;
+  }
+  
+  .video-close-btn:hover {
+    background: rgba(255,255,255,0.2);
+    transform: scale(1.05);
+  }
+
+  .video-close-btn:focus-visible {
+    outline: 2px solid white;
+    outline-offset: 2px;
+  }
+
+  .video-modal-body {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  .iframe-container {
+    width: 100%;
+    aspect-ratio: 16/9;
+    background: #000;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 24px 64px rgba(0,0,0,0.5);
+  }
+
+  @media (max-width: 992px) {
+    div[style*="grid-template-columns: 2fr 1fr"] { grid-template-columns: 1fr !important; }
+  }
+  @media (max-width: 768px) {
+    div[style*="grid-template-columns: repeat(3, 1fr)"] { grid-template-columns: 1fr 1fr !important; }
+    .video-modal-content { padding: 12px; }
+    .video-close-btn { width: 40px; height: 40px; }
+  }
+</style>

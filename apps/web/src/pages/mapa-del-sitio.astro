@@ -1,0 +1,177 @@
+---
+// src/pages/mapa-del-sitio.astro
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+  title="Mapa del sitio | ANALAC"
+  description="Mapa completo del ecosistema digital de Red ANALAC y todos sus nodos."
+>
+  <section class="page-hero hero-dark fade-up" style="padding: 180px 0 100px; background-color: #06150f;">
+    <div class="container text-center">
+      <h1 class="h1" style="color: #fff; margin-bottom: 24px;">Mapa del sitio</h1>
+      <p style="color: rgba(255,255,255,0.7); font-size: 19px; max-width: 600px; margin: 0 auto;">Estructura profunda de todo el ecosistema de Red ANALAC.</p>
+    </div>
+  </section>
+
+  <section class="section" style="padding: 80px 0; background: var(--c-cream); min-height: 50vh;">
+    <div class="container" style="max-width: 900px;">
+      
+      <div class="sitemap-grid">
+        
+        <!-- TERRITORIO 1: ANALAC (Quiénes somos) -->
+        <div class="sitemap-group">
+          <h3>1. Quiénes somos</h3>
+          <ul>
+            <li><a href="/quienes-somos">Página Institucional</a></li>
+            <li><a href="/quienes-somos#nuestra-historia">Nuestra historia</a></li>
+            <li><a href="/quienes-somos#proposito">Propósito y enfoque</a></li>
+            <li><a href="/quienes-somos#representacion">Representación gremial</a></li>
+            <li><a href="/quienes-somos#junta">Junta directiva</a></li>
+            <li><a href="/quienes-somos#nuestro-equipo">Equipo</a></li>
+            <li><a href="/quienes-somos#capitulos-y-comites">Capítulos y comités</a></li>
+            <li><a href="/quienes-somos/transparencia-y-gobierno">Transparencia y gobierno</a></li>
+            <li><a href="/contacto">Contacto</a></li>
+          </ul>
+        </div>
+
+        <!-- TERRITORIO 2: RED ANALAC -->
+        <div class="sitemap-group">
+          <h3>2. La Red</h3>
+          <ul>
+            <li><a href="/asociados-y-aliados">Landing Red ANALAC</a></li>
+            <li><a href="/asociados-y-aliados/directorio">Directorio de Organizaciones</a></li>
+            <li><span class="mock-link">Soluciones y Vitrina (Próximamente)</span></li>
+            <li><span class="mock-link">Comunidad de Profesionales (Próximamente)</span></li>
+            <li><span class="mock-link">Oportunidades (Próximamente)</span></li>
+          </ul>
+        </div>
+
+        <!-- TERRITORIO 3: OBSERVATORIO -->
+        <div class="sitemap-group">
+          <h3>3. Observatorio</h3>
+          <ul>
+            <li><a href="/informacion-sectorial">Observatorio e Información Sectorial</a></li>
+            <li><a href="/informacion-sectorial#indicadores">Indicadores</a></li>
+            <li><a href="/informacion-sectorial#panorama">Panorama Sectorial</a></li>
+            <li><a href="/informacion-sectorial#boletines">Informes y estudios</a></li>
+            <li><a href="/informacion-sectorial#datos-territoriales">Datos territoriales</a></li>
+          </ul>
+        </div>
+
+        <!-- TERRITORIO 4: CONOCIMIENTO -->
+        <div class="sitemap-group">
+          <h3>4. Conocimiento</h3>
+          <ul>
+            <li><a href="/noticias">Conocimiento y Actualidad</a></li>
+            <li><a href="/noticias">Actualidad y análisis (Noticias)</a></li>
+            <li><a href="/consumo-lacteo">Consumo Lácteo</a></li>
+            <li><span class="mock-link">Investigación y ciencia (Próximamente)</span></li>
+            <li><span class="mock-link">Guías y recursos (Próximamente)</span></li>
+            <li><span class="mock-link">Biblioteca y publicaciones (Próximamente)</span></li>
+          </ul>
+        </div>
+
+        <!-- TERRITORIO 5: PARTICIPA -->
+        <div class="sitemap-group">
+          <h3>5. Vincúlate</h3>
+          <ul>
+            <li><a href="/afiliate">Hazte afiliado</a></li>
+            <li><span class="mock-link">Sé aliado</span></li>
+            <li><span class="mock-link">Beneficios</span></li>
+            <li><span class="mock-link">Eventos</span></li>
+            <li><span class="mock-link">Convocatorias</span></li>
+            <li><span class="mock-link">Campañas</span></li>
+            <li><a href="/zona-pagos">Pago de membresía</a></li>
+          </ul>
+        </div>
+
+        <!-- TERRITORIO 6: PLATAFORMAS -->
+        <div class="sitemap-group">
+          <h3>6. Plataformas</h3>
+          <ul>
+            <li><a href="/portal">Portal ANALAC</a></li>
+            <li><a href="/portal-aliados/iniciar-sesion">Iniciar Sesión</a></li>
+            <li><span class="mock-link">Academia ANALAC (Próximamente)</span></li>
+          </ul>
+        </div>
+
+        <!-- TERRITORIO 7: AYUDA -->
+        <div class="sitemap-group">
+          <h3>7. Mesa de Ayuda</h3>
+          <ul>
+            <li><a href="/ayuda">Centro de Ayuda</a></li>
+            <li><span class="mock-link">Preguntas frecuentes</span></li>
+            <li><span class="mock-link">Reportar un problema</span></li>
+            <li><span class="mock-link">Crear una solicitud</span></li>
+          </ul>
+        </div>
+
+        <!-- TERRITORIO 8: LEGAL -->
+        <div class="sitemap-group">
+          <h3>8. Legal y Gobierno</h3>
+          <ul>
+            <li><span class="mock-link">Política de privacidad</span></li>
+            <li><span class="mock-link">Tratamiento de datos personales</span></li>
+            <li><span class="mock-link">Política de cookies</span></li>
+            <li><span class="mock-link">Términos y condiciones</span></li>
+            <li><span class="mock-link">Aviso legal</span></li>
+            <li><span class="mock-link">Accesibilidad</span></li>
+            <li><span class="mock-link">Canal ético</span></li>
+            <li><a href="/mapa-del-sitio">Mapa del sitio</a></li>
+          </ul>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .sitemap-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 48px;
+  }
+  @media (max-width: 768px) {
+    .sitemap-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  .sitemap-group {
+    background: #ffffff;
+    padding: 32px;
+    border-radius: 16px;
+    border: 1px solid rgba(0,0,0,0.05);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+  }
+  .sitemap-group h3 {
+    font-size: 18px;
+    color: var(--c-green-deep);
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+  }
+  .sitemap-group ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .sitemap-group li a, .sitemap-group li span {
+    font-size: 15px;
+    color: var(--c-text);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .sitemap-group li a:hover {
+    color: var(--c-green);
+  }
+  .mock-link {
+    color: var(--c-muted) !important;
+    cursor: default;
+  }
+</style>

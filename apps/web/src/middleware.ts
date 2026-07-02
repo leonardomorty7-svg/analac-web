@@ -36,8 +36,11 @@ export const onRequest = defineMiddleware(async (context, next) => {
   // 3. Obtener la respuesta normal
   const response = await next();
 
-  // 4. Inyectar cabecera X-Robots-Tag para bloquear indexación en rutas protegidas/API
+  // 4. Inyectar cabecera X-Robots-Tag para bloquear indexación en rutas protegidas/API o en Staging
+  const isStaging = import.meta.env.PUBLIC_VERCEL_ENV === 'preview' || import.meta.env.STAGING === 'true';
+
   if (
+    isStaging ||
     url.pathname.startsWith('/portal-aliados') ||
     url.pathname.startsWith('/admin-analac') ||
     url.pathname.startsWith('/api') ||

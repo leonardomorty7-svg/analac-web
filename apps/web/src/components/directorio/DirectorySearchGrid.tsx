@@ -51,6 +51,35 @@ export default function DirectorySearchGrid() {
       });
       setData(result);
       
+      // Analítica de búsqueda
+      if (typeof window !== 'undefined') {
+        const { trackEvent } = await import('../../lib/analytics');
+        
+        // Sanitizar término de búsqueda (evitar PII)
+        let safeSearchTerm = searchTerm;
+        if (safeSearchTerm) {
+          // Límite de longitud
+          safeSearchTerm = safeSearchTerm.substring(0, 50);
+          // Normalización (minúsculas y trim)
+          safeSearchTerm = safeSearchTerm.toLowerCase().trim();
+          // Eliminar emails
+          safeSearchTerm = safeSearchTerm.replace(/[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/g, '[EMAIL_REMOVED]');
+          // Eliminar teléfonos (patrón básico de números continuos o con guiones/espacios)
+          safeSearchTerm = safeSearchTerm.replace(/(\+?\d[\d\-\s]{7,}\d)/g, '[PHONE_REMOVED]');
+        }
+
+        trackEvent('directory_search', {
+          search_term: safeSearchTerm,
+          category: selectedCategory,
+          region: selectedRegion,
+          results_count: result.total
+        });
+        
+        if (result.total === 0) {
+          trackEvent('directory_no_results', { search_term: safeSearchTerm });
+        }
+      }
+
       // Actualizar URL
       if (typeof window !== 'undefined') {
         const url = new URL(window.location.href);
@@ -94,7 +123,7 @@ export default function DirectorySearchGrid() {
     <div style={{ maxWidth: '1200px', margin: '0 auto', padding: '40px 20px' }}>
       
       {/* Search & Filters */}
-      <div style={{ background: '#fff', borderRadius: '16px', padding: '24px', boxShadow: '0 4px 20px rgba(0,0,0,0.04)', marginBottom: '40px', border: '1px solid rgba(0,0,0,0.05)' }}>
+      <div className="card" style={{ padding: '24px', marginBottom: '40px', boxShadow: 'var(--shadow-premium)' }}>
         <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap' }}>
           
           <div style={{ flex: '1 1 300px' }}>

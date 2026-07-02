@@ -66,9 +66,17 @@ const uniqueOrgs = publishedOrgs.filter((org, index, self) =>
   index === self.findIndex((t) => (t.id === org.id))
 );
 
-// Regla SEO: Si hay menos de 2 empresas, lanzar 404 (Thin Content)
-if (uniqueOrgs.length < 2) {
+// Regla SEO (Thin Content): Evaluar indexabilidad
+let shouldNoIndex = false;
+
+if (uniqueOrgs.length === 0) {
   return Astro.redirect('/404');
+}
+
+// Para ubicaciones no tenemos una descripción rica en DB todavía,
+// se genera dinámicamente. Si hay 1 sola organización, es thin content a menos que generemos contenido rico.
+if (uniqueOrgs.length === 1) {
+  shouldNoIndex = true;
 }
 
 const capitalizedDepto = deptoName.split(' ').map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase()).join(' ');
@@ -100,6 +108,7 @@ const customSchema = JSON.stringify({
   description={description} 
   customSchema={customSchema}
   customCanonical={`https://analac.com/asociados-y-aliados/directorio/ubicaciones/${departamento}`}
+  noIndex={shouldNoIndex}
 >
   <div style="background: #f8fafc; padding: 40px 20px;">
     <div style="max-width: 1200px; margin: 0 auto;">

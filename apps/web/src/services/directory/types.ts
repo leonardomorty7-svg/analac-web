@@ -38,7 +38,7 @@ export interface OrganizationDTO {
     email?: string;
     phone?: string;
     website?: string;
-  };
+  } | undefined;
   faqs?: {
     question: string;
     answer: string;

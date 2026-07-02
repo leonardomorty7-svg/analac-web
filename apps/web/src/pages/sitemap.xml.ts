@@ -1,18 +1,31 @@
 import type { APIRoute } from 'astro';
 import { getSupabaseServer } from '../lib/supabase/server';
 
+export const prerender = false;
+
 export const GET: APIRoute = async ({ request, cookies }) => {
   try {
     const supabase = getSupabaseServer(request, cookies);
+    const isMock = import.meta.env.PUBLIC_DIRECTORY_DATA_SOURCE === 'mock';
     
-    // 1. Obtener todos los perfiles publicados
-    const { data: profiles, error } = await supabase
-      .from('organization_profiles')
-      .select('slug, updated_at, organization_id')
-      .eq('editorial_status', 'published');
+    let profiles: any[] | null = null;
+    let categoryStats: any[] | null = null;
 
-    if (error) {
-      throw error;
+    if (!isMock) {
+      // 1. Obtener todos los perfiles publicados
+      const { data, error } = await supabase
+        .from('organization_profiles')
+        .select('slug, updated_at, organization_id')
+        .eq('editorial_status', 'published');
+
+      if (error) throw error;
+      profiles = data;
+    } else {
+      // Mock data for profiles
+      profiles = [
+        { slug: 'lacteos-del-valle', updated_at: new Date().toISOString() },
+        { slug: 'agrovet-innovacion', updated_at: new Date().toISOString() }
+      ];
     }
 
     const baseUrl = 'https://analac.com';
@@ -56,9 +69,18 @@ export const GET: APIRoute = async ({ request, cookies }) => {
 
     // 3. URLs Temáticas (Categorías) - Fase 7 GEO
     // Solo si tienen más de 1 empresa asociada
-    const { data: categoryStats } = await supabase
-      .from('organization_categories')
-      .select('categories ( slug ), organization_id');
+    if (!isMock) {
+      const { data } = await supabase
+        .from('organization_categories')
+        .select('categories ( slug ), organization_id');
+      categoryStats = data;
+    } else {
+      categoryStats = [
+        { categories: { slug: 'insumos' } },
+        { categories: { slug: 'insumos' } },
+        { categories: { slug: 'maquinaria' } }
+      ];
+    }
     
     if (categoryStats) {
       // Agrupar por categoria
@@ -92,6 +114,7 @@ export const GET: APIRoute = async ({ request, cookies }) => {
     });
 
   } catch (err: any) {
+    console.error("Error en sitemap.xml.ts:", err);
     return new Response(err.message, { status: 500 });
   }
 };

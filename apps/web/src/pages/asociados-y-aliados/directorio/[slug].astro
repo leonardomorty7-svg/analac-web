@@ -35,15 +35,22 @@ const schemaPayload: any = {
       "url": org.contacts?.website || `https://analac.com/asociados-y-aliados/directorio/${org.slug}`,
       "logo": org.logo || "https://analac.com/logo.svg",
       "image": org.cover || org.logo || "https://analac.com/og-analac.jpg",
-      "description": org.description || org.summary,
-      "memberOf": {
-        "@type": "Organization",
-        "name": "ANALAC",
-        "url": "https://analac.com"
-      }
+      "description": org.description || org.summary
     }
   ]
 };
+
+// memberOf solo si es un Asociado o Miembro real de ANALAC
+const membershipKeywords = ['asociado', 'miembro', 'afiliado'];
+const isMember = org.status && membershipKeywords.some(kw => org.status?.toLowerCase().includes(kw));
+
+if (isMember) {
+  schemaPayload["@graph"][0]["memberOf"] = {
+    "@type": "Organization",
+    "name": "ANALAC",
+    "url": "https://analac.com"
+  };
+}
 
 if (org.foundationYear) {
   schemaPayload["@graph"][0]["foundingDate"] = org.foundationYear.toString();
@@ -70,17 +77,24 @@ if (org.contacts?.phone || org.contacts?.email) {
 
 // FAQ Schema
 if (org.faqs && org.faqs.length > 0) {
-  schemaPayload["@graph"].push({
-    "@type": "FAQPage",
-    "mainEntity": org.faqs.map((faq: any) => ({
-      "@type": "Question",
-      "name": faq.question,
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": faq.answer
-      }
-    }))
-  });
+  const validFaqs = org.faqs.filter((faq: any) => 
+    faq.question && faq.question.trim().length > 10 && 
+    faq.answer && faq.answer.trim().length > 10
+  );
+
+  if (validFaqs.length > 0) {
+    schemaPayload["@graph"].push({
+      "@type": "FAQPage",
+      "mainEntity": validFaqs.map((faq: any) => ({
+        "@type": "Question",
+        "name": faq.question.trim(),
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": faq.answer.trim()
+        }
+      }))
+    });
+  }
 }
 
 const customSchema = JSON.stringify(schemaPayload);

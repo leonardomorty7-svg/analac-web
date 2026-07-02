@@ -91,7 +91,10 @@ async function getOrganizationsFromSupabase(q: string, page: number, pageSize: n
     slug: row.slug,
     name: row.name,
     type: row.org_type,
-    category: row.organization_categories?.[0]?.categories?.name || 'Otro',
+    category: (() => {
+      const cats = row.organization_categories?.[0]?.categories as any;
+      return (Array.isArray(cats) ? cats[0]?.name : cats?.name) || 'Otro';
+    })(),
     status: row.status,
     verified: row.verified,
     logo: row.organization_profiles[0]?.logo_url,

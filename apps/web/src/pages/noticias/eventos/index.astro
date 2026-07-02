@@ -1,0 +1,170 @@
+---
+// src/pages/noticias/eventos/index.astro
+import BaseLayout from '../../../layouts/BaseLayout.astro'
+
+// MOCK DATA - DEBE REEMPLAZARSE POR EL CMS CUANDO HAYA CONTENIDO REAL
+const seminarios = [
+  {
+    id: 'sem-2025',
+    title: 'III Seminario Presente y Futuro de la Cadena Láctea',
+    year: '2025',
+    date: '15 Noviembre 2025',
+    location: 'Bogotá, Colombia',
+    excerpt: 'Análisis de competitividad, sostenibilidad y adopción tecnológica en el sector lácteo colombiano.',
+    imageUrl: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80&auto=format&fit=crop',
+    slug: 'seminario-cadena-lactea-2025'
+  },
+  {
+    id: 'sem-2024',
+    title: 'II Seminario Presente y Futuro de la Cadena Láctea',
+    year: '2024',
+    date: '10 Noviembre 2024',
+    location: 'Medellín, Colombia',
+    excerpt: 'El mercado lácteo global y sus impactos en el escenario productivo nacional.',
+    imageUrl: 'https://images.unsplash.com/photo-1591115765373-5207764f72e7?w=800&q=80&auto=format&fit=crop',
+    slug: 'seminario-cadena-lactea-2024'
+  }
+]
+
+const encuentros = [
+  {
+    id: 'enc-narino-2023',
+    title: 'Encuentro de Productores de Leche',
+    region: 'Nariño',
+    year: '2023',
+    slug: 'encuentro-productores-narino-2023'
+  },
+  {
+    id: 'enc-jovenes-2023',
+    title: 'Encuentro Nacional de Jóvenes Ganaderos',
+    region: 'Nacional',
+    year: '2023',
+    slug: 'encuentro-jovenes-ganaderos-2023'
+  }
+]
+---
+
+<BaseLayout
+  title="Eventos y Memorias | ANALAC"
+  description="Seminarios, encuentros, videos, presentaciones y memorias del sector lácteo colombiano."
+>
+  <Fragment slot="head">
+    <meta name="robots" content="noindex" />
+  </Fragment>
+
+  <!-- Hero -->
+  <section class="page-hero fade-up" style="padding: 180px 0 100px; background: #fdfdfc; border-bottom: 1px solid rgba(0,0,0,0.05);">
+    <div class="container" style="max-width: 800px; text-align: center;">
+      <span class="tag" style="background: rgba(109,181,109,0.1); color: var(--color-green-dark); margin-bottom: 24px; display: inline-block;">Contenido de demostración</span>
+      <h1 class="h1" style="font-size: clamp(36px, 5vw, 56px); color: var(--color-text-main); margin-bottom: 24px; letter-spacing: -0.02em;">Eventos y Memorias</h1>
+      <p style="font-size: 18px; color: var(--color-text-sub); line-height: 1.6;">
+        Seminarios, encuentros, conferencias y espacios de articulación del sector lácteo colombiano. Consulta información de las ediciones realizadas, conferencistas, temas, videos y presentaciones disponibles.
+      </p>
+    </div>
+  </section>
+
+  <!-- Contenido Destacado -->
+  <section class="section fade-up" style="padding: 80px 0; background: #fff;">
+    <div class="container">
+      <div class="section-header" style="margin-bottom: 40px;">
+        <h2 class="h2" style="font-size: 28px;">Seminario más reciente</h2>
+      </div>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; background: var(--c-cream); border-radius: 24px; overflow: hidden; border: 1px solid rgba(0,0,0,0.05);">
+        <div style="height: 100%; min-height: 400px; position: relative;">
+          <img src={seminarios[0].imageUrl} alt="Seminario" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;" />
+        </div>
+        <div style="padding: 48px 48px 48px 0;">
+          <span style="font-size: 13px; font-weight: 600; color: var(--c-green-deep); text-transform: uppercase; letter-spacing: 0.1em;">{seminarios[0].year}</span>
+          <h3 style="font-size: 32px; font-weight: 500; margin: 16px 0; color: var(--c-text);">{seminarios[0].title}</h3>
+          <p style="font-size: 16px; color: var(--c-muted); line-height: 1.6; margin-bottom: 32px;">{seminarios[0].excerpt}</p>
+          <div style="display: flex; gap: 16px; margin-bottom: 32px; font-size: 14px; color: var(--c-muted);">
+            <span>📍 {seminarios[0].location}</span>
+            <span>📅 {seminarios[0].date}</span>
+          </div>
+          <a href={`/noticias/eventos/${seminarios[0].slug}`} class="btn btn--primary">Ver memorias completas →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Series y Archivo Histórico -->
+  <section class="section" style="padding: 80px 0; background: #faf9f7; border-top: 1px solid rgba(0,0,0,0.05);">
+    <div class="container">
+      
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 64px;">
+        <!-- Seminarios Anteriores -->
+        <div>
+          <h3 style="font-size: 24px; font-weight: 500; margin-bottom: 32px; padding-bottom: 16px; border-bottom: 1px solid rgba(0,0,0,0.1);">Archivo: Seminarios de la Cadena Láctea</h3>
+          <div style="display: flex; flex-direction: column; gap: 24px;">
+            {seminarios.slice(1).map(sem => (
+              <a href={`/noticias/eventos/${sem.slug}`} style="display: flex; gap: 24px; text-decoration: none; padding: 16px; border-radius: 12px; transition: background 0.2s;">
+                <div style="width: 120px; height: 80px; border-radius: 8px; overflow: hidden; flex-shrink: 0;">
+                  <img src={sem.imageUrl} alt={sem.title} style="width: 100%; height: 100%; object-fit: cover;" />
+                </div>
+                <div>
+                  <h4 style="font-size: 18px; font-weight: 500; color: var(--c-text); margin-bottom: 4px;">{sem.title}</h4>
+                  <p style="font-size: 14px; color: var(--c-muted);">{sem.year} · {sem.location}</p>
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <!-- Encuentros de Productores -->
+        <div>
+          <h3 style="font-size: 24px; font-weight: 500; margin-bottom: 32px; padding-bottom: 16px; border-bottom: 1px solid rgba(0,0,0,0.1);">Encuentros de Productores de Leche</h3>
+          <div style="display: flex; flex-direction: column; gap: 16px;">
+            {encuentros.map(enc => (
+              <a href={`/noticias/eventos/${enc.slug}`} style="display: flex; justify-content: space-between; align-items: center; padding: 20px; background: #fff; border: 1px solid rgba(0,0,0,0.05); border-radius: 12px; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;" class="enc-card">
+                <div>
+                  <h4 style="font-size: 16px; font-weight: 500; color: var(--c-text); margin-bottom: 4px;">{enc.title}</h4>
+                  <p style="font-size: 14px; color: var(--c-muted);">Región: {enc.region}</p>
+                </div>
+                <div style="font-size: 14px; font-weight: 600; color: var(--c-green-deep); background: rgba(109,181,109,0.1); padding: 4px 12px; border-radius: 100px;">
+                  {enc.year}
+                </div>
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Relaciones Transversales AEO/SEO -->
+  <section style="padding: 80px 0; background: #fff; border-top: 1px solid rgba(0,0,0,0.05);">
+    <div class="container" style="max-width: 800px;">
+      <h3 style="font-size: 24px; font-weight: 500; margin-bottom: 32px; text-align: center;">Explora contenidos relacionados</h3>
+      
+      <div style="display: flex; flex-direction: column; gap: 24px;">
+        <details style="background: var(--c-cream); border-radius: 12px; padding: 20px; border: 1px solid rgba(0,0,0,0.05);">
+          <summary style="font-weight: 500; font-size: 16px; cursor: pointer; color: var(--c-green-deep);">¿Qué contenidos puedo consultar en las memorias?</summary>
+          <p style="margin-top: 16px; font-size: 15px; color: var(--c-muted); line-height: 1.6;">
+            Puedes consultar información de las ediciones realizadas, conferencistas, temas abordados, videos completos, presentaciones técnicas en PDF, fotografías y documentos de conclusiones institucionales.
+          </p>
+        </details>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 24px;">
+          <a href="/informacion-sectorial" style="padding: 24px; border-radius: 16px; border: 1px solid rgba(0,0,0,0.1); text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 12px; transition: background 0.2s;">
+            <span style="font-size: 12px; font-weight: 600; color: var(--c-green-deep); text-transform: uppercase;">Ir al Observatorio</span>
+            <p style="font-size: 14px; color: var(--c-muted);">Relaciona los datos económicos presentados en los eventos con nuestros indicadores oficiales.</p>
+          </a>
+          <a href="/asociados-y-aliados/directorio" style="padding: 24px; border-radius: 16px; border: 1px solid rgba(0,0,0,0.1); text-decoration: none; color: inherit; display: flex; flex-direction: column; gap: 12px; transition: background 0.2s;">
+            <span style="font-size: 12px; font-weight: 600; color: var(--c-green-deep); text-transform: uppercase;">Directorio de La Red</span>
+            <p style="font-size: 14px; color: var(--c-muted);">Conoce a los organizadores, aliados y patrocinadores de nuestros espacios de conocimiento.</p>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  a:hover { background: rgba(0,0,0,0.02); }
+  .enc-card:hover { transform: translateY(-4px); box-shadow: 0 8px 24px rgba(0,0,0,0.04); }
+  @media (max-width: 768px) {
+    div[style*="grid-template-columns: 1fr 1fr"] { grid-template-columns: 1fr !important; }
+    div[style*="padding: 48px 48px 48px 0"] { padding: 32px !important; }
+  }
+</style>

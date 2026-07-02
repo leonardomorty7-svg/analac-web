@@ -86,6 +86,19 @@ const defaultSchema = JSON.stringify({
 
     <!-- Structured data -->
     <script type="application/ld+json" set:html={customSchema || defaultSchema}></script>
+    
+    <!-- Analytics Init -->
+    <script>
+      import { initAnalytics, trackEvent } from '../lib/analytics';
+      initAnalytics();
+
+      // Rastrear la vista de página por defecto
+      trackEvent('page_view', {
+        page_path: window.location.pathname,
+        page_title: document.title
+      });
+    </script>
+    <slot name="head" />
   </head>
   <body>
     <Nav />

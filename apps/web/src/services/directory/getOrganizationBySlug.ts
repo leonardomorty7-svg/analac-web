@@ -44,7 +44,10 @@ export async function getOrganizationBySlug(slug: string): Promise<OrganizationD
     slug: data.slug,
     name: data.name,
     type: data.org_type,
-    category: data.organization_categories?.[0]?.categories?.name || 'Otro',
+    category: (() => {
+      const cats = data.organization_categories?.[0]?.categories as any;
+      return (Array.isArray(cats) ? cats[0]?.name : cats?.name) || 'Otro';
+    })(),
     status: data.status,
     verified: data.verified,
     logo: data.organization_profiles[0]?.logo_url,

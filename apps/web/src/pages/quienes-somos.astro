@@ -23,6 +23,66 @@ import CtaFinal from '../components/CtaFinal.astro'
     </div>
   </section>
 
+  <!-- Navegación Interna -->
+  <div class="page-nav fade-up">
+    <div class="container">
+      <div class="page-nav-scroll">
+        <a href="#representacion" class="page-nav-link">Propósito</a>
+        <a href="#que-hacemos" class="page-nav-link">Labor Gremial</a>
+        <a href="#nuestro-equipo" class="page-nav-link">Equipo</a>
+        <a href="#junta" class="page-nav-link">Junta Directiva</a>
+        <a href="#ecosistema" class="page-nav-link">Ecosistema Digital</a>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .page-nav {
+      background: #ffffff;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      position: sticky;
+      top: 104px;
+      z-index: 100;
+    }
+    .page-nav-scroll {
+      display: flex;
+      gap: 32px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .page-nav-scroll::-webkit-scrollbar {
+      display: none;
+    }
+    .page-nav-link {
+      padding: 20px 0;
+      color: var(--color-text-sub);
+      font-weight: 500;
+      font-size: 15px;
+      text-decoration: none;
+      white-space: nowrap;
+      position: relative;
+      transition: color 0.2s ease;
+    }
+    .page-nav-link:hover {
+      color: var(--color-green-dark);
+    }
+    .page-nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--color-green-dark);
+      transform: scaleX(0);
+      transition: transform 0.2s ease;
+    }
+    .page-nav-link:hover::after {
+      transform: scaleX(1);
+    }
+  </style>
+
   <!-- S2 Bloque de Impacto -->
   <section class="section impact-section" style="background: var(--color-bg-page);">
     <div class="container">

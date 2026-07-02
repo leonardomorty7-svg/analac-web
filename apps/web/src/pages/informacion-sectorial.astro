@@ -13,25 +13,98 @@ const chartData = [
 ---
 
 <BaseLayout
-  title="Información sectorial láctea | ANALAC"
-  description="Consulta boletines, indicadores, noticias y análisis del sector lácteo colombiano publicados por ANALAC."
+  title="Observatorio ANALAC | Información del sector lácteo colombiano"
+  description="Consulta información, indicadores, análisis y datos del sector lácteo colombiano en el Observatorio de Red ANALAC."
 >
   <!-- S1 Hero interior -->
   <section class="page-hero hero-dark fade-up">
     <div class="page-hero-bg"></div>
     <div class="container page-hero-content">
-      <p class="overline overline-light">Centro de inteligencia</p>
+      <p class="overline overline-light">Información Sectorial</p>
       <h1 class="page-hero-title">
-        Indicadores y estadísticas del sector lácteo colombiano
+        Observatorio ANALAC
       </h1>
       <p class="page-hero-desc">
-        Datos de acopio, precios y producción nacional con actualización mensual, diseñados para empoderar al productor y fortalecer la competitividad.
+        Información, indicadores y análisis del sector lácteo colombiano.
+      </p>
+    </div>
+  </section>
+
+  <!-- Navegación Interna -->
+  <div class="page-nav fade-up">
+    <div class="container">
+      <div class="page-nav-scroll">
+        <a href="#que-es" class="page-nav-link">¿Qué es el Observatorio?</a>
+        <a href="#indicadores" class="page-nav-link">Indicadores</a>
+        <a href="#panorama" class="page-nav-link">Panorama Sectorial</a>
+        <a href="#boletines" class="page-nav-link">Informes y Estudios</a>
+        <a href="#datos-territoriales" class="page-nav-link">Datos Territoriales</a>
+      </div>
+    </div>
+  </div>
+
+  <style>
+    .page-nav {
+      background: #ffffff;
+      border-bottom: 1px solid rgba(0,0,0,0.05);
+      position: sticky;
+      top: 104px;
+      z-index: 100;
+    }
+    .page-nav-scroll {
+      display: flex;
+      gap: 32px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      -ms-overflow-style: none;
+    }
+    .page-nav-scroll::-webkit-scrollbar {
+      display: none;
+    }
+    .page-nav-link {
+      padding: 20px 0;
+      color: var(--c-muted);
+      font-weight: 500;
+      font-size: 15px;
+      text-decoration: none;
+      white-space: nowrap;
+      position: relative;
+      transition: color 0.2s ease;
+    }
+    .page-nav-link:hover {
+      color: var(--c-green-deep);
+    }
+    .page-nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: var(--c-green-deep);
+      transform: scaleX(0);
+      transition: transform 0.2s ease;
+    }
+    .page-nav-link:hover::after {
+      transform: scaleX(1);
+    }
+  </style>
+
+  <!-- AEO: ¿Qué es el Observatorio? -->
+  <section id="que-es" class="section fade-up" style="padding: 80px 0; background: #ffffff;">
+    <div class="container text-center" style="max-width: 800px;">
+      <h2 class="h3" style="color: var(--c-green-deep); margin-bottom: 24px;">¿Qué es el Observatorio ANALAC?</h2>
+      <p style="font-size: 19px; color: var(--c-muted); line-height: 1.6; margin-bottom: 24px;">
+        Observatorio ANALAC es el espacio de Red ANALAC que reúne información, indicadores, análisis, informes y datos del sector lácteo colombiano para facilitar su comprensión y apoyar la toma de decisiones.
+      </p>
+      <p style="font-size: 16px; color: var(--c-muted); line-height: 1.6;">
+        Su contenido público permite conocer cifras y tendencias generales. Los usuarios vinculados a la Red podrán acceder progresivamente a consultas ampliadas, comparaciones, descargas y herramientas especializadas según su afiliación y permisos.
       </p>
     </div>
   </section>
 
   <!-- S2 Indicadores actuales -->
-  <section class="section" style="padding: 120px 0; background: var(--c-cream);">
+  <section id="indicadores" class="section" style="padding: 120px 0; background: var(--c-cream);">
     <div class="container">
       <div class="section-header fade-up" style="margin-bottom: 48px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 24px;">
         <div>
@@ -58,11 +131,18 @@ const chartData = [
           </div>
         ))}
       </div>
+      
+      <!-- Metodología -->
+      <div style="margin-top: 48px; padding-top: 32px; border-top: 1px solid rgba(0,0,0,0.05);">
+        <p style="font-size: 13px; color: var(--c-muted); line-height: 1.5; max-width: 800px;">
+          <strong>Metodología y fuentes:</strong> Los datos de este dashboard son de carácter informativo público (Nivel 1). Son recopilados mensualmente a partir de fuentes consolidadas (DANE, USP, FEDEGÁN, ANALAC). Para detalles metodológicos o acceso a series históricas completas (Nivel 2), los usuarios autorizados deberán iniciar sesión en Mi Red ANALAC.
+        </p>
+      </div>
     </div>
   </section>
 
   <!-- S3 Nueva Sección: Panorama del Sector -->
-  <section class="section" style="padding: 120px 0; background: #ffffff;">
+  <section id="panorama" class="section" style="padding: 120px 0; background: #ffffff;">
     <div class="container">
       <div class="panorama-layout fade-up">
         <div class="panorama-text">
@@ -94,7 +174,7 @@ const chartData = [
     <div class="container">
       <div class="section-header text-center fade-up" style="max-width: 600px; margin: 0 auto 64px;">
         <p class="overline">Publicaciones</p>
-        <h2 class="h2">Boletines Ejecutivos</h2>
+        <h2 class="h2">Informes y Estudios</h2>
       </div>
 
       <div class="boletines-grid fade-up">
@@ -124,16 +204,44 @@ const chartData = [
     </div>
   </section>
 
-  <!-- S5 CTA Afiliación -->
+  <!-- S4B Datos Territoriales (Placeholder) -->
+  <section id="datos-territoriales" class="section fade-up" style="padding: 120px 0; background: #ffffff;">
+    <div class="container text-center" style="max-width: 700px;">
+      <div style="width: 64px; height: 64px; margin: 0 auto 24px; border-radius: 50%; background: rgba(0, 169, 79, 0.1); color: var(--c-green); display: flex; align-items: center; justify-content: center;">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+      </div>
+      <p class="overline">Próximamente</p>
+      <h2 class="h2" style="margin-bottom: 24px;">Datos Territoriales</h2>
+      <p style="font-size: 18px; color: var(--c-muted); line-height: 1.6;">
+        Una vista geográfica interactiva para consultar la presencia de organizaciones, vocación departamental y estadísticas territoriales del ecosistema lácteo.
+      </p>
+    </div>
+  </section>
+  
+  <!-- S4C Información Comunitaria -->
+  <section class="section fade-up" style="padding: 80px 0; background: #faf9f7; border-top: 1px solid rgba(0,0,0,0.05); border-bottom: 1px solid rgba(0,0,0,0.05);">
+    <div class="container" style="max-width: 800px; text-align: center;">
+      <h2 class="h3" style="color: var(--c-green-deep); margin-bottom: 24px;">Información construida con el ecosistema</h2>
+      <p style="font-size: 16px; color: var(--c-muted); line-height: 1.6; margin-bottom: 16px;">
+        Las organizaciones, profesionales y asociados de Red ANALAC actualizan progresivamente información sobre sus capacidades, cobertura y actividades. ANALAC organiza, valida y presenta estos datos de manera agregada para fortalecer el conocimiento del sector.
+      </p>
+      <p style="font-size: 14px; color: var(--c-muted); line-height: 1.5; font-style: italic;">
+        Nota: Los datos agregados protegen la privacidad de las organizaciones. El Observatorio diferenciará claramente entre estadísticas de fuentes oficiales externas y datos auto-declarados por la comunidad de la Red.
+      </p>
+    </div>
+  </section>
+
+  <!-- S5 CTA Acceso Avanzado -->
   <section class="cta-final section fade-up" style="background: var(--c-green-deep);">
     <div class="container text-center" style="max-width: 700px;">
-      <p class="overline overline-light" style="margin-bottom: 24px;">Contenido Exclusivo</p>
-      <h2 class="h2 cta-title">Accede a nuestra inteligencia sectorial completa</h2>
+      <p class="overline overline-light" style="margin-bottom: 24px;">Mi Red ANALAC</p>
+      <h2 class="h2 cta-title">Accede a más información del Observatorio</h2>
       <p style="color: rgba(255,255,255,0.7); font-size: 19px; margin-bottom: 48px; line-height: 1.6; text-wrap: balance;">
-        El boletín técnico integral, el análisis detallado y los estudios de mercado son beneficios exclusivos para los miembros de ANALAC. Únete a nuestro gremio para desbloquear toda la información estratégica.
+        Inicia sesión para consultar progresivamente datos ampliados, análisis, herramientas y contenidos disponibles según tu afiliación dentro de Red ANALAC, o conoce cómo formar parte de la Red.
       </p>
       <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
-        <a href="/quienes-somos" class="btn btn--accent" style="padding: 16px 32px; font-size: 15px;">Conoce los beneficios de ser afiliado</a>
+        <a href="/portal-aliados/iniciar-sesion" class="btn btn--accent" style="padding: 16px 32px; font-size: 15px;">Iniciar sesión</a>
+        <a href="/afiliate" class="btn btn--outline-light" style="padding: 16px 32px; font-size: 15px; border-color: rgba(255,255,255,0.3); color: #fff;">Afiliarme a ANALAC</a>
       </div>
     </div>
   </section>

@@ -14,28 +14,22 @@ const description = "Encuentra proveedores, empresas transformadoras, aliados y 
   <!-- Hero AEO/SEO -->
   <header class="directory-hero">
     <div class="directory-hero-bg"></div>
-    <div class="container relative z-10 text-center">
-      <div class="breadcrumb reveal">
+    <div class="container hero-content">
+      <div class="breadcrumb">
         <a href="/">Inicio</a> <span class="separator">/</span> 
-        <a href="/asociados-aliados">Asociados y Aliados</a> <span class="separator">/</span> 
+        <a href="/asociados-y-aliados">Red ANALAC</a> <span class="separator">/</span> 
         <span>Directorio</span>
       </div>
       
-      <h1 class="directory-title reveal" style="transition-delay: 50ms;">
-        Directorio del Ecosistema Lácteo Colombiano
+      <span class="hero-eyebrow">Red ANALAC</span>
+      
+      <h1 class="directory-title">
+        Organizaciones del ecosistema lácteo colombiano
       </h1>
       
-      {/* Resumen AEO */}
-      <p class="directory-summary reveal" style="transition-delay: 100ms;">
-        El Directorio Inteligente de ANALAC es la base de conocimiento verificable del sector lechero en Colombia. 
-        Aquí puedes explorar el perfil de <strong>empresas transformadoras, productores, proveedores y aliados estratégicos</strong>, 
-        conocer sus productos, certificaciones y regiones de cobertura para generar conexiones comerciales seguras.
+      <p class="directory-summary">
+        Explora empresas, asociados, aliados, cooperativas, instituciones y proveedores que hacen parte de la cadena láctea colombiana. Encuentra capacidades, productos, servicios, cobertura y formas de contacto dentro de Red ANALAC.
       </p>
-
-      <div class="directory-actions reveal" style="transition-delay: 150ms;">
-        <a href="#buscar" class="btn btn--accent">Buscar empresas</a>
-        <a href="/portal-aliados/directorio" class="btn btn--outline-white">Publicar mi empresa</a>
-      </div>
     </div>
   </header>
 
@@ -100,16 +94,31 @@ const description = "Encuentra proveedores, empresas transformadoras, aliados y 
     z-index: -1;
   }
 
-  /* Hero */
   .directory-hero {
     position: relative;
-    padding: 160px 20px 100px;
+    padding: 120px 20px 140px; /* 140px bottom para alojar el -120px margin del buscador sin espacio vacío */
     color: #fff;
-    min-height: 500px;
+    min-height: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
     overflow: hidden;
+  }
+  
+  .hero-content {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+  }
+  
+  .hero-eyebrow {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    color: var(--c-green-light, #85cc85);
+    text-transform: uppercase;
+    margin-bottom: 16px;
   }
   
   .directory-hero-bg {
@@ -178,7 +187,20 @@ const description = "Encuentra proveedores, empresas transformadoras, aliados y 
 
   /* Secciones Inferiores */
   .directory-search-section {
-    padding: 40px 0;
+    position: relative;
+    z-index: 20;
+    margin-top: -120px;
+    padding: 0 0 40px;
+  }
+
+  @media (max-width: 768px) {
+    .directory-search-section {
+      margin-top: 0;
+      padding-top: 40px;
+    }
+    .directory-hero {
+      padding-bottom: 60px;
+    }
   }
 
   .directory-faqs {
