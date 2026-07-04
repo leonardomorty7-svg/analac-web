@@ -1,0 +1,130 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+---
+
+<BaseLayout
+  title="Tratamiento de Datos Personales | ANALAC"
+  description="Conoce nuestra política de tratamiento de datos personales."
+>
+  <section class="page-hero hero-dark slim fade-up">
+    <div class="page-hero-bg"></div>
+    <div class="container page-hero-content">
+      <p class="overline overline-light">Legal</p>
+      <h1 class="page-hero-title">Tratamiento de Datos Personales</h1>
+    </div>
+  </section>
+
+  <section class="section legal-content" style="padding: 80px 0;">
+    <div class="container" style="max-width: 800px; margin: 0 auto;">
+      <div class="premium-panel fade-up">
+        <div class="legal-alert">
+          <strong>Aviso:</strong> Este documento es una plantilla estándar y se encuentra pendiente de revisión y aprobación por parte del equipo jurídico de ANALAC.
+        </div>
+        
+        <h2>1. Marco Legal</h2>
+        <p>El presente manual de Políticas de Tratamiento de Datos Personales se redacta en cumplimiento de la Ley 1581 de 2012 y el Decreto 1377 de 2013, garantizando los derechos de privacidad, intimidad y buen nombre de todas las personas naturales y jurídicas que interactúan con ANALAC.</p>
+        
+        <h2>2. Alcance</h2>
+        <p>Aplica para toda la información personal registrada en las bases de datos de ANALAC, quien actúa en calidad de responsable del tratamiento de los datos personales.</p>
+
+        <h2>3. Finalidad del Tratamiento</h2>
+        <p>Los datos suministrados serán recolectados, almacenados, procesados, usados y administrados por ANALAC con la finalidad de mantener el contacto con afiliados, gestionar cobros, enviar comunicaciones institucionales y realizar encuestas de satisfacción o estadísticas gremiales.</p>
+
+        <h2>4. Seguridad de la Información</h2>
+        <p>ANALAC implementa medidas de seguridad administrativas, técnicas y físicas para evitar la adulteración, pérdida, consulta, uso o acceso no autorizado o fraudulento de la información contenida en nuestras bases de datos.</p>
+
+        <p class="last-update">Última actualización: Julio 2026</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Slim Hero */
+  .page-hero.hero-dark.slim {
+    padding: 160px 0 80px;
+    min-height: 40vh;
+    display: flex;
+    align-items: center;
+    background-color: #06150f;
+    position: relative;
+  }
+  .page-hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(rgba(6, 15, 7, 0.4), rgba(6, 15, 7, 0.8)), url('/images/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+  }
+  .page-hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    text-align: center;
+    margin: 0 auto;
+  }
+  .page-hero-title {
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+  }
+  .overline-light {
+    color: var(--color-green-soft);
+    border-color: rgba(255, 255, 255, 0.2);
+    margin-bottom: 16px;
+    display: inline-block;
+  }
+
+  /* Legal Content */
+  .premium-panel {
+    background: #ffffff;
+    padding: 64px;
+    border-radius: 16px;
+    border: 1px solid rgba(0,0,0,0.04);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.02);
+  }
+  
+  .legal-alert {
+    background: rgba(255, 171, 0, 0.1);
+    color: #b37700;
+    padding: 16px 24px;
+    border-radius: 8px;
+    border-left: 4px solid #ffab00;
+    margin-bottom: 40px;
+    font-size: 15px;
+  }
+
+  .premium-panel h2 {
+    font-size: 24px;
+    color: var(--color-green-dark);
+    margin: 40px 0 16px;
+    font-weight: 500;
+  }
+  
+  .premium-panel h2:first-of-type {
+    margin-top: 0;
+  }
+
+  .premium-panel p {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--color-text-main);
+    margin-bottom: 16px;
+  }
+
+  .last-update {
+    margin-top: 48px;
+    font-size: 14px !important;
+    color: var(--color-text-sub) !important;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    padding-top: 24px;
+  }
+  
+  @media (max-width: 768px) {
+    .premium-panel { padding: 32px 24px; }
+    .page-hero.hero-dark.slim { min-height: auto; padding: 140px 0 60px; }
+  }
+</style>

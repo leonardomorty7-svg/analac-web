@@ -1,0 +1,127 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+---
+
+<BaseLayout
+  title="Accesibilidad | ANALAC"
+  description="Declaración de accesibilidad del portal web de ANALAC."
+>
+  <section class="page-hero hero-dark slim fade-up">
+    <div class="page-hero-bg"></div>
+    <div class="container page-hero-content">
+      <p class="overline overline-light">Inclusión</p>
+      <h1 class="page-hero-title">Declaración de Accesibilidad</h1>
+    </div>
+  </section>
+
+  <section class="section legal-content" style="padding: 80px 0;">
+    <div class="container" style="max-width: 800px; margin: 0 auto;">
+      <div class="premium-panel fade-up">
+        
+        <h2>1. Nuestro Compromiso</h2>
+        <p>En ANALAC estamos comprometidos con hacer que nuestro portal web sea accesible y utilizable por todas las personas, independientemente de sus capacidades, habilidades o tecnologías que utilicen. Nos esforzamos continuamente por mejorar la experiencia de usuario para todos y aplicar los estándares de accesibilidad pertinentes.</p>
+        
+        <h2>2. Estándares de Accesibilidad</h2>
+        <p>Este sitio ha sido diseñado y desarrollado siguiendo las Pautas de Accesibilidad para el Contenido Web (WCAG) 2.1 en su nivel AA, establecidas por el World Wide Web Consortium (W3C). Esto incluye, entre otras medidas:</p>
+        <ul>
+          <li style="margin-bottom: 8px; color: var(--color-text-main);">Diseño responsivo adaptable a cualquier dispositivo móvil o de escritorio.</li>
+          <li style="margin-bottom: 8px; color: var(--color-text-main);">Contraste de color adecuado para facilitar la lectura.</li>
+          <li style="margin-bottom: 8px; color: var(--color-text-main);">Soporte para navegación exclusiva por teclado y tecnologías de asistencia.</li>
+          <li style="margin-bottom: 8px; color: var(--color-text-main);">Etiquetas semánticas (ARIA) para lectores de pantalla.</li>
+        </ul>
+
+        <h2>3. Herramientas Integradas</h2>
+        <p>Hemos implementado características de diseño que permiten escalar el texto y realizar lectura en voz alta utilizando los comandos y configuraciones nativas de los sistemas operativos (Windows, macOS, iOS, Android) y los navegadores modernos (Chrome, Firefox, Safari, Edge).</p>
+
+        <h2>4. Retroalimentación y Contacto</h2>
+        <p>Si encuentras alguna barrera de accesibilidad o tienes sugerencias sobre cómo podemos mejorar, por favor contáctanos a través de nuestro <strong>canal de Mesa de Ayuda</strong>. Tu retroalimentación es vital para ayudarnos a mantener una plataforma verdaderamente inclusiva para todos los productores de leche del país.</p>
+
+        <p class="last-update">Última actualización: Julio 2026</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Slim Hero */
+  .page-hero.hero-dark.slim {
+    padding: 160px 0 80px;
+    min-height: 40vh;
+    display: flex;
+    align-items: center;
+    background-color: #06150f;
+    position: relative;
+  }
+  .page-hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(rgba(6, 15, 7, 0.4), rgba(6, 15, 7, 0.8)), url('/images/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+  }
+  .page-hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    text-align: center;
+    margin: 0 auto;
+  }
+  .page-hero-title {
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+  }
+  .overline-light {
+    color: var(--color-green-soft);
+    border-color: rgba(255, 255, 255, 0.2);
+    margin-bottom: 16px;
+    display: inline-block;
+  }
+
+  /* Legal Content */
+  .premium-panel {
+    background: #ffffff;
+    padding: 64px;
+    border-radius: 16px;
+    border: 1px solid rgba(0,0,0,0.04);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.02);
+  }
+
+  .premium-panel h2 {
+    font-size: 24px;
+    color: var(--color-green-dark);
+    margin: 40px 0 16px;
+    font-weight: 500;
+  }
+  
+  .premium-panel h2:first-of-type {
+    margin-top: 0;
+  }
+
+  .premium-panel p, .premium-panel ul {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--color-text-main);
+    margin-bottom: 16px;
+  }
+
+  .premium-panel ul {
+    padding-left: 20px;
+  }
+
+  .last-update {
+    margin-top: 48px;
+    font-size: 14px !important;
+    color: var(--color-text-sub) !important;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    padding-top: 24px;
+  }
+  
+  @media (max-width: 768px) {
+    .premium-panel { padding: 32px 24px; }
+    .page-hero.hero-dark.slim { min-height: auto; padding: 140px 0 60px; }
+  }
+</style>

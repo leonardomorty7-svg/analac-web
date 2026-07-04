@@ -1,0 +1,139 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro'
+---
+
+<BaseLayout
+  title="Política de Cookies | ANALAC"
+  description="Conoce cómo utilizamos las cookies en nuestro portal."
+>
+  <section class="page-hero hero-dark slim fade-up">
+    <div class="page-hero-bg"></div>
+    <div class="container page-hero-content">
+      <p class="overline overline-light">Legal</p>
+      <h1 class="page-hero-title">Política de Cookies</h1>
+    </div>
+  </section>
+
+  <section class="section legal-content" style="padding: 80px 0;">
+    <div class="container" style="max-width: 800px; margin: 0 auto;">
+      <div class="premium-panel fade-up">
+        <div class="legal-alert">
+          <strong>Aviso:</strong> Este documento es una plantilla estándar y se encuentra pendiente de revisión y aprobación por parte del equipo jurídico de ANALAC.
+        </div>
+        
+        <h2>1. ¿Qué son las cookies?</h2>
+        <p>Las cookies son pequeños archivos de texto que los sitios web almacenan en su ordenador o dispositivo móvil cuando los visita. Permiten que el sitio web recuerde sus acciones y preferencias (como inicio de sesión, idioma, tamaño de fuente y otras preferencias de visualización) durante un período de tiempo.</p>
+        
+        <h2>2. Uso de cookies en ANALAC</h2>
+        <p>En el portal de ANALAC utilizamos cookies propias y de terceros con los siguientes propósitos:</p>
+        <ul>
+          <li style="margin-bottom: 8px; color: var(--color-text-main);"><strong>Cookies técnicas:</strong> Esenciales para el correcto funcionamiento del portal, como el mantenimiento de la sesión en el área de afiliados.</li>
+          <li style="margin-bottom: 8px; color: var(--color-text-main);"><strong>Cookies de personalización:</strong> Permiten al usuario acceder al servicio con características generales predefinidas como el idioma o la configuración regional.</li>
+          <li style="margin-bottom: 8px; color: var(--color-text-main);"><strong>Cookies de análisis:</strong> Nos permiten medir el tráfico y uso del sitio web para mejorar su rendimiento (ej. Google Analytics).</li>
+        </ul>
+
+        <h2>3. Consentimiento</h2>
+        <p>Al continuar navegando por nuestro sitio web, usted acepta el uso de estas cookies. Puede revocar su consentimiento en cualquier momento eliminando las cookies mediante las opciones de su navegador.</p>
+
+        <h2>4. Gestión y desactivación de cookies</h2>
+        <p>Usted puede restringir, bloquear o borrar las cookies de ANALAC o cualquier otra página web, utilizando su navegador. Cada navegador opera de manera diferente, la función de "Ayuda" de su navegador le mostrará cómo hacerlo.</p>
+
+        <p class="last-update">Última actualización: Julio 2026</p>
+      </div>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  /* Slim Hero */
+  .page-hero.hero-dark.slim {
+    padding: 160px 0 80px;
+    min-height: 40vh;
+    display: flex;
+    align-items: center;
+    background-color: #06150f;
+    position: relative;
+  }
+  .page-hero-bg {
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(rgba(6, 15, 7, 0.4), rgba(6, 15, 7, 0.8)), url('/images/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    z-index: 0;
+  }
+  .page-hero-content {
+    position: relative;
+    z-index: 1;
+    max-width: 900px;
+    text-align: center;
+    margin: 0 auto;
+  }
+  .page-hero-title {
+    font-size: clamp(32px, 5vw, 48px);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: #ffffff;
+  }
+  .overline-light {
+    color: var(--color-green-soft);
+    border-color: rgba(255, 255, 255, 0.2);
+    margin-bottom: 16px;
+    display: inline-block;
+  }
+
+  /* Legal Content */
+  .premium-panel {
+    background: #ffffff;
+    padding: 64px;
+    border-radius: 16px;
+    border: 1px solid rgba(0,0,0,0.04);
+    box-shadow: 0 4px 24px rgba(0,0,0,0.02);
+  }
+  
+  .legal-alert {
+    background: rgba(255, 171, 0, 0.1);
+    color: #b37700;
+    padding: 16px 24px;
+    border-radius: 8px;
+    border-left: 4px solid #ffab00;
+    margin-bottom: 40px;
+    font-size: 15px;
+  }
+
+  .premium-panel h2 {
+    font-size: 24px;
+    color: var(--color-green-dark);
+    margin: 40px 0 16px;
+    font-weight: 500;
+  }
+  
+  .premium-panel h2:first-of-type {
+    margin-top: 0;
+  }
+
+  .premium-panel p, .premium-panel ul {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--color-text-main);
+    margin-bottom: 16px;
+  }
+
+  .premium-panel ul {
+    padding-left: 20px;
+  }
+
+  .last-update {
+    margin-top: 48px;
+    font-size: 14px !important;
+    color: var(--color-text-sub) !important;
+    border-top: 1px solid rgba(0,0,0,0.1);
+    padding-top: 24px;
+  }
+  
+  @media (max-width: 768px) {
+    .premium-panel { padding: 32px 24px; }
+    .page-hero.hero-dark.slim { min-height: auto; padding: 140px 0 60px; }
+  }
+</style>

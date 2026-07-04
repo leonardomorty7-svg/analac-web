@@ -2,6 +2,15 @@
 // src/components/Nav.astro
 ---
 <nav class="nav" id="main-nav">
+  <div class="nav-top-bar">
+    <div class="top-bar-container">
+      <a href="/portal">Portal</a>
+      <span class="separator">|</span>
+      <a href="/afiliate">Hazte afiliado</a>
+      <span class="separator">|</span>
+      <a href="/zona-pagos">Pagos</a>
+    </div>
+  </div>
   <div class="nav-container">
     <a href="/" class="nav-logo"><img src="/images/logo-white.svg" alt="ANALAC" class="nav-logo-img" /></a>
     
@@ -14,11 +23,6 @@
     </div>
 
     <div class="nav-actions">
-      <div class="nav-cta">
-        <a href="/portal" class="nav-btn-discreet">Portal</a>
-        <a href="/afiliate" class="nav-btn">Hazte afiliado</a>
-      </div>
-
       <button class="nav-hamburger" id="nav-toggle" aria-label="Menu" aria-expanded="false" aria-controls="mobile-menu">
         <span></span><span></span><span></span>
       </button>
@@ -34,8 +38,6 @@
       <img src="/images/logo-white.svg" alt="ANALAC" class="mobile-logo-img" />
     </div>
     <div class="mobile-menu-actions">
-      <a href="/portal" class="nav-btn-discreet">Portal</a>
-      <a href="/afiliate" class="nav-btn">Hazte afiliado</a>
       <button class="nav-hamburger is-active" id="nav-close" aria-label="Cerrar menú">
         <span></span><span></span><span></span>
       </button>
@@ -97,7 +99,7 @@
           </div>
           <div class="net-link-content">
             <span class="net-link-title">Observatorio</span>
-            <span class="net-link-desc">Datos, indicadores e información sectorial.</span>
+            <span class="net-link-desc">Información sectorial, datos, indicadores y análisis.</span>
           </div>
         </a>
         <a href="/noticias" class="net-link">
@@ -136,11 +138,11 @@
 
       <div class="menu-legal">
         <a href="/quienes-somos/transparencia-y-gobierno">Transparencia</a>
-        <a href="/politica-de-privacidad" class="mock-link">Privacidad</a>
-        <a href="/tratamiento-de-datos-personales" class="mock-link">Tratamiento de datos</a>
-        <a href="/politica-de-cookies" class="mock-link">Cookies</a>
-        <a href="/terminos-y-condiciones" class="mock-link">Términos</a>
-        <a href="/accesibilidad" class="mock-link">Accesibilidad</a>
+        <a href="/politica-de-privacidad">Privacidad</a>
+        <a href="/tratamiento-de-datos-personales">Tratamiento de datos</a>
+        <a href="/politica-de-cookies">Cookies</a>
+        <a href="/terminos-y-condiciones">Términos</a>
+        <a href="/accesibilidad">Accesibilidad</a>
         <a href="/mapa-del-sitio">Mapa del sitio</a>
       </div>
 
@@ -225,10 +227,45 @@
     top: 0;
     left: 0;
     width: 100%;
-    height: 104px;
     z-index: 1000;
     background: linear-gradient(to bottom, rgba(6, 15, 7, 0.85) 0%, transparent 100%);
     transition: all 0.3s ease;
+  }
+
+  .nav-top-bar {
+    background: #115724; /* Verde institucional oscuro para contraste */
+    height: 36px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    transition: opacity 0.3s ease;
+  }
+
+  .top-bar-container {
+    max-width: 1440px;
+    margin: 0 auto;
+    padding: 0 40px;
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .top-bar-container a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 500;
+    transition: opacity 0.2s;
+    letter-spacing: 0.02em;
+  }
+  .top-bar-container a:hover {
+    opacity: 0.8;
+  }
+  .top-bar-container .separator {
+    color: rgba(255,255,255,0.3);
+    font-size: 12px;
   }
 
   .nav.scrolled {
@@ -251,9 +288,10 @@
     align-items: center;
     max-width: 1440px;
     margin: 0 auto;
-    height: 100%;
+    height: 80px;
     padding: 0 40px;
     pointer-events: all;
+    transition: opacity 0.3s ease;
   }
 
   .nav.menu-open .nav-container {
@@ -378,10 +416,12 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    height: 104px;
+    height: 80px;
+    margin-top: 36px; /* Para esquivar la franja verde */
     padding: 0 40px;
     max-width: 1440px;
-    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
     width: 100%;
     border-bottom: 1px solid rgba(255,255,255,0.05);
   }
@@ -658,7 +698,17 @@
   }
 
   @media (max-width: 768px) {
-    .mobile-menu-header { padding: 0 24px; height: 68px; }
+    .top-bar-container {
+      justify-content: center;
+      padding: 0 24px;
+      gap: 12px;
+    }
+    .top-bar-container a {
+      font-size: 12px;
+    }
+    
+    .mobile-menu-header { padding: 0 24px; height: 68px; margin-top: 36px; }
+    .nav-container { padding: 0 24px; height: 68px; }
     .mobile-logo-img { height: 42px; }
     .mobile-menu-actions .nav-btn-discreet,
     .mobile-menu-actions .nav-btn { display: none; }
