@@ -9,7 +9,7 @@ CREATE TABLE user_profiles (
 );
 
 CREATE TABLE organization_users (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   organization_id UUID REFERENCES organizations(id) ON DELETE CASCADE,
   user_id UUID REFERENCES user_profiles(id) ON DELETE CASCADE,
   org_role VARCHAR(50) DEFAULT 'editor', -- 'owner', 'editor', 'viewer'
@@ -19,7 +19,7 @@ CREATE TABLE organization_users (
 
 -- 2. Relación con ANALAC
 CREATE TABLE memberships (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   organization_id UUID REFERENCES organizations(id) ON DELETE CASCADE,
   membership_type VARCHAR(100) NOT NULL,
   status VARCHAR(50) DEFAULT 'active',
@@ -29,7 +29,7 @@ CREATE TABLE memberships (
 );
 
 CREATE TABLE verification_records (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   organization_id UUID REFERENCES organizations(id) ON DELETE CASCADE,
   verified_by UUID REFERENCES user_profiles(id),
   verification_date TIMESTAMPTZ DEFAULT NOW(),
@@ -38,7 +38,7 @@ CREATE TABLE verification_records (
 
 -- 3. Contenido Extendido
 CREATE TABLE services (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   name VARCHAR(255) UNIQUE NOT NULL,
   slug VARCHAR(255) UNIQUE NOT NULL
 );
@@ -50,7 +50,7 @@ CREATE TABLE organization_services (
 );
 
 CREATE TABLE galleries (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   organization_profile_id UUID REFERENCES organization_profiles(id) ON DELETE CASCADE,
   image_url TEXT NOT NULL,
   caption VARCHAR(255),
@@ -58,7 +58,7 @@ CREATE TABLE galleries (
 );
 
 CREATE TABLE documents (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   organization_profile_id UUID REFERENCES organization_profiles(id) ON DELETE CASCADE,
   title VARCHAR(255) NOT NULL,
   file_url TEXT NOT NULL,
@@ -68,7 +68,7 @@ CREATE TABLE documents (
 
 -- 4. Flujo Editorial (Separación de Publicado vs Borrador)
 CREATE TABLE profile_revisions (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   organization_profile_id UUID REFERENCES organization_profiles(id) ON DELETE CASCADE,
   submitted_by UUID REFERENCES user_profiles(id),
   status profile_status_enum DEFAULT 'pending_review',
@@ -79,7 +79,7 @@ CREATE TABLE profile_revisions (
 );
 
 CREATE TABLE moderation_notes (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   revision_id UUID REFERENCES profile_revisions(id) ON DELETE CASCADE,
   moderator_id UUID REFERENCES user_profiles(id),
   note TEXT NOT NULL,
@@ -87,7 +87,7 @@ CREATE TABLE moderation_notes (
 );
 
 CREATE TABLE publication_history (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   organization_profile_id UUID REFERENCES organization_profiles(id) ON DELETE CASCADE,
   revision_id UUID REFERENCES profile_revisions(id),
   published_at TIMESTAMPTZ DEFAULT NOW(),

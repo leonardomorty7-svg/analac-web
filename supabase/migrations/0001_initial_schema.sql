@@ -1,6 +1,12 @@
 -- Enable UUID extension
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
+-- Create fallback function for uuid_generate_v4 to prevent schema path errors
+CREATE OR REPLACE FUNCTION public.uuid_generate_v4()
+RETURNS uuid AS $$
+  SELECT gen_random_uuid();
+$$ LANGUAGE sql;
+
 -- 1. Enums
 CREATE TYPE profile_status_enum AS ENUM (
   'draft', 
@@ -26,7 +32,7 @@ CREATE TYPE organization_type_enum AS ENUM (
 -- 2. Identidad de la Organización (Core)
 -- Esta tabla aloja la identidad inmutable que persistirá incluso si el perfil público es archivado
 CREATE TABLE organizations (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   slug VARCHAR(255) UNIQUE NOT NULL,
   name VARCHAR(255) NOT NULL,
   org_type organization_type_enum NOT NULL,
@@ -39,7 +45,7 @@ CREATE TABLE organizations (
 -- 3. Perfil Empresarial (Contenido AEO y Público)
 -- Aloja la información enriquecida que atraviesa estados editoriales
 CREATE TABLE organization_profiles (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   organization_id UUID REFERENCES organizations(id) ON DELETE CASCADE,
   editorial_status profile_status_enum DEFAULT 'draft',
   summary VARCHAR(300) NOT NULL, -- Obligatorio para AEO
@@ -56,7 +62,7 @@ CREATE TABLE organization_profiles (
 
 -- 4. Categorías
 CREATE TABLE categories (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   slug VARCHAR(255) UNIQUE NOT NULL,
   name VARCHAR(255) UNIQUE NOT NULL,
   description TEXT
@@ -70,7 +76,7 @@ CREATE TABLE organization_categories (
 
 -- 5. Ubicación y Cobertura
 CREATE TABLE locations (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   organization_id UUID REFERENCES organizations(id) ON DELETE CASCADE,
   city VARCHAR(255) NOT NULL,
   department VARCHAR(255) NOT NULL,
@@ -86,7 +92,7 @@ CREATE TABLE coverage_areas (
 
 -- 6. Contactos
 CREATE TABLE contacts (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   organization_id UUID REFERENCES organizations(id) ON DELETE CASCADE,
   email VARCHAR(255),
   phone VARCHAR(50),
@@ -95,7 +101,7 @@ CREATE TABLE contacts (
 );
 
 CREATE TABLE social_links (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   organization_id UUID REFERENCES organizations(id) ON DELETE CASCADE,
   platform VARCHAR(50) NOT NULL, -- e.g. "LinkedIn", "Instagram"
   url TEXT NOT NULL
@@ -103,14 +109,14 @@ CREATE TABLE social_links (
 
 -- 7. Contenidos Específicos
 CREATE TABLE products_summary (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   organization_profile_id UUID REFERENCES organization_profiles(id) ON DELETE CASCADE,
   name VARCHAR(255) NOT NULL,
   display_order INT DEFAULT 0
 );
 
 CREATE TABLE certifications (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   organization_profile_id UUID REFERENCES organization_profiles(id) ON DELETE CASCADE,
   name VARCHAR(255) NOT NULL,
   document_url TEXT, -- URL en bucket private-docs
@@ -118,7 +124,7 @@ CREATE TABLE certifications (
 );
 
 CREATE TABLE faqs (
-  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
   organization_profile_id UUID REFERENCES organization_profiles(id) ON DELETE CASCADE,
   question TEXT NOT NULL,
   answer TEXT NOT NULL,

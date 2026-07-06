@@ -63,4 +63,4 @@ WITH CHECK (
 CREATE TRIGGER handle_updated_at_admin_users
   BEFORE UPDATE ON admin_users
   FOR EACH ROW
-  EXECUTE FUNCTION moddatetime();
+  EXECUTE FUNCTION update_updated_at_column();
