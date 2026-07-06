@@ -1,0 +1,90 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import { getSupabaseServer } from '../../lib/supabase/server'
+import { marked } from 'marked' // We might need this, or Astro's own markdown. But we'll render as HTML.
+
+export async function getStaticPaths() {
+  const supabase = getSupabaseServer(new Request('http://localhost'), { get: () => '', set: () => '', delete: () => '', has: () => false } as any)
+  const { data } = await supabase.from('noticias').select('slug').eq('is_published', true)
+  
+  return (data || []).map((noticia) => ({
+    params: { slug: noticia.slug },
+  }))
+}
+
+const { slug } = Astro.params
+
+const supabase = getSupabaseServer(Astro.request, Astro.cookies)
+const { data: noticia, error } = await supabase
+  .from('noticias')
+  .select('*')
+  .eq('slug', slug)
+  .eq('is_published', true)
+  .single()
+
+if (error || !noticia) {
+  return Astro.redirect('/404')
+}
+
+// Convert markdown if content is markdown, otherwise trust HTML
+const htmlContent = noticia.content // Assuming it might be HTML or simple text. If marked is used, `marked.parse(noticia.content)`
+const formattedDate = new Date(noticia.date_iso).toLocaleDateString('es-CO', { year: 'numeric', month: 'long', day: 'numeric' })
+---
+
+<BaseLayout
+  title={`${noticia.title} | ANALAC`}
+  description={noticia.excerpt}
+>
+  <article class="article-detail fade-up" style="padding: 140px 0 80px;">
+    <div class="container" style="max-width: 800px; margin: 0 auto;">
+      <div style="margin-bottom: 32px; text-align: center;">
+        <span class="tag tag--filled" style="margin-bottom: 16px;">{noticia.category}</span>
+        <h1 style="font-size: clamp(32px, 5vw, 48px); font-weight: 500; letter-spacing: -0.02em; margin-bottom: 16px; color: var(--c-text);">
+          {noticia.title}
+        </h1>
+        <p style="font-size: 18px; color: var(--c-muted); line-height: 1.6; margin-bottom: 24px;">
+          {noticia.excerpt}
+        </p>
+        <time style="font-size: 14px; font-weight: 500; color: var(--c-muted); text-transform: uppercase; letter-spacing: 0.05em;">
+          {formattedDate}
+        </time>
+      </div>
+
+      <div style="border-radius: 16px; overflow: hidden; margin-bottom: 48px; max-height: 460px;">
+        <img 
+          src={noticia.image_url} 
+          alt={noticia.image_alt}
+          style="width: 100%; height: 100%; object-fit: cover;"
+        />
+      </div>
+
+      <div class="prose" style="max-width: 100%;" set:html={htmlContent} />
+
+      <div style="margin-top: 64px; border-top: 1px solid rgba(0,0,0,0.1); padding-top: 32px;">
+        <a href="/noticias" style="display: inline-flex; align-items: center; gap: 8px; font-weight: 500; color: var(--c-green-deep); text-decoration: none;">
+          ← Volver a Noticias
+        </a>
+      </div>
+    </div>
+  </article>
+</BaseLayout>
+
+<style>
+  .prose {
+    font-size: 17px;
+    line-height: 1.7;
+    color: var(--c-text);
+  }
+  .prose p {
+    margin-bottom: 1.5em;
+  }
+  .prose h2, .prose h3 {
+    margin-top: 2em;
+    margin-bottom: 1em;
+    color: var(--c-text);
+  }
+  .prose ul, .prose ol {
+    margin-bottom: 1.5em;
+    padding-left: 1.5em;
+  }
+</style>

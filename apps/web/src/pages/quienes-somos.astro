@@ -1,8 +1,36 @@
 ---
 // src/pages/quienes-somos.astro
 import BaseLayout from '../layouts/BaseLayout.astro'
-import AliadosSection from '../components/AliadosSection.astro'
+import LogoShowcase from '../components/LogoShowcase.astro'
 import CtaFinal from '../components/CtaFinal.astro'
+import fs from 'node:fs'
+import path from 'node:path'
+
+// Función para leer dinámicamente las carpetas de imágenes
+function getLogosFromDir(dirPath: string) {
+  try {
+    const fullPath = path.join(process.cwd(), 'public', 'images', dirPath);
+    if (!fs.existsSync(fullPath)) return [];
+    const files = fs.readdirSync(fullPath);
+    return files
+      .filter(f => !f.startsWith('.')) // Excluir ocultos (.DS_Store)
+      .map(f => ({
+        src: `/images/${dirPath}/${f}`,
+        // Limpiar nombre para el alt (ej: 'grupo-bios.webp' -> 'grupo bios')
+        alt: f.replace(/\.[^/.]+$/, '').replace(/-/g, ' ') 
+      }));
+  } catch (e) {
+    console.error(`Error reading ${dirPath}:`, e);
+    return [];
+  }
+}
+
+const tier1 = getLogosFromDir('aliados/tier-1');
+const tier2 = getLogosFromDir('aliados/tier-2');
+const tier3 = getLogosFromDir('aliados/tier-3');
+const gremios = getLogosFromDir('gremios');
+const instituciones = getLogosFromDir('instituciones');
+const academia = getLogosFromDir('academia');
 ---
 
 <BaseLayout
@@ -318,8 +346,83 @@ import CtaFinal from '../components/CtaFinal.astro'
     </div>
   </section>
 
-  <!-- S5b Asociaciones Afiliadas -->
-  <AliadosSection />
+  <!-- S5b Aliados, Instituciones y Representación -->
+  <section class="section" id="organizaciones" style="background: #ffffff; padding: 120px 0; border-top: 1px solid rgba(0,0,0,0.05);">
+    <div class="container">
+      
+      <!-- 1. Aliados Estratégicos -->
+      <div class="section-header text-center fade-up" style="max-width: 800px; margin: 0 auto 80px;">
+        <p class="overline">Red de Apoyo</p>
+        <h2 class="h2">Aliados Estratégicos</h2>
+        <p style="font-size: 19px; color: var(--color-text-sub); margin-top: 16px;">
+          Empresas que apoyan económicamente a ANALAC, fortalecen el desarrollo del sector lácteo colombiano y aportan soluciones y tecnología para nuestros productores.
+        </p>
+      </div>
+
+      <div style="margin-bottom: 120px;">
+        <LogoShowcase 
+          title="Aliados Premium"
+          logos={tier1}
+          variant="premium"
+          layout="flex"
+          size="large"
+        />
+        
+        <LogoShowcase 
+          title="Aliados Estratégicos"
+          logos={tier2}
+          variant="standard"
+          layout="flex"
+          size="medium"
+        />
+        
+        <LogoShowcase 
+          title="Empresas Aliadas"
+          logos={tier3}
+          variant="standard"
+          layout="grid"
+          size="standard"
+        />
+      </div>
+
+      <!-- 2. Representación Gremial -->
+      <div style="margin-bottom: 120px; padding-top: 60px; border-top: 1px solid rgba(0,0,0,0.05);">
+        <LogoShowcase 
+          title="Representación Gremial"
+          description="ANALAC participa activamente en espacios donde se construyen políticas públicas y se defiende la agenda del sector lácteo colombiano, articulando esfuerzos con los gremios más importantes del país."
+          logos={gremios}
+          variant="premium"
+          layout="flex"
+          size="medium"
+        />
+      </div>
+
+      <!-- 3. Instituciones -->
+      <div style="margin-bottom: 120px; padding-top: 60px; border-top: 1px solid rgba(0,0,0,0.05);">
+        <LogoShowcase 
+          title="Articulación Institucional"
+          description="Trabajamos de forma constante con entidades gubernamentales, ministerios y organismos técnicos para garantizar la normatividad, sanidad y competitividad de la producción nacional."
+          logos={instituciones}
+          variant="premium"
+          layout="grid"
+          size="medium"
+        />
+      </div>
+
+      <!-- 4. Academia -->
+      <div style="padding-top: 60px; border-top: 1px solid rgba(0,0,0,0.05);">
+        <LogoShowcase 
+          title="Academia y Formación"
+          description="Nuestra relación con universidades y entidades formativas nos permite llevar capacitación, ciencia y transferencia tecnológica directamente a las fincas de nuestros afiliados."
+          logos={academia}
+          variant="standard"
+          layout="flex"
+          size="medium"
+        />
+      </div>
+
+    </div>
+  </section>
 
   <!-- S6 Equipo -->
   <section class="section" id="junta" style="background: var(--color-bg-page); padding: 120px 0;">

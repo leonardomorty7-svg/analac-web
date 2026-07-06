@@ -1,47 +1,33 @@
 ---
 // src/pages/noticias/eventos/index.astro
 import BaseLayout from '../../../layouts/BaseLayout.astro'
+import { getSupabaseServer } from '../../../lib/supabase/server'
 
-// MOCK DATA - DEBE REEMPLAZARSE POR EL CMS CUANDO HAYA CONTENIDO REAL
-const seminarios = [
-  {
-    id: 'sem-2025',
-    title: 'III Seminario Presente y Futuro de la Cadena Láctea',
-    year: '2025',
-    date: '15 Noviembre 2025',
-    location: 'Bogotá, Colombia',
-    excerpt: 'Análisis de competitividad, sostenibilidad y adopción tecnológica en el sector lácteo colombiano.',
-    imageUrl: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80&auto=format&fit=crop',
-    slug: 'seminario-cadena-lactea-2025'
-  },
-  {
-    id: 'sem-2024',
-    title: 'II Seminario Presente y Futuro de la Cadena Láctea',
-    year: '2024',
-    date: '10 Noviembre 2024',
-    location: 'Medellín, Colombia',
-    excerpt: 'El mercado lácteo global y sus impactos en el escenario productivo nacional.',
-    imageUrl: 'https://images.unsplash.com/photo-1591115765373-5207764f72e7?w=800&q=80&auto=format&fit=crop',
-    slug: 'seminario-cadena-lactea-2024'
-  }
-]
+const supabase = getSupabaseServer(Astro.request, Astro.cookies)
 
-const encuentros = [
-  {
-    id: 'enc-narino-2023',
-    title: 'Encuentro de Productores de Leche',
-    region: 'Nariño',
-    year: '2023',
-    slug: 'encuentro-productores-narino-2023'
-  },
-  {
-    id: 'enc-jovenes-2023',
-    title: 'Encuentro Nacional de Jóvenes Ganaderos',
-    region: 'Nacional',
-    year: '2023',
-    slug: 'encuentro-jovenes-ganaderos-2023'
-  }
-]
+const { data: eventosData } = await supabase
+  .from('eventos')
+  .select('*')
+  .eq('is_published', true)
+  .order('year', { ascending: false })
+
+const eventos = eventosData || []
+
+// Map snake_case to camelCase
+const mappedEventos = eventos.map(e => ({
+  id: e.id,
+  title: e.title,
+  year: e.year,
+  date: e.event_date,
+  location: e.location,
+  excerpt: e.excerpt,
+  imageUrl: e.image_url,
+  slug: e.slug,
+  type: e.type,
+}))
+
+const seminarios = mappedEventos.filter(e => e.type === 'seminario')
+const encuentros = mappedEventos.filter(e => e.type === 'encuentro')
 ---
 
 <BaseLayout
@@ -69,6 +55,7 @@ const encuentros = [
       <div class="section-header" style="margin-bottom: 40px;">
         <h2 class="h2" style="font-size: 28px;">Seminario más reciente</h2>
       </div>
+      {seminarios.length > 0 ? (
       <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center; background: var(--c-cream); border-radius: 24px; overflow: hidden; border: 1px solid rgba(0,0,0,0.05);">
         <div style="height: 100%; min-height: 400px; position: relative;">
           <img src={seminarios[0].imageUrl} alt="Seminario" style="position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;" />
@@ -84,6 +71,11 @@ const encuentros = [
           <a href={`/noticias/eventos/${seminarios[0].slug}`} class="btn btn--primary">Ver memorias completas →</a>
         </div>
       </div>
+      ) : (
+        <div style="padding: 48px; text-align: center; background: var(--c-cream); border-radius: 24px; border: 1px solid rgba(0,0,0,0.05);">
+          <p style="color: var(--c-muted);">Próximamente publicaremos las memorias de nuestros seminarios.</p>
+        </div>
+      )}
     </div>
   </section>
 
@@ -107,6 +99,9 @@ const encuentros = [
                 </div>
               </a>
             ))}
+            {seminarios.length <= 1 && (
+              <p style="font-size: 14px; color: var(--c-muted);">No hay seminarios anteriores disponibles.</p>
+            )}
           </div>
         </div>
 
@@ -118,13 +113,16 @@ const encuentros = [
               <a href={`/noticias/eventos/${enc.slug}`} style="display: flex; justify-content: space-between; align-items: center; padding: 20px; background: #fff; border: 1px solid rgba(0,0,0,0.05); border-radius: 12px; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s;" class="enc-card">
                 <div>
                   <h4 style="font-size: 16px; font-weight: 500; color: var(--c-text); margin-bottom: 4px;">{enc.title}</h4>
-                  <p style="font-size: 14px; color: var(--c-muted);">Región: {enc.region}</p>
+                  <p style="font-size: 14px; color: var(--c-muted);">Región: {enc.location}</p>
                 </div>
                 <div style="font-size: 14px; font-weight: 600; color: var(--c-green-deep); background: rgba(109,181,109,0.1); padding: 4px 12px; border-radius: 100px;">
                   {enc.year}
                 </div>
               </a>
             ))}
+            {encuentros.length === 0 && (
+              <p style="font-size: 14px; color: var(--c-muted);">No hay encuentros disponibles.</p>
+            )}
           </div>
         </div>
       </div>

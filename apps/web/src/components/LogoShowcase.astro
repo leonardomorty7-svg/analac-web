@@ -1,0 +1,292 @@
+---
+// src/components/LogoShowcase.astro
+
+export interface Props {
+  title?: string;
+  description?: string;
+  logos: { src: string; alt: string }[];
+  variant?: 'premium' | 'standard';
+  layout?: 'grid' | 'marquee' | 'flex';
+  size?: 'large' | 'medium' | 'standard';
+}
+
+const { 
+  title, 
+  description, 
+  logos, 
+  variant = 'standard', 
+  layout = 'flex', 
+  size = 'standard' 
+} = Astro.props;
+
+const sizeClass = `size-${size}`;
+const variantClass = `variant-${variant}`;
+const layoutClass = `layout-${layout}`;
+
+// Determinar el delay base para animaciones reveal
+const baseDelay = 150;
+---
+
+<div class={`logo-showcase fade-up ${layoutClass}`}>
+  {(title || description) && (
+    <div class="showcase-header">
+      {title && <h3 class="showcase-title">{title}</h3>}
+      {description && <p class="showcase-desc">{description}</p>}
+    </div>
+  )}
+
+  {layout === 'marquee' ? (
+    <div class="marquee-container">
+      <div class="marquee-track">
+        {[...logos, ...logos, ...logos].map((logo) => (
+          <div class={`logo-wrapper ${sizeClass} ${variantClass}`}>
+            <img src={logo.src} alt={logo.alt} loading="lazy" class="logo-img" />
+          </div>
+        ))}
+      </div>
+    </div>
+  ) : (
+    <div class={`static-container ${layoutClass}`}>
+      {logos.map((logo, index) => (
+        <div class={`logo-wrapper reveal ${sizeClass} ${variantClass}`} style={`transition-delay: ${Math.min(baseDelay * (index + 1), 600)}ms`}>
+          <img src={logo.src} alt={logo.alt} loading="lazy" class="logo-img" />
+        </div>
+      ))}
+    </div>
+  )}
+</div>
+
+<style>
+  .logo-showcase {
+    margin-bottom: 64px;
+    width: 100%;
+  }
+
+  .showcase-header {
+    text-align: center;
+    max-width: 800px;
+    margin: 0 auto 40px;
+  }
+
+  .showcase-title {
+    font-size: clamp(24px, 3vw, 32px);
+    font-weight: 500;
+    color: var(--c-text);
+    margin-bottom: 16px;
+    letter-spacing: -0.01em;
+  }
+
+  .showcase-desc {
+    font-size: 16px;
+    color: var(--c-muted);
+    line-height: 1.6;
+  }
+
+  /* --- Wrappers & Items --- */
+  .logo-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    border-radius: 12px;
+  }
+
+  .logo-img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    transition: all 0.4s ease;
+  }
+
+  /* --- Sizes --- */
+  .logo-wrapper.size-large {
+    width: 240px;
+    height: 140px;
+    padding: 24px;
+  }
+  .logo-wrapper.size-large .logo-img { max-height: 90px; }
+
+  .logo-wrapper.size-medium {
+    width: 180px;
+    height: 100px;
+    padding: 16px;
+  }
+  .logo-wrapper.size-medium .logo-img { max-height: 60px; }
+
+  .logo-wrapper.size-standard {
+    width: 140px;
+    height: 80px;
+    padding: 12px;
+  }
+  .logo-wrapper.size-standard .logo-img { max-height: 45px; }
+
+  /* --- Variants --- */
+  .logo-wrapper.variant-standard .logo-img {
+    filter: grayscale(100%) opacity(0.6);
+  }
+  .logo-wrapper.variant-standard:hover .logo-img {
+    filter: grayscale(0%) opacity(1);
+    transform: scale(1.08);
+  }
+
+  .logo-wrapper.variant-premium {
+    background: #ffffff;
+    border: 1px solid rgba(0,0,0,0.04);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+  }
+  .logo-wrapper.variant-premium .logo-img {
+    filter: grayscale(100%) opacity(0.7);
+  }
+  .logo-wrapper.variant-premium:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.08);
+    border-color: transparent;
+  }
+  .logo-wrapper.variant-premium:hover .logo-img {
+    filter: grayscale(0%) opacity(1);
+    transform: scale(1.05);
+  }
+
+  /* --- Layouts --- */
+  .static-container.layout-flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 32px;
+  }
+
+  .static-container.layout-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 24px;
+    justify-items: center;
+  }
+
+  /* --- Marquee --- */
+  .marquee-container {
+    width: 100%;
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+  }
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    gap: 40px;
+    animation: scroll 40s linear infinite;
+    padding: 20px 0;
+  }
+  .marquee-track:hover {
+    animation-play-state: paused;
+  }
+  @keyframes scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-33.33% - 20px)); } /* Asumimos triplicado */
+  }
+
+  /* --- Utils --- */
+  .reveal {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* --- Responsive --- */
+  @media (max-width: 768px) {
+    .logo-wrapper.size-large { width: 160px; height: 100px; padding: 16px; }
+    .logo-wrapper.size-medium { width: 130px; height: 80px; padding: 12px; }
+    .logo-wrapper.size-standard { width: 100px; height: 60px; padding: 8px; }
+
+    .static-container.layout-flex { gap: 16px; }
+    .static-container.layout-grid { gap: 16px; grid-template-columns: repeat(2, 1fr); }
+  }
+</style>
+
+<script>
+  function balanceLogoGrids() {
+    const containers = document.querySelectorAll('.static-container');
+    
+    containers.forEach(container => {
+      // 1. Reset para medir capacidad natural
+      container.style.maxWidth = '';
+      
+      // En mobile no intervenimos según requerimiento
+      if (window.innerWidth <= 768) return;
+      
+      const items = Array.from(container.children);
+      const N = items.length;
+      if (N <= 1) return;
+      
+      // 2. Medir columnas naturales en la primera fila
+      let firstRowY = items[0].getBoundingClientRect().top;
+      let maxCols = 0;
+      
+      for (let i = 0; i < N; i++) {
+        if (Math.abs(items[i].getBoundingClientRect().top - firstRowY) < 10) {
+          maxCols++;
+        } else {
+          break;
+        }
+      }
+      
+      // Si todo cabe en una sola fila de forma natural, no hacemos nada
+      if (maxCols >= N) return;
+      
+      // 3. Algoritmo editorial de balanceo
+      const R = Math.ceil(N / maxCols); // filas mínimas requeridas
+      let targetCols = Math.ceil(N / R); // distribución óptima de columnas
+      
+      // Evitar que la última fila quede con 1 solo elemento (orphan)
+      while (targetCols > 2 && (N % targetCols === 1)) {
+        targetCols--;
+      }
+      
+      // Si la distribución óptima coincide con la natural, el flex-wrap nativo ya es perfecto
+      if (targetCols === maxCols) return;
+      
+      // 4. Aplicar restricción de ancho para forzar 'targetCols'
+      const itemWidth = items[0].getBoundingClientRect().width;
+      let gap = 0;
+      if (maxCols > 1) {
+        gap = items[1].getBoundingClientRect().left - items[0].getBoundingClientRect().right;
+      }
+      
+      const newMaxWidth = (itemWidth * targetCols) + (gap * (targetCols - 1));
+      
+      // Aplicamos un pequeño buffer (+2px) para prevenir saltos por decimales
+      container.style.maxWidth = `${Math.ceil(newMaxWidth) + 2}px`;
+      container.style.margin = '0 auto';
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // Observer de Reveal (existente)
+    const observer = new IntersectionObserver((entries, obs) => {
+      entries.forEach(el => {
+        if (el.isIntersecting) {
+          el.target.classList.add('visible');
+          obs.unobserve(el.target);
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.logo-showcase .reveal').forEach(el => observer.observe(el));
+
+    // Ejecutar balanceo
+    balanceLogoGrids();
+  });
+
+  // Re-calcular al redimensionar la pantalla
+  let balanceTimeout;
+  window.addEventListener('resize', () => {
+    clearTimeout(balanceTimeout);
+    balanceTimeout = setTimeout(balanceLogoGrids, 150);
+  });
+  
+  // Re-calcular al cargar fuentes/imágenes por si alteran el layout
+  window.addEventListener('load', balanceLogoGrids);
+</script>
