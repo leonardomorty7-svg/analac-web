@@ -12,7 +12,7 @@
 
   <!-- Contenido principal -->
   <div class="hero-content">
-    <p class="overline" style="margin-bottom: 24px; color: rgba(255, 255, 255, 0.85); letter-spacing: 0.15em; font-size: 12px; font-weight: 500;">ASOCIACIÓN NACIONAL DE PRODUCTORES DE LECHE</p>
+    <p class="overline" style="margin-bottom: 24px; color: rgba(255, 255, 255, 0.85); letter-spacing: 0.15em; font-size: 12px; font-weight: 500; text-wrap: balance;">ASOCIACIÓN NACIONAL DE PRODUCTORES DE LECHE</p>
     
     <h1 class="hero-title">
       Unimos al <em class="hero-accent">sector lácteo colombiano</em> para impulsar su competitividad y desarrollo sostenible.
@@ -105,12 +105,13 @@
     line-height: 1.05;
     letter-spacing: -0.03em;
     margin-bottom: 32px;
-    font-size: clamp(48px, 5.5vw, 76px);
+    font-size: clamp(36px, 6vw, 76px);
     font-weight: 300;
     color: white;
     max-width: 1200px;
     margin-left: auto;
     margin-right: auto;
+    text-wrap: balance;
   }
 
   .hero-accent {
@@ -166,8 +167,7 @@
 
   @media (max-width: 768px) {
     .hero-home {
-      padding: 0 24px;
-      padding-bottom: 64px;
+      padding: 100px 24px 64px 24px;
     }
     .hero-content {
       padding: 0;

@@ -6,7 +6,7 @@
     <span class="overline">NUESTRO IMPACTO</span>
     <h2 class="impacto-h2">Una trayectoria al servicio del sector lácteo colombiano</h2>
     <div class="impacto-separator"></div>
-    <p class="impacto-desc-main" style="max-width: 700px; margin: 0 auto 40px; color: var(--c-muted); font-size: 19px; line-height: 1.6;">
+    <p class="impacto-desc-main" style="max-width: 700px; margin: 0 auto 40px; color: var(--c-muted); font-size: 19px; line-height: 1.6; text-wrap: balance;">
       Años de representación gremial, información sectorial y trabajo por el fortalecimiento de los productores de leche en Colombia.
     </p>
     
@@ -18,7 +18,7 @@
           <span data-counter="400000">0</span>+
         </div>
         <div class="impacto-label">productores representados</div>
-        <div class="impacto-desc">familias campesinas en todo el país (dato de referencia del demo)</div>
+        <div class="impacto-desc">familias campesinas vinculadas al sector lácteo colombiano</div>
       </div>
       
       <!-- Item 2 -->
@@ -36,7 +36,7 @@
           $<span data-counter="1820">0</span>
         </div>
         <div class="impacto-label">precio litro referencial</div>
-        <div class="impacto-desc">COP en finca — dato de referencia del demo*</div>
+        <div class="impacto-desc">COP en finca — *Información sectorial sujeta a actualización por ANALAC</div>
       </div>
     </div>
   </div>
@@ -60,11 +60,12 @@
   }
 
   .impacto-h2 {
-    font-size: 36px;
+    font-size: clamp(32px, 4vw, 48px);
     font-weight: 400;
     color: var(--c-text);
     margin-bottom: 0;
     letter-spacing: -0.02em;
+    text-wrap: balance;
   }
 
   .impacto-separator {
@@ -112,11 +113,12 @@
   .impacto-desc {
     font-size: 19px;
     color: var(--c-muted);
+    text-wrap: balance;
   }
 
   @media (max-width: 768px) {
     .impacto {
-      padding: 48px 24px;
+      padding: 64px 24px;
     }
     .impacto-grid {
       grid-template-columns: 1fr;

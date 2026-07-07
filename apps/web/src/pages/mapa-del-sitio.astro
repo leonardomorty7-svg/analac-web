@@ -41,9 +41,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <ul>
             <li><a href="/asociados-y-aliados">Landing Red ANALAC</a></li>
             <li><a href="/asociados-y-aliados/directorio">Directorio de Organizaciones</a></li>
-            <li><span class="mock-link">Soluciones y Vitrina (Próximamente)</span></li>
-            <li><span class="mock-link">Comunidad de Profesionales (Próximamente)</span></li>
-            <li><span class="mock-link">Oportunidades (Próximamente)</span></li>
+            <li><span class="inactive">Soluciones y Vitrina (Próximamente)</span></li>
+            <li><span class="inactive">Comunidad de Profesionales (Próximamente)</span></li>
+            <li><span class="inactive">Oportunidades (Próximamente)</span></li>
           </ul>
         </div>
 
@@ -66,9 +66,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
             <li><a href="/noticias">Conocimiento y Actualidad</a></li>
             <li><a href="/noticias">Actualidad y análisis (Noticias)</a></li>
             <li><a href="/consumo-lacteo">Consumo Lácteo</a></li>
-            <li><span class="mock-link">Investigación y ciencia (Próximamente)</span></li>
-            <li><span class="mock-link">Guías y recursos (Próximamente)</span></li>
-            <li><span class="mock-link">Biblioteca y publicaciones (Próximamente)</span></li>
+            <li><span class="inactive">Investigación y ciencia (Próximamente)</span></li>
+            <li><span class="inactive">Guías y recursos (Próximamente)</span></li>
+            <li><span class="inactive">Biblioteca y publicaciones (Próximamente)</span></li>
           </ul>
         </div>
 
@@ -77,11 +77,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <h3>5. Vincúlate</h3>
           <ul>
             <li><a href="/afiliate">Hazte afiliado</a></li>
-            <li><span class="mock-link">Sé aliado</span></li>
-            <li><span class="mock-link">Beneficios</span></li>
-            <li><span class="mock-link">Eventos</span></li>
-            <li><span class="mock-link">Convocatorias</span></li>
-            <li><span class="mock-link">Campañas</span></li>
+            <li><span class="inactive">Sé aliado</span></li>
+            <li><span class="inactive">Beneficios</span></li>
+            <li><span class="inactive">Eventos</span></li>
+            <li><span class="inactive">Convocatorias</span></li>
+            <li><span class="inactive">Campañas</span></li>
             <li><a href="/zona-pagos">Pago de membresía</a></li>
           </ul>
         </div>
@@ -92,7 +92,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <ul>
             <li><a href="/portal">Portal ANALAC</a></li>
             <li><a href="/portal-aliados/iniciar-sesion">Iniciar Sesión</a></li>
-            <li><span class="mock-link">Academia ANALAC (Próximamente)</span></li>
+            <li><span class="inactive">Academia ANALAC (Próximamente)</span></li>
           </ul>
         </div>
 
@@ -101,9 +101,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
           <h3>7. Mesa de Ayuda</h3>
           <ul>
             <li><a href="/ayuda">Centro de Ayuda</a></li>
-            <li><span class="mock-link">Preguntas frecuentes</span></li>
-            <li><span class="mock-link">Reportar un problema</span></li>
-            <li><span class="mock-link">Crear una solicitud</span></li>
+            <li><span class="inactive">Preguntas frecuentes</span></li>
+            <li><span class="inactive">Reportar un problema</span></li>
+            <li><span class="inactive">Crear una solicitud</span></li>
           </ul>
         </div>
 
@@ -111,13 +111,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
         <div class="sitemap-group">
           <h3>8. Legal y Gobierno</h3>
           <ul>
-            <li><span class="mock-link">Política de privacidad</span></li>
-            <li><span class="mock-link">Tratamiento de datos personales</span></li>
-            <li><span class="mock-link">Política de cookies</span></li>
-            <li><span class="mock-link">Términos y condiciones</span></li>
-            <li><span class="mock-link">Aviso legal</span></li>
-            <li><span class="mock-link">Accesibilidad</span></li>
-            <li><span class="mock-link">Canal ético</span></li>
+            <li class="inactive">Política de privacidad</li>
+            <li class="inactive">Tratamiento de datos personales</li>
+            <li class="inactive">Política de cookies</li>
+            <li class="inactive">Términos y condiciones</li>
+            <li class="inactive">Aviso legal</li>
+            <li class="inactive">Accesibilidad</li>
+            <li class="inactive">Canal ético</li>
             <li><a href="/mapa-del-sitio">Mapa del sitio</a></li>
           </ul>
         </div>
@@ -170,7 +170,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
   .sitemap-group li a:hover {
     color: var(--c-green);
   }
-  .mock-link {
+  .inactive {
     color: var(--c-muted) !important;
     cursor: default;
   }

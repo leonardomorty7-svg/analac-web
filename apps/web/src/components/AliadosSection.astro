@@ -33,9 +33,14 @@ const aliados = [
 
   <div class="marquee-container reveal" style="transition-delay: 300ms">
     <div class="marquee-track">
-      {[...aliados, ...aliados].map((aliado) => (
+      {aliados.map((aliado) => (
         <div class="aliado-logo-wrapper">
           <img src={`/images/aliados/${aliado.file}`} alt={`Logo ${aliado.nombre}`} class="aliado-logo" loading="lazy" />
+        </div>
+      ))}
+      {aliados.map((aliado) => (
+        <div class="aliado-logo-wrapper" aria-hidden="true">
+          <img src={`/images/aliados/${aliado.file}`} alt="" class="aliado-logo" loading="lazy" />
         </div>
       ))}
     </div>
@@ -77,6 +82,7 @@ const aliados = [
     font-weight: 400;
     letter-spacing: -0.02em;
     margin-bottom: 24px;
+    text-wrap: balance;
   }
 
   .aliados-p {
@@ -185,7 +191,7 @@ const aliados = [
 
   @media (max-width: 768px) {
     .aliados-section {
-      padding: 80px 24px;
+      padding: 64px 24px;
     }
     .marquee-track {
       gap: 24px;
@@ -196,9 +202,16 @@ const aliados = [
       100% { transform: translateX(calc(-50% - 12px)); }
     }
     .aliado-logo-wrapper {
-      width: 100px;
-      height: 60px;
-      padding: 8px;
+      width: 120px;
+      height: 72px;
+      padding: 12px;
+    }
+    .aliados-actions {
+      width: 100%;
+    }
+    .btn-primary {
+      width: 100%;
+      text-align: center;
     }
   }
 </style>

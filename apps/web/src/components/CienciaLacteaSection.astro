@@ -97,6 +97,7 @@ const sideArticles = [
     line-height: 1.15;
     margin: 0;
     letter-spacing: -0.02em;
+    text-wrap: balance;
   }
 
 
@@ -173,6 +174,7 @@ const sideArticles = [
     line-height: 1.15;
     margin: 0 0 16px;
     letter-spacing: -0.01em;
+    text-wrap: balance;
   }
 
   .main-desc {
@@ -256,6 +258,7 @@ const sideArticles = [
     line-height: 1.4;
     margin: 0;
     transition: color 0.3s ease;
+    text-wrap: balance;
   }
   .side-card:hover .side-title {
     color: #6db56d;
@@ -317,7 +320,7 @@ const sideArticles = [
 
   @media (max-width: 768px) {
     .ciencia-section {
-      padding: 80px 24px;
+      padding: 64px 24px;
     }
     .editorial-side {
       flex-direction: column;
@@ -326,7 +329,11 @@ const sideArticles = [
       width: 100%;
     }
     .editorial-main {
-      padding: 28px;
+      padding: 24px;
+      min-height: 380px;
+    }
+    .main-content {
+      max-width: 100%;
     }
   }
 </style>

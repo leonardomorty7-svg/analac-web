@@ -350,8 +350,100 @@ const academia = getLogosFromDir('academia');
   <section class="section" id="organizaciones" style="background: #ffffff; padding: 120px 0; border-top: 1px solid rgba(0,0,0,0.05);">
     <div class="container">
       
+      <!-- Estilos locales para las grillas de logos (Plano 007) -->
+      <style>
+        .section-logo-title {
+          font-size: clamp(24px, 3vw, 32px);
+          font-weight: 500;
+          text-align: center;
+          margin-bottom: 16px;
+          color: var(--color-text-main);
+          letter-spacing: -0.01em;
+        }
+        .section-logo-desc {
+          text-align: center;
+          color: var(--color-text-sub);
+          max-width: 800px;
+          margin: 0 auto 48px;
+          line-height: 1.6;
+        }
+        .logo-item {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        .logo-item img {
+          height: 60px; /* height uniforme */
+          width: auto;
+          object-fit: contain;
+          opacity: 0.65;
+          filter: grayscale(100%);
+          transition: opacity 0.4s ease, filter 0.4s ease, transform 0.4s ease;
+        }
+        .logo-item:hover img {
+          opacity: 1;
+          filter: none;
+          transform: scale(1.05);
+        }
+        .logo-item.tier-1 img { height: 72px; }
+        .logo-item.tier-2 img { height: 60px; }
+        .logo-item.tier-3 img { height: 50px; }
+
+        /* Grillas estáticas */
+        .static-logo-grid {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          gap: 64px;
+        }
+        .academia-logo-grid {
+          display: flex;
+          flex-wrap: nowrap;
+          justify-content: center;
+          gap: 64px;
+          overflow-x: auto;
+          scrollbar-width: none;
+        }
+        .academia-logo-grid::-webkit-scrollbar { display: none; }
+
+        /* Carrusel infinito */
+        .marquee-wrapper {
+          width: 100%;
+          overflow: hidden;
+          position: relative;
+          -webkit-mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+          mask-image: linear-gradient(90deg, transparent, #000 5%, #000 95%, transparent);
+        }
+        .marquee-track {
+          display: flex;
+          width: max-content;
+          gap: 80px;
+          padding: 20px 0;
+          animation: marquee-scroll 35s linear infinite;
+        }
+        .marquee-track:hover {
+          animation-play-state: paused;
+        }
+        @keyframes marquee-scroll {
+          0% { transform: translateX(0); }
+          100% { transform: translateX(calc(-50% - 40px)); } /* Half width + half gap */
+        }
+
+        @media (max-width: 768px) {
+          .static-logo-grid { gap: 32px; }
+          .academia-logo-grid { gap: 32px; justify-content: flex-start; padding-bottom: 16px; }
+          .logo-item.tier-1 img { height: 56px; }
+          .logo-item img { height: 48px; }
+          .marquee-track { gap: 40px; animation-duration: 25s; }
+          @keyframes marquee-scroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-50% - 20px)); }
+          }
+        }
+      </style>
+
       <!-- 1. Aliados Estratégicos -->
-      <div class="section-header text-center fade-up" style="max-width: 800px; margin: 0 auto 80px;">
+      <div class="section-header text-center fade-up" style="max-width: 800px; margin: 0 auto 64px;">
         <p class="overline">Red de Apoyo</p>
         <h2 class="h2">Aliados Estratégicos</h2>
         <p style="font-size: 19px; color: var(--color-text-sub); margin-top: 16px;">
@@ -359,66 +451,80 @@ const academia = getLogosFromDir('academia');
         </p>
       </div>
 
-      <div style="margin-bottom: 120px;">
-        <LogoShowcase 
-          title="Aliados Premium"
-          logos={tier1}
-          variant="premium"
-          layout="flex"
-          size="large"
-        />
-        
-        <LogoShowcase 
-          title="Aliados Estratégicos"
-          logos={tier2}
-          variant="standard"
-          layout="flex"
-          size="medium"
-        />
-        
-        <LogoShowcase 
-          title="Empresas Aliadas"
-          logos={tier3}
-          variant="standard"
-          layout="grid"
-          size="standard"
-        />
+      <div style="margin-bottom: 96px;" class="fade-up">
+        <h3 class="section-logo-title">Aliados Premium</h3>
+        <div class="static-logo-grid">
+          {tier1.map(logo => (
+            <div class="logo-item tier-1">
+              <img src={logo.src} alt={logo.alt} loading="lazy" />
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      <div style="margin-bottom: 96px;" class="fade-up">
+        <h3 class="section-logo-title">Aliados Estratégicos</h3>
+        <div class="static-logo-grid" style="gap: 48px;">
+          {tier2.map(logo => (
+            <div class="logo-item tier-2">
+              <img src={logo.src} alt={logo.alt} loading="lazy" />
+            </div>
+          ))}
+        </div>
+      </div>
+      
+      <div style="margin-bottom: 96px;" class="fade-up">
+        <h3 class="section-logo-title">Empresas Aliadas</h3>
+        <div class="marquee-wrapper">
+          <div class="marquee-track">
+            {[...tier3, ...tier3].map((logo) => (
+              <div class="logo-item tier-3">
+                <img src={logo.src} alt={logo.alt} loading="lazy" />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
       <!-- 2. Representación Gremial -->
-      <div style="margin-bottom: 120px; padding-top: 60px; border-top: 1px solid rgba(0,0,0,0.05);">
-        <LogoShowcase 
-          title="Representación Gremial"
-          description="ANALAC participa activamente en espacios donde se construyen políticas públicas y se defiende la agenda del sector lácteo colombiano, articulando esfuerzos con los gremios más importantes del país."
-          logos={gremios}
-          variant="premium"
-          layout="flex"
-          size="medium"
-        />
+      <div style="margin-bottom: 96px; padding-top: 64px; border-top: 1px solid rgba(0,0,0,0.05);" class="fade-up">
+        <h3 class="section-logo-title">Representación Gremial</h3>
+        <p class="section-logo-desc">ANALAC participa activamente en espacios donde se construyen políticas públicas y se defiende la agenda del sector lácteo colombiano, articulando esfuerzos con los gremios más importantes del país.</p>
+        <div class="static-logo-grid">
+          {gremios.map(logo => (
+            <div class="logo-item">
+              <img src={logo.src} alt={logo.alt} loading="lazy" />
+            </div>
+          ))}
+        </div>
       </div>
 
       <!-- 3. Instituciones -->
-      <div style="margin-bottom: 120px; padding-top: 60px; border-top: 1px solid rgba(0,0,0,0.05);">
-        <LogoShowcase 
-          title="Articulación Institucional"
-          description="Trabajamos de forma constante con entidades gubernamentales, ministerios y organismos técnicos para garantizar la normatividad, sanidad y competitividad de la producción nacional."
-          logos={instituciones}
-          variant="premium"
-          layout="grid"
-          size="medium"
-        />
+      <div style="margin-bottom: 96px; padding-top: 64px; border-top: 1px solid rgba(0,0,0,0.05);" class="fade-up">
+        <h3 class="section-logo-title">Articulación Institucional</h3>
+        <p class="section-logo-desc">Trabajamos de forma constante con entidades gubernamentales, ministerios y organismos técnicos para garantizar la normatividad, sanidad y competitividad de la producción nacional.</p>
+        <div class="marquee-wrapper">
+          <div class="marquee-track" style="animation-duration: 38s;">
+            {[...instituciones, ...instituciones].map(logo => (
+              <div class="logo-item">
+                <img src={logo.src} alt={logo.alt} loading="lazy" />
+              </div>
+            ))}
+          </div>
+        </div>
       </div>
 
       <!-- 4. Academia -->
-      <div style="padding-top: 60px; border-top: 1px solid rgba(0,0,0,0.05);">
-        <LogoShowcase 
-          title="Academia y Formación"
-          description="Nuestra relación con universidades y entidades formativas nos permite llevar capacitación, ciencia y transferencia tecnológica directamente a las fincas de nuestros afiliados."
-          logos={academia}
-          variant="standard"
-          layout="flex"
-          size="medium"
-        />
+      <div style="padding-top: 64px; border-top: 1px solid rgba(0,0,0,0.05);" class="fade-up">
+        <h3 class="section-logo-title">Academia y Formación</h3>
+        <p class="section-logo-desc">Nuestra relación con universidades y entidades formativas nos permite llevar capacitación, ciencia y transferencia tecnológica directamente a las fincas de nuestros afiliados.</p>
+        <div class="academia-logo-grid">
+          {academia.map(logo => (
+            <div class="logo-item tier-academia">
+              <img src={logo.src} alt={logo.alt} loading="lazy" />
+            </div>
+          ))}
+        </div>
       </div>
 
     </div>

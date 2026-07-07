@@ -149,6 +149,9 @@ const defaultSchema = JSON.stringify({
     </script>
 
     <style is:global>
+      body {
+        overflow-x: hidden;
+      }
       .wa-float {
         position: fixed;
         bottom: 32px;
@@ -208,10 +211,7 @@ const defaultSchema = JSON.stringify({
           height: 28px;
         }
         .payment-pill {
-          bottom: 96px;
-          right: 24px;
-          padding: 12px 20px;
-          font-size: 14px;
+          display: none;
         }
       }
       @media (max-width: 480px) {

@@ -274,22 +274,65 @@
   }
 
   @media (max-width: 768px) {
-    .track-viewport {
-      height: 320px;
+    .statement-scroll-section {
+      height: auto;
+      padding: 64px 24px;
     }
-    .node {
-      width: 280px;
-      top: 30px;
+    .sticky-container {
+      position: relative;
+      height: auto;
+      top: auto;
+      overflow: visible;
+    }
+    .scroll-triggers {
+      display: none;
+    }
+    .network-canvas {
+      display: none;
     }
     .statement-h2 {
       font-size: 28px;
       margin-bottom: 16px;
     }
     .statement-header {
-      margin-bottom: 32px;
+      margin-bottom: 48px;
+      padding: 0;
+    }
+    .track-viewport {
+      height: auto;
+      width: 100%;
+    }
+    .track {
+      width: 100%;
+      height: auto;
+      flex-direction: column;
+      gap: 40px;
+      transform: none !important;
+    }
+    .track-bg {
+      display: none;
+    }
+    .node-wrapper {
+      width: 100%;
+      height: auto;
+    }
+    .node {
+      position: relative;
+      left: auto;
+      top: auto;
+      transform: none !important;
+      width: 100%;
+      opacity: 1 !important;
+      align-items: center;
+    }
+    .node .node-icon {
+      background: #6db56d;
+      color: white;
+      box-shadow: 0 12px 32px rgba(109,181,109,0.4);
+      transform: none !important;
     }
     .statement-cta {
-      margin-top: 32px;
+      margin-top: 48px;
     }
   }
 </style>
