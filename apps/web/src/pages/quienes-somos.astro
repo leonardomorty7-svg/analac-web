@@ -6,6 +6,47 @@ import CtaFinal from '../components/CtaFinal.astro'
 import fs from 'node:fs'
 import path from 'node:path'
 
+// Diccionario de normalización óptica
+// Ajustamos visualmente marcas que naturalmente se ven muy grandes o muy pequeñas
+// manteniendo el mismo tamaño de caja.
+const opticalScales: Record<string, number> = {
+  // Aliados Tier 1 (Premium: Microajuste visual de ~15% adicional)
+  'carval': 1.55,
+  'grupo-bios': 1.65,
+  'solla': 1.65,
+  // Aliados Tier 2 (Estratégicos: Reducción visual de ~15%)
+  'delaval': 0.55,      // DeLaval ajustado para no dominar visualmente
+  'saenz-fety': 0.95,   // Proporción equivalente a DeLaval
+  // Aliados Tier 3
+  'biogenesis': 0.85,
+  'ganasal': 0.9,
+  'genetica-selecta': 0.85,
+  'lares': 0.9,
+  'noga': 0.9,
+  'nutrimixes': 0.9,
+  'nutryr': 0.9,
+  'ourofino': 0.85,
+  'partner': 0.9,
+  'semex': 0.9,
+  'silveragro': 0.9,
+  // Gremios
+  'andi': 0.9,
+  'asoleche': 0.9,
+  'consejo-nacional-lacteo': 0.85,
+  'fedegan': 0.9,
+  // Instituciones
+  'ica': 0.55,         // Logo muy cuadrado y alto, domina demasiado
+  'icontec': 0.75,     // Tiende a verse prominente
+  'Logo_Ministerio_de_Agricultura_y_Desarrollo_Rural_Colombia': 0.85,
+  'Logo_Ministerio_de_Ambiente_y_Desarrollo_Sostenible_Colombia': 0.85,
+  'Logo_Invima': 0.85,
+  'sic': 0.8,
+  // Academia
+  'unisabana': 0.7,     // Logo muy alargado horizontalmente
+  'sena': 1.15,         // Para balancear el peso visual frente a unisabana
+  'uniagraria': 0.85,
+};
+
 // Función para leer dinámicamente las carpetas de imágenes
 function getLogosFromDir(dirPath: string) {
   try {
@@ -14,11 +55,18 @@ function getLogosFromDir(dirPath: string) {
     const files = fs.readdirSync(fullPath);
     return files
       .filter(f => !f.startsWith('.')) // Excluir ocultos (.DS_Store)
-      .map(f => ({
-        src: `/images/${dirPath}/${f}`,
-        // Limpiar nombre para el alt (ej: 'grupo-bios.webp' -> 'grupo bios')
-        alt: f.replace(/\.[^/.]+$/, '').replace(/-/g, ' ') 
-      }));
+      .map(f => {
+        // Obtenemos el nombre base sin extensión(es) para buscar en el diccionario
+        const baseName = f.replace(/\.svg\.webp$/, '').replace(/\.[^/.]+$/, '');
+        const scale = opticalScales[baseName] || 1;
+        
+        return {
+          src: `/images/${dirPath}/${f}`,
+          // Limpiar nombre para el alt (ej: 'grupo-bios.webp' -> 'grupo bios')
+          alt: f.replace(/\.[^/.]+$/, '').replace(/-/g, ' '),
+          scale: scale
+        };
+      });
   } catch (e) {
     console.error(`Error reading ${dirPath}:`, e);
     return [];
@@ -378,12 +426,13 @@ const academia = getLogosFromDir('academia');
           object-fit: contain;
           opacity: 0.65;
           filter: grayscale(100%);
+          transform: scale(var(--logo-scale, 1));
           transition: opacity 0.4s ease, filter 0.4s ease, transform 0.4s ease;
         }
         .logo-item:hover img {
           opacity: 1;
           filter: none;
-          transform: scale(1.05);
+          transform: scale(calc(var(--logo-scale, 1) * 1.05));
         }
         .logo-item.tier-1 img { height: 72px; }
         .logo-item.tier-2 img { height: 60px; }
@@ -455,7 +504,7 @@ const academia = getLogosFromDir('academia');
         <h3 class="section-logo-title">Aliados Premium</h3>
         <div class="static-logo-grid">
           {tier1.map(logo => (
-            <div class="logo-item tier-1">
+            <div class="logo-item tier-1" style={`--logo-scale: ${logo.scale};`}>
               <img src={logo.src} alt={logo.alt} loading="lazy" />
             </div>
           ))}
@@ -466,7 +515,7 @@ const academia = getLogosFromDir('academia');
         <h3 class="section-logo-title">Aliados Estratégicos</h3>
         <div class="static-logo-grid" style="gap: 48px;">
           {tier2.map(logo => (
-            <div class="logo-item tier-2">
+            <div class="logo-item tier-2" style={`--logo-scale: ${logo.scale};`}>
               <img src={logo.src} alt={logo.alt} loading="lazy" />
             </div>
           ))}
@@ -478,7 +527,7 @@ const academia = getLogosFromDir('academia');
         <div class="marquee-wrapper">
           <div class="marquee-track">
             {[...tier3, ...tier3].map((logo) => (
-              <div class="logo-item tier-3">
+              <div class="logo-item tier-3" style={`--logo-scale: ${logo.scale};`}>
                 <img src={logo.src} alt={logo.alt} loading="lazy" />
               </div>
             ))}
@@ -492,7 +541,7 @@ const academia = getLogosFromDir('academia');
         <p class="section-logo-desc">ANALAC participa activamente en espacios donde se construyen políticas públicas y se defiende la agenda del sector lácteo colombiano, articulando esfuerzos con los gremios más importantes del país.</p>
         <div class="static-logo-grid">
           {gremios.map(logo => (
-            <div class="logo-item">
+            <div class="logo-item" style={`--logo-scale: ${logo.scale};`}>
               <img src={logo.src} alt={logo.alt} loading="lazy" />
             </div>
           ))}
@@ -506,7 +555,7 @@ const academia = getLogosFromDir('academia');
         <div class="marquee-wrapper">
           <div class="marquee-track" style="animation-duration: 38s;">
             {[...instituciones, ...instituciones].map(logo => (
-              <div class="logo-item">
+              <div class="logo-item" style={`--logo-scale: ${logo.scale};`}>
                 <img src={logo.src} alt={logo.alt} loading="lazy" />
               </div>
             ))}
@@ -520,7 +569,7 @@ const academia = getLogosFromDir('academia');
         <p class="section-logo-desc">Nuestra relación con universidades y entidades formativas nos permite llevar capacitación, ciencia y transferencia tecnológica directamente a las fincas de nuestros afiliados.</p>
         <div class="academia-logo-grid">
           {academia.map(logo => (
-            <div class="logo-item tier-academia">
+            <div class="logo-item tier-academia" style={`--logo-scale: ${logo.scale};`}>
               <img src={logo.src} alt={logo.alt} loading="lazy" />
             </div>
           ))}

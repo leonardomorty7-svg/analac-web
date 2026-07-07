@@ -369,7 +369,7 @@
     background: none;
     border: none;
     cursor: pointer;
-    padding: 8px;
+    padding: 10px; /* Aumentado a 10px para lograr > 44px touch target */
     margin-left: 12px;
   }
   .nav-hamburger span {
@@ -405,6 +405,7 @@
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
+    padding-top: env(safe-area-inset-top); /* Notch avoidance */
   }
 
   .mobile-menu.is-open {
@@ -487,8 +488,8 @@
     gap: 12px;
   }
   .social-link {
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     background: rgba(255,255,255,0.03);
     color: rgba(255,255,255,0.6);
@@ -687,8 +688,8 @@
     .network-title { font-size: 22px; margin-bottom: 4px; }
     .main-link-title { font-size: 28px; }
     .social-icons { gap: 8px; }
-    .social-link { width: 36px; height: 36px; }
-    .social-link svg { width: 16px; height: 16px; }
+    .social-link { width: 44px; height: 44px; }
+    .social-link svg { width: 18px; height: 18px; }
   }
 
   @media (max-width: 1024px) {
