@@ -1,25 +1,43 @@
 ---
 // src/components/Nav.astro
+
+const mainLinks = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Quiénes somos', href: '/quienes-somos' },
+  { label: 'La Red', href: '/asociados-y-aliados' },
+  { label: 'Observatorio', href: '/informacion-sectorial' },
+  { label: 'Conocimiento', href: '/noticias' },
+];
+
+const topLinks = [
+  { label: 'Portal', href: '/portal' },
+  { label: 'Hazte afiliado', href: '/afiliate' },
+  { label: 'Pagos', href: '/zona-pagos' },
+];
+
+const compLinks = [
+  { label: 'Mesa de ayuda', href: '/ayuda' },
+  { label: 'Contacto', href: '/contacto' },
+];
 ---
 <nav class="nav" id="main-nav">
   <div class="nav-top-bar">
     <div class="top-bar-container">
-      <a href="/portal">Portal</a>
-      <span class="separator">|</span>
-      <a href="/afiliate">Hazte afiliado</a>
-      <span class="separator">|</span>
-      <a href="/zona-pagos">Pagos</a>
+      {topLinks.map((link, i) => (
+        <>
+          <a href={link.href}>{link.label}</a>
+          {i < topLinks.length - 1 && <span class="separator">|</span>}
+        </>
+      ))}
     </div>
   </div>
   <div class="nav-container">
     <a href="/" class="nav-logo"><img src="/images/logo-white.svg" alt="ANALAC" class="nav-logo-img" /></a>
     
     <div class="nav-links">
-      <a href="/">Inicio</a>
-      <a href="/quienes-somos">Quiénes somos</a>
-      <a href="/asociados-y-aliados">La Red</a>
-      <a href="/informacion-sectorial">Observatorio</a>
-      <a href="/noticias">Conocimiento</a>
+      {mainLinks.map(link => (
+        <a href={link.href}>{link.label}</a>
+      ))}
     </div>
 
     <div class="nav-actions">
@@ -49,12 +67,11 @@
     <!-- Franja Superior: Main y Redes Sociales -->
     <div class="menu-top-row fade-in-up" style="animation-delay: 0.05s;">
       <div class="menu-main-nav">
-        <a href="/" class="main-link">
-          <span class="main-link-title">Inicio</span>
-        </a>
-        <a href="/quienes-somos" class="main-link">
-          <span class="main-link-title">Quiénes somos</span>
-        </a>
+        {mainLinks.map(link => (
+          <a href={link.href} class="main-link">
+            <span class="main-link-title">{link.label}</span>
+          </a>
+        ))}
       </div>
       
       <div class="social-links-row">
@@ -130,10 +147,12 @@
     <div class="menu-bottom-row fade-in-up" style="animation-delay: 0.15s;">
       
       <div class="comp-links-row">
-        <a href="/portal" class="comp-link-simple">Portal</a>
-        <!-- <a href="/academia" class="comp-link-simple">Academia</a> -->
-        <a href="/ayuda" class="comp-link-simple">Mesa de ayuda</a>
-        <a href="/contacto" class="comp-link-simple">Contacto</a>
+        {topLinks.map(link => (
+          <a href={link.href} class="comp-link-simple">{link.label}</a>
+        ))}
+        {compLinks.map(link => (
+          <a href={link.href} class="comp-link-simple">{link.label}</a>
+        ))}
       </div>
 
       <div class="menu-legal">
@@ -393,7 +412,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    min-height: 100dvh;
+    height: 100dvh;
     background: rgba(6, 15, 7, 0.98); /* Premium dark translucent */
     backdrop-filter: blur(24px);
     -webkit-backdrop-filter: blur(24px);
@@ -403,6 +422,8 @@
     transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     overflow-y: auto;
     overflow-x: hidden;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
     display: flex;
     flex-direction: column;
     padding-top: env(safe-area-inset-top); /* Notch avoidance */
@@ -418,6 +439,7 @@
     justify-content: space-between;
     align-items: center;
     height: 80px;
+    flex-shrink: 0;
     margin-top: 36px; /* Para esquivar la franja verde */
     padding: 0 40px;
     max-width: 1440px;
@@ -430,7 +452,7 @@
   .mobile-menu-actions { display: flex; align-items: center; gap: 20px; }
 
   .mobile-menu-inner {
-    flex: 1;
+    flex: 1 0 auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -444,15 +466,17 @@
   /* ROW 1: Main links + Socials */
   .menu-top-row {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: clamp(24px, 3vh, 32px);
     border-bottom: 1px solid rgba(255,255,255,0.06);
-    padding-bottom: clamp(16px, 3vh, 32px);
+    padding-bottom: clamp(24px, 4vh, 40px);
   }
 
   .menu-main-nav {
     display: flex;
-    gap: 48px;
+    flex-wrap: wrap;
+    gap: clamp(24px, 3vw, 48px);
   }
   .main-link {
     text-decoration: none;
@@ -467,14 +491,15 @@
     position: relative;
     display: inline-block;
     transition: color 0.3s ease;
+    white-space: nowrap;
   }
   .main-link:hover .main-link-title { color: #6db56d; }
 
   .social-links-row {
     display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 12px;
+    flex-direction: row;
+    align-items: center;
+    gap: 20px;
   }
   .social-title {
     font-size: 11px;
@@ -614,15 +639,17 @@
   /* ROW 3: Secondary Links + Legal */
   .menu-bottom-row {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 24px;
     margin-top: auto;
   }
   
   .comp-links-row {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 32px;
+    gap: clamp(24px, 3vw, 32px);
   }
   .comp-link-simple {
     color: rgba(255,255,255,0.8);
@@ -630,6 +657,7 @@
     font-size: 15px;
     font-weight: 500;
     transition: color 0.3s ease;
+    white-space: nowrap;
   }
   .comp-link-simple:hover:not(.mock-link) { color: #6db56d; }
   
@@ -694,7 +722,6 @@
 
   @media (max-width: 1024px) {
     .network-access-grid { grid-template-columns: repeat(2, 1fr); }
-    .menu-bottom-row { flex-direction: column; align-items: flex-start; gap: 32px; }
     .menu-legal { gap: 16px; }
   }
 
@@ -720,7 +747,7 @@
     
     .menu-top-row { flex-direction: column; align-items: flex-start; gap: 32px; padding-bottom: 24px; }
     .menu-main-nav { gap: 24px; flex-direction: column; }
-    .social-links-row { align-items: flex-start; }
+    .social-links-row { flex-direction: column; align-items: flex-start; gap: 12px; }
     
     .menu-network { padding: 32px 24px; border-radius: 20px; }
     .network-header { margin-bottom: 24px; }
