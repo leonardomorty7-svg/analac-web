@@ -175,39 +175,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro'
     </div>
   </section>
 
-  <!-- 4. Bloque de Arquitectura Unificada y Acceso al Portal -->
-  <section class="section fade-up" style="padding-block: 80px; background-color: #fff;">
-    <div class="container">
-      <div class="portal-access-box" style="flex-direction: column; gap: 40px;">
-        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 40px; text-align: left;">
-          <div>
-            <div style="width: 48px; height: 48px; border-radius: 12px; background: rgba(0, 169, 79, 0.1); color: var(--c-green); display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
-            </div>
-            <h2 class="h3" style="color: var(--c-green-deep); margin-bottom: 16px;">Un solo perfil para toda la Red</h2>
-            <p style="font-size: 16px; color: var(--c-muted); line-height: 1.6;">
-              Tu información se gestiona desde una única cuenta. Completa los datos de tu organización una sola vez y reutilízalos, según tus permisos, en el Directorio, la Vitrina, la Comunidad, el Observatorio y los futuros servicios de Red ANALAC.
-            </p>
-          </div>
-          <div>
-            <div style="width: 48px; height: 48px; border-radius: 12px; background: rgba(0, 169, 79, 0.1); color: var(--c-green); display: flex; align-items: center; justify-content: center; margin-bottom: 16px;">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
-            </div>
-            <h2 class="h3" style="color: var(--c-green-deep); margin-bottom: 16px;">Una red alimentada por sus participantes</h2>
-            <p style="font-size: 16px; color: var(--c-muted); line-height: 1.6;">
-              Las organizaciones, profesionales y asociados actualizan progresivamente la información del ecosistema. ANALAC organiza, modera y verifica los contenidos para convertirlos en conocimiento útil y confiable para el sector.
-            </p>
-          </div>
-        </div>
-        
-        <div class="portal-actions" style="margin-top: 16px; justify-content: center; padding-top: 32px; border-top: 1px solid rgba(0,0,0,0.05);">
-          <a href="/portal-aliados/iniciar-sesion" class="btn btn--primary" style="padding: 14px 32px; font-size: 16px;">Gestionar mi perfil en el portal</a>
-          <a href="/afiliate" class="btn btn--outline-dark" style="padding: 14px 32px; font-size: 16px;">Afiliarme a ANALAC</a>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- 5. CTA Final -->
   <section class="fade-up" style="position: relative; display: flex; align-items: center; justify-content: center; text-align: center; min-height: 70vh; padding: 120px 0;">
     <div style="position: absolute; inset: 0; background-image: linear-gradient(rgba(6, 15, 7, 0.4), rgba(6, 15, 7, 0.8)), url('/images/cta-lared-bg.jpg'); background-size: cover; background-position: center; z-index: 0;"></div>
@@ -532,30 +499,6 @@ import BaseLayout from '../../layouts/BaseLayout.astro'
     }
   }
 
-  /* Portal Access Box */
-  .portal-access-box {
-    background: var(--c-cream);
-    border: 1px solid rgba(0,0,0,0.03);
-    border-radius: 24px;
-    padding: 48px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 32px;
-  }
-  .portal-actions {
-    display: flex;
-    gap: 16px;
-    flex-wrap: wrap;
-    flex-shrink: 0;
-  }
-  @media (max-width: 900px) {
-    .portal-access-box {
-      flex-direction: column;
-      align-items: flex-start;
-      padding: 32px;
-    }
-  }
 </style>
 
 <script>
