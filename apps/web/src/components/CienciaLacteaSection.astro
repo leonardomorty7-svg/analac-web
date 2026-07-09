@@ -53,7 +53,7 @@ const articles = [
 
   <div class="ciencia-carousel-wrap reveal" style="transition-delay: 150ms">
     <div class="ciencia-track" id="cienciaTrack">
-      {articles.map((art) => (
+      {[...articles, ...articles, ...articles].map((art) => (
         <a href="/noticias" class="article-card">
           <div class="article-img-wrapper">
             <img src={art.imagen} alt={art.categoria} class="article-img" />
@@ -390,12 +390,15 @@ const articles = [
 
   document.querySelectorAll('.ciencia-section .reveal').forEach(el => observer.observe(el));
 
-  // Carrusel horizontal de "Ciencia Láctea": botones + loop infinito
+  // Carrusel horizontal de "Ciencia Láctea": auto-rotación infinita + botones
   ;(function () {
+    const wrap = document.querySelector('.ciencia-carousel-wrap')
     const track = document.getElementById('cienciaTrack')
     const prev = document.getElementById('cienciaPrev')
     const next = document.getElementById('cienciaNext')
-    if (!track || !prev || !next) return
+    if (!wrap || !track || !prev || !next) return
+
+    const AUTOPLAY_MS = 3500
 
     function cardStep() {
       const card = track.querySelector('.article-card')
@@ -405,28 +408,62 @@ const articles = [
       return card.getBoundingClientRect().width + gap
     }
 
-    function atEnd() {
-      return track.scrollLeft + track.clientWidth >= track.scrollWidth - 4
+    // El track contiene 3 copias del set de artículos. Mantenemos el
+    // scroll siempre dentro de la copia del medio y, cuando se sale de
+    // ese rango, saltamos instantáneamente una copia hacia el otro lado
+    // (contenido idéntico, así que el salto es invisible) => loop infinito.
+    function setWidth() {
+      return track.scrollWidth / 3
     }
 
-    function atStart() {
-      return track.scrollLeft <= 4
+    function normalize() {
+      const width = setWidth()
+      if (track.scrollLeft < width * 0.5) {
+        track.scrollTo({ left: track.scrollLeft + width, behavior: 'instant' })
+      } else if (track.scrollLeft > width * 1.5) {
+        track.scrollTo({ left: track.scrollLeft - width, behavior: 'instant' })
+      }
+    }
+
+    function advance(dir) {
+      track.scrollBy({ left: dir * cardStep(), behavior: 'smooth' })
+    }
+
+    let normalizeTimeout
+    track.addEventListener('scroll', () => {
+      clearTimeout(normalizeTimeout)
+      normalizeTimeout = setTimeout(normalize, 150)
+    })
+
+    let timer = null
+    function startAutoplay() {
+      stopAutoplay()
+      timer = setInterval(() => advance(1), AUTOPLAY_MS)
+    }
+    function stopAutoplay() {
+      if (timer) clearInterval(timer)
+      timer = null
     }
 
     next.addEventListener('click', () => {
-      if (atEnd()) {
-        track.scrollTo({ left: 0, behavior: 'smooth' })
-      } else {
-        track.scrollBy({ left: cardStep(), behavior: 'smooth' })
-      }
+      advance(1)
+      startAutoplay()
+    })
+    prev.addEventListener('click', () => {
+      advance(-1)
+      startAutoplay()
     })
 
-    prev.addEventListener('click', () => {
-      if (atStart()) {
-        track.scrollTo({ left: track.scrollWidth, behavior: 'smooth' })
-      } else {
-        track.scrollBy({ left: -cardStep(), behavior: 'smooth' })
-      }
+    wrap.addEventListener('mouseenter', stopAutoplay)
+    wrap.addEventListener('mouseleave', startAutoplay)
+
+    window.addEventListener('resize', () => {
+      normalize()
     })
+
+    // Posiciona el scroll al inicio de la copia del medio antes de arrancar
+    // (el layout ya está resuelto de forma síncrona en este punto).
+    track.scrollTo({ left: setWidth(), behavior: 'instant' })
+    startAutoplay()
   })()
 </script>
