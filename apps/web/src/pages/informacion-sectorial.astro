@@ -3,6 +3,7 @@
 import BaseLayout from '../layouts/BaseLayout.astro'
 import { bulletins } from '../data/bulletins'
 import { sectorIndicators } from '../data/stats'
+import mapaColombiaSvg from '../assets/mapa-colombia.svg?raw'
 
 const chartData = [
   { label: 'Producción Nacional (Formal)', value: '82%', color: 'var(--c-green-light)', amount: '3.42B L' },
@@ -204,17 +205,48 @@ const chartData = [
     </div>
   </section>
 
-  <!-- S4B Datos Territoriales (Placeholder) -->
-  <section id="datos-territoriales" class="section fade-up" style="padding: 120px 0; background: #ffffff;">
-    <div class="container text-center" style="max-width: 700px;">
-      <div style="width: 64px; height: 64px; margin: 0 auto 24px; border-radius: 50%; background: rgba(0, 169, 79, 0.1); color: var(--c-green); display: flex; align-items: center; justify-content: center;">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+  <!-- S4B Datos Territoriales -->
+  <section id="datos-territoriales" class="section fade-up territorial-section">
+    <div class="container territorial-grid">
+      <div class="territorial-content">
+        <p class="overline">Próximamente</p>
+        <h2 class="h2" style="margin-bottom: 20px; color: #ffffff;">Datos Territoriales</h2>
+        <p style="font-size: 18px; color: rgba(255,255,255,0.7); line-height: 1.6; margin-bottom: 28px;">
+          Una vista geográfica interactiva para consultar la presencia de organizaciones, vocación departamental y estadísticas territoriales del ecosistema lácteo.
+        </p>
+        <div class="territorial-badge">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+          Disponible solo para afiliados
+        </div>
+        <a href="/afiliate" class="btn btn--primary territorial-cta">Ver Territorios →</a>
       </div>
-      <p class="overline">Próximamente</p>
-      <h2 class="h2" style="margin-bottom: 24px;">Datos Territoriales</h2>
-      <p style="font-size: 18px; color: var(--c-muted); line-height: 1.6;">
-        Una vista geográfica interactiva para consultar la presencia de organizaciones, vocación departamental y estadísticas territoriales del ecosistema lácteo.
-      </p>
+
+      <div class="territorial-visual" aria-hidden="true">
+        <div class="territorial-glow"></div>
+        <div class="colombia-map-wrap">
+          <Fragment set:html={mapaColombiaSvg} />
+          <span class="map-pin-group" style="left: 57%; top: 55%; animation-delay: 0s;">
+            <span class="map-pin-pulse"></span>
+            <span class="map-pin"></span>
+          </span>
+          <span class="map-pin-group" style="left: 44%; top: 36%; animation-delay: 0.4s;">
+            <span class="map-pin-pulse"></span>
+            <span class="map-pin"></span>
+          </span>
+          <span class="map-pin-group" style="left: 32%; top: 58%; animation-delay: 0.8s;">
+            <span class="map-pin-pulse"></span>
+            <span class="map-pin"></span>
+          </span>
+          <span class="map-pin-group" style="left: 46%; top: 12%; animation-delay: 1.2s;">
+            <span class="map-pin-pulse"></span>
+            <span class="map-pin"></span>
+          </span>
+          <span class="map-pin-group" style="left: 67%; top: 62%; animation-delay: 1.6s;">
+            <span class="map-pin-pulse"></span>
+            <span class="map-pin"></span>
+          </span>
+        </div>
+      </div>
     </div>
   </section>
   
@@ -471,6 +503,114 @@ const chartData = [
     padding: 12px;
   }
 
+  /* Datos Territoriales */
+  .territorial-section {
+    position: relative;
+    padding: 120px 0;
+    background-color: #040a05;
+    overflow: hidden;
+  }
+  .territorial-section::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 25% 30%, rgba(109, 181, 109, 0.14), transparent 50%),
+                radial-gradient(circle at 80% 75%, rgba(109, 181, 109, 0.1), transparent 45%);
+    z-index: 0;
+  }
+  .territorial-section::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
+    mask-image: radial-gradient(ellipse at center, black 10%, transparent 80%);
+    -webkit-mask-image: radial-gradient(ellipse at center, black 10%, transparent 80%);
+    z-index: 0;
+  }
+  .territorial-grid {
+    position: relative;
+    z-index: 2;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+  .territorial-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 28px;
+  }
+  .territorial-cta {
+    flex-shrink: 0;
+  }
+  .territorial-section .territorial-cta.btn--primary {
+    background-color: var(--c-green);
+  }
+  .territorial-section .territorial-cta.btn--primary:hover {
+    background-color: #5aa35a;
+  }
+  .territorial-visual {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 480px;
+  }
+  .territorial-glow {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(109, 181, 109, 0.22), transparent 65%);
+    z-index: 0;
+  }
+  .colombia-map-wrap {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 440px;
+  }
+  .colombia-map-wrap :global(svg) {
+    width: 100%;
+    height: auto;
+    display: block;
+    overflow: visible;
+  }
+  .colombia-map-wrap :global(path) {
+    fill: var(--c-green) !important;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+  }
+  .map-pin-group {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    width: 10px;
+    height: 10px;
+  }
+  .map-pin {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: #ffffff;
+    box-shadow: 0 0 0 2px var(--c-green), 0 0 12px rgba(109, 181, 109, 0.6);
+  }
+  .map-pin-pulse {
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: var(--c-green);
+    opacity: 0.5;
+    animation: mapPinPulse 2.4s ease-out infinite;
+  }
+  @keyframes mapPinPulse {
+    0% { transform: scale(1); opacity: 0.5; }
+    100% { transform: scale(3.6); opacity: 0; }
+  }
+
   /* CTA Final */
   .cta-final {
     padding: 120px 0;
@@ -491,6 +631,18 @@ const chartData = [
     .panorama-layout {
       grid-template-columns: 1fr;
       gap: 48px;
+    }
+    .territorial-grid {
+      grid-template-columns: 1fr;
+      gap: 40px;
+      text-align: center;
+    }
+    .territorial-badge {
+      justify-content: center;
+    }
+    .territorial-visual {
+      min-height: 280px;
+      order: -1;
     }
     .indicadores-grid, .boletines-grid {
       grid-template-columns: 1fr;
