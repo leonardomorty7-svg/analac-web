@@ -15,7 +15,8 @@
     <p class="overline" style="margin-bottom: 24px; color: rgba(255, 255, 255, 0.85); letter-spacing: 0.15em; font-size: 12px; font-weight: 500; text-wrap: balance;">ASOCIACIÓN NACIONAL DE PRODUCTORES DE LECHE</p>
     
     <h1 class="hero-title">
-      Unimos al <em class="hero-accent">sector lácteo colombiano</em> para impulsar su competitividad y desarrollo sostenible.
+      <span class="nowrap-desktop">Unimos al <em class="hero-accent">sector lácteo colombiano</em></span> <br class="break-desktop" />
+      <span class="nowrap-desktop">para impulsar un desarrollo sostenible.</span>
     </h1>
 
     <div class="hero-footer">
@@ -102,16 +103,33 @@
 
   .hero-title {
     text-align: center;
-    line-height: 1.05;
-    letter-spacing: -0.03em;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
     margin-bottom: 32px;
-    font-size: clamp(36px, 6vw, 76px);
+    font-size: clamp(32px, 4.5vw, 68px);
     font-weight: 300;
     color: white;
     max-width: 1200px;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
-    text-wrap: balance;
+  }
+
+  .break-desktop {
+    display: none;
+  }
+
+  .nowrap-desktop {
+    white-space: normal;
+  }
+
+  @media (min-width: 769px) {
+    .break-desktop {
+      display: inline;
+    }
+    .nowrap-desktop {
+      white-space: nowrap;
+    }
   }
 
   .hero-accent {
@@ -173,7 +191,8 @@
       padding: 0;
     }
     .hero-title {
-      font-size: 42px;
+      font-size: 40px;
+      text-wrap: balance;
     }
     .hero-footer {
       flex-direction: column;

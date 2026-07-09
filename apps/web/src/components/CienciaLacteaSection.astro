@@ -25,7 +25,10 @@ const sideArticles = [
 <section class="ciencia-section">
   <div class="ciencia-header reveal" style="transition-delay: 0ms">
     <span class="overline">CIENCIA LÁCTEA</span>
-    <h2 class="ciencia-h2">Investigación, nutrición y desarrollo productivo lácteo con información técnica rigurosa</h2>
+    <h2 class="ciencia-h2">
+      <span class="nowrap-desktop">Investigación, nutrición y desarrollo productivo</span> <br class="break-desktop" />
+      <span class="nowrap-desktop">lácteo con información técnica rigurosa</span>
+    </h2>
   </div>
 
   <div class="editorial-grid">
@@ -51,6 +54,7 @@ const sideArticles = [
           <div class="side-content">
             <span class="editorial-tag-side">{art.categoria}</span>
             <h3 class="side-title">{art.titulo}</h3>
+            <span class="side-read">Leer artículo &rarr;</span>
           </div>
         </a>
       ))}
@@ -97,7 +101,23 @@ const sideArticles = [
     line-height: 1.15;
     margin: 0;
     letter-spacing: -0.02em;
-    text-wrap: balance;
+  }
+
+  .break-desktop {
+    display: none;
+  }
+
+  .nowrap-desktop {
+    white-space: normal;
+  }
+
+  @media (min-width: 769px) {
+    .break-desktop {
+      display: inline;
+    }
+    .nowrap-desktop {
+      white-space: nowrap;
+    }
   }
 
 
@@ -123,17 +143,25 @@ const sideArticles = [
     padding: 48px;
     text-decoration: none;
     isolation: isolate;
+    cursor: pointer;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+  }
+  .editorial-main:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(15,34,17,0.15);
   }
   .main-bg {
     position: absolute;
     top: 0; left: 0; width: 100%; height: 100%;
     background-size: cover;
     background-position: center;
-    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
     z-index: 1;
+    filter: brightness(1);
   }
   .editorial-main:hover .main-bg {
-    transform: scale(1.03);
+    transform: scale(1.04);
+    filter: brightness(1.08);
   }
   .main-overlay {
     position: absolute;
@@ -190,10 +218,16 @@ const sideArticles = [
     font-weight: 500;
     border-bottom: 1px solid rgba(255,255,255,0.3);
     padding-bottom: 3px;
-    transition: border-color 0.3s ease;
+    transition: opacity 0.35s ease, transform 0.35s ease, border-color 0.35s ease;
+    opacity: 0;
+    transform: translateY(10px);
+    display: inline-block;
+    align-self: flex-start;
   }
   .editorial-main:hover .editorial-read {
     border-color: white;
+    opacity: 1;
+    transform: translateY(0);
   }
 
   /* Side Articles */
@@ -212,11 +246,12 @@ const sideArticles = [
     text-decoration: none;
     height: 100%;
     border: 1px solid rgba(0,0,0,0.06);
-    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    transition: transform 0.35s ease, box-shadow 0.35s ease;
+    cursor: pointer;
   }
   .side-card:hover {
     transform: translateY(-4px);
-    box-shadow: 0 12px 32px rgba(15,34,17,0.06);
+    box-shadow: 0 16px 32px rgba(15,34,17,0.08);
   }
 
   .side-img-wrapper {
@@ -229,10 +264,12 @@ const sideArticles = [
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), filter 0.6s ease;
+    filter: brightness(1);
   }
   .side-card:hover .side-img {
     transform: scale(1.05);
+    filter: brightness(1.08);
   }
 
   .side-content {
@@ -262,6 +299,21 @@ const sideArticles = [
   }
   .side-card:hover .side-title {
     color: #6db56d;
+  }
+
+  .side-read {
+    font-size: 13px;
+    color: #6db56d;
+    font-weight: 500;
+    margin-top: auto;
+    padding-top: 16px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
+  }
+  .side-card:hover .side-read {
+    opacity: 1;
+    transform: translateY(0);
   }
 
   /* Editorial CTA */

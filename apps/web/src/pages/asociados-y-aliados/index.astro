@@ -15,16 +15,15 @@ import BaseLayout from '../../layouts/BaseLayout.astro'
     </div>
     <div class="container relative z-10" style="display: flex; flex-direction: column; align-items: center; text-align: center; justify-content: center; min-height: 80vh;">
       <p class="overline" style="color: var(--c-green-light); letter-spacing: 0.2em; font-size: 13px; margin-bottom: 24px;">Red ANALAC</p>
-      <h1 class="h1" style="color: #fff; max-width: 900px; margin-bottom: 24px; font-weight: 300;">
-        El punto de encuentro digital del <em style="color: var(--c-green-light); font-style: normal; font-weight: 600;">ecosistema lácteo colombiano</em>
+      <h1 class="h1" style="color: #fff; max-width: 1100px; margin-left: auto; margin-right: auto; margin-bottom: 24px; font-weight: 300;">
+        El punto de encuentro digital<br>del <em style="color: var(--c-green-light); font-style: normal; font-weight: 600;">ecosistema lácteo colombiano</em>
       </h1>
-      <p style="color: rgba(255, 255, 255, 0.7); font-size: 18px; max-width: 750px; margin-bottom: 40px; line-height: 1.6;">
-        Encuentra organizaciones y profesionales, comprende el sector mediante datos y conocimiento, conecta con soluciones y participa en oportunidades que fortalecen la cadena láctea colombiana.
+      <p style="color: rgba(255, 255, 255, 0.7); font-size: 18px; max-width: 900px; margin-left: auto; margin-right: auto; margin-bottom: 40px; line-height: 1.6;">
+        Encuentra organizaciones y profesionales, comprende el sector mediante datos y conocimiento,<br>conecta con soluciones y participa en oportunidades que fortalecen la cadena láctea colombiana.
       </p>
       <div style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center;">
-        <a href="#nodos" class="btn btn--primary" style="padding: 16px 32px; font-size: 16px;">
+        <a href="#nodos" class="btn btn--accent" style="padding: 14px 32px; font-size: 15px;">
           Explorar la Red
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="margin-left: 8px;"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
         </a>
         <a href="/afiliate" class="btn btn--outline-white" style="padding: 16px 32px; font-size: 16px;">
           Ser parte de ANALAC
@@ -199,14 +198,17 @@ import BaseLayout from '../../layouts/BaseLayout.astro'
   </section>
 
   <!-- 5. CTA Final -->
-  <section class="section fade-up" style="padding-block: 100px; background: linear-gradient(135deg, var(--c-green-deep) 0%, #16361a 100%); text-align: center;">
-    <div class="container" style="max-width: 700px;">
-      <h2 class="h1" style="color: #fff; margin-bottom: 24px;">Haz parte de la red que conecta al sector lácteo colombiano</h2>
-      <p style="font-size: 18px; color: rgba(255,255,255,0.7); line-height: 1.6; margin-bottom: 40px;">
-        Afiliarte a ANALAC te permite aumentar tu visibilidad, acceder a información sectorial, fortalecer relaciones, participar en oportunidades y formar parte de una comunidad especializada.
+  <section class="fade-up" style="position: relative; display: flex; align-items: center; justify-content: center; text-align: center; min-height: 70vh; padding: 120px 0;">
+    <div style="position: absolute; inset: 0; background-image: linear-gradient(rgba(6, 15, 7, 0.4), rgba(6, 15, 7, 0.8)), url('/images/cta-lared-bg.jpg'); background-size: cover; background-position: center; z-index: 0;"></div>
+    <div class="container" style="position: relative; z-index: 2;">
+      <h2 class="h1" style="color: #ffffff; max-width: 1200px; margin-left: auto; margin-right: auto; margin-bottom: 24px;">
+        Haz parte de la red que conecta<br>al sector lácteo colombiano
+      </h2>
+      <p style="font-size: 19px; color: #ffffff; max-width: 1000px; margin-left: auto; margin-right: auto; line-height: 1.6; margin-bottom: 40px; text-wrap: balance;">
+        Afiliarte a ANALAC te permite aumentar tu visibilidad, acceder a información sectorial, fortalecer relaciones,<br>participar en oportunidades y formar parte de una comunidad especializada.
       </p>
       <div style="display: flex; justify-content: center;">
-        <a href="/afiliate" class="btn btn--accent" style="padding: 16px 36px; font-size: 16px;">Conocer beneficios de afiliación</a>
+        <a href="/afiliate" class="btn btn--accent" style="padding: 14px 32px; font-size: 15px;">Conocer beneficios de afiliación</a>
       </div>
     </div>
   </section>

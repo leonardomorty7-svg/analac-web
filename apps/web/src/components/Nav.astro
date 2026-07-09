@@ -1,12 +1,19 @@
 ---
 // src/components/Nav.astro
 
-const mainLinks = [
+// Links del header desktop (siempre visibles junto al logo)
+const headerLinks = [
   { label: 'Inicio', href: '/' },
   { label: 'Quiénes somos', href: '/quienes-somos' },
   { label: 'La Red', href: '/asociados-y-aliados' },
   { label: 'Observatorio', href: '/informacion-sectorial' },
   { label: 'Conocimiento', href: '/noticias' },
+];
+
+// Links del menú superior del Overlay (sin La Red, ya existe como bloque)
+const mainLinks = [
+  { label: 'Inicio', href: '/' },
+  { label: 'Quiénes somos', href: '/quienes-somos' },
 ];
 
 const topLinks = [
@@ -23,11 +30,10 @@ const compLinks = [
 <nav class="nav" id="main-nav">
   <div class="nav-top-bar">
     <div class="top-bar-container">
-      {topLinks.map((link, i) => (
-        <>
-          <a href={link.href}>{link.label}</a>
-          {i < topLinks.length - 1 && <span class="separator">|</span>}
-        </>
+      {topLinks.map((link) => (
+        <a href={link.href} class={link.label === 'Hazte afiliado' ? 'top-cta' : 'top-link'}>
+          {link.label}
+        </a>
       ))}
     </div>
   </div>
@@ -35,7 +41,7 @@ const compLinks = [
     <a href="/" class="nav-logo"><img src="/images/logo-white.svg" alt="ANALAC" class="nav-logo-img" /></a>
     
     <div class="nav-links">
-      {mainLinks.map(link => (
+      {headerLinks.map(link => (
         <a href={link.href}>{link.label}</a>
       ))}
     </div>
@@ -64,7 +70,7 @@ const compLinks = [
 
   <div class="mobile-menu-inner container">
     
-    <!-- Franja Superior: Main y Redes Sociales -->
+    <!-- Franja Superior: Main nav -->
     <div class="menu-top-row fade-in-up" style="animation-delay: 0.05s;">
       <div class="menu-main-nav">
         {mainLinks.map(link => (
@@ -72,24 +78,6 @@ const compLinks = [
             <span class="main-link-title">{link.label}</span>
           </a>
         ))}
-      </div>
-      
-      <div class="social-links-row">
-        <span class="social-title">Comunidad</span>
-        <div class="social-icons">
-          <a href="https://facebook.com/analac_col" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="social-link">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
-          </a>
-          <a href="https://x.com/analac_col" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)" class="social-link">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l11.733 16h4.267l-11.733 -16z"></path><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path></svg>
-          </a>
-          <a href="https://instagram.com/analac_col" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="social-link">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
-          </a>
-          <a href="https://youtube.com/analac" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="social-link">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
-          </a>
-        </div>
       </div>
     </div>
 
@@ -143,7 +131,7 @@ const compLinks = [
       </div>
     </div>
 
-    <!-- Franja Inferior: Accesos complementarios y Legal -->
+    <!-- Franja Inferior: Accesos complementarios + Comunidad + Legal -->
     <div class="menu-bottom-row fade-in-up" style="animation-delay: 0.15s;">
       
       <div class="comp-links-row">
@@ -153,6 +141,25 @@ const compLinks = [
         {compLinks.map(link => (
           <a href={link.href} class="comp-link-simple">{link.label}</a>
         ))}
+      </div>
+
+      <!-- COMUNIDAD — al final, después de los accesos institucionales -->
+      <div class="social-links-row">
+        <span class="social-title">Comunidad</span>
+        <div class="social-icons">
+          <a href="https://facebook.com/analac_col" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="social-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"></path></svg>
+          </a>
+          <a href="https://x.com/analac_col" target="_blank" rel="noopener noreferrer" aria-label="X (Twitter)" class="social-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4l11.733 16h4.267l-11.733 -16z"></path><path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path></svg>
+          </a>
+          <a href="https://instagram.com/analac_col" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="social-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line></svg>
+          </a>
+          <a href="https://youtube.com/analac" target="_blank" rel="noopener noreferrer" aria-label="YouTube" class="social-link">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"></path><polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"></polygon></svg>
+          </a>
+        </div>
       </div>
 
       <div class="menu-legal">
@@ -252,12 +259,19 @@ const compLinks = [
   }
 
   .nav-top-bar {
-    background: #115724; /* Verde institucional oscuro para contraste */
+    background: transparent;
     height: 36px;
     display: flex;
     align-items: center;
     border-bottom: 1px solid rgba(255,255,255,0.05);
-    transition: opacity 0.3s ease;
+    transition: background 0.4s ease, backdrop-filter 0.4s ease, border-color 0.4s ease;
+  }
+
+  .nav.scrolled .nav-top-bar {
+    background: rgba(17, 87, 36, 0.85); /* Verde institucional con transparencia */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border-bottom: 1px solid rgba(255,255,255,0.1);
   }
 
   .top-bar-container {
@@ -268,10 +282,10 @@ const compLinks = [
     display: flex;
     justify-content: flex-end;
     align-items: center;
-    gap: 16px;
+    gap: 24px;
   }
 
-  .top-bar-container a {
+  .top-link {
     color: #fff;
     text-decoration: none;
     font-size: 13px;
@@ -279,12 +293,31 @@ const compLinks = [
     transition: opacity 0.2s;
     letter-spacing: 0.02em;
   }
-  .top-bar-container a:hover {
+  .top-link:hover {
     opacity: 0.8;
   }
-  .top-bar-container .separator {
-    color: rgba(255,255,255,0.3);
-    font-size: 12px;
+  
+  .top-cta {
+    background: #115724;
+    color: #fff;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 600;
+    padding: 4px 16px;
+    border-radius: 100px;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    letter-spacing: 0.02em;
+    border: 1px solid rgba(255,255,255,0.15);
+  }
+  .top-cta:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    background: #156c2c;
+  }
+  
+  .nav.scrolled .top-cta {
+    border-color: rgba(255,255,255,0.3);
   }
 
   .nav.scrolled {
@@ -731,7 +764,8 @@ const compLinks = [
       padding: 0 24px;
       gap: 12px;
     }
-    .top-bar-container a {
+    .top-bar-container .top-link,
+    .top-bar-container .top-cta {
       font-size: 12px;
     }
     

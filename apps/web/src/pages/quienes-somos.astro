@@ -2,7 +2,6 @@
 // src/pages/quienes-somos.astro
 import BaseLayout from '../layouts/BaseLayout.astro'
 import LogoShowcase from '../components/LogoShowcase.astro'
-import CtaFinal from '../components/CtaFinal.astro'
 import fs from 'node:fs'
 import path from 'node:path'
 
@@ -89,13 +88,9 @@ const academia = getLogosFromDir('academia');
   <section class="page-hero hero-dark fade-up">
     <div class="page-hero-bg"></div>
     <div class="container page-hero-content">
-      <p class="overline overline-light">Sobre ANALAC</p>
-      <h1 class="page-hero-title">
-        Más de 65 años fortaleciendo la producción lechera colombiana
-      </h1>
-      <p class="page-hero-desc">
-        Somos la voz institucional, el respaldo gremial y el motor de desarrollo de las familias campesinas e industrias dedicadas al sector lácteo en todo el territorio nacional.
-      </p>
+      <p class="overline overline-light" style="color: rgba(255, 255, 255, 0.9);">Sobre ANALAC</p>
+      <h1 class="page-hero-title" style="max-width: 1100px; margin: 0 auto;">Más de 65 años fortaleciendo<br>la producción lechera colombiana</h1>
+      <p class="page-hero-desc" style="max-width: 900px; margin-left: auto; margin-right: auto; text-wrap: balance;">Somos la voz institucional, el respaldo gremial y el motor de desarrollo de las familias <br class="break-desktop" />campesinas e industrias dedicadas al sector lácteo en todo el territorio nacional.</p>
     </div>
   </section>
 
@@ -113,6 +108,11 @@ const academia = getLogosFromDir('academia');
   </div>
 
   <style>
+    .break-desktop { display: none; }
+    @media (min-width: 769px) {
+      .break-desktop { display: inline; }
+    }
+
     .page-nav {
       background: #ffffff;
       border-bottom: 1px solid rgba(0,0,0,0.05);
@@ -162,26 +162,115 @@ const academia = getLogosFromDir('academia');
   <!-- S2 Bloque de Impacto -->
   <section class="section impact-section" style="background: var(--color-bg-page);">
     <div class="container">
-      <div class="impact-grid fade-up">
+      <div class="impact-grid fade-up" id="impact-grid">
         <div class="impact-stat">
-          <div class="stat-number">65+</div>
+          <div class="stat-number" data-count="65" data-suffix="+" data-type="number">65+</div>
           <div class="stat-label">Años de trayectoria</div>
         </div>
         <div class="impact-stat">
-          <div class="stat-number">Miles</div>
+          <div class="stat-number" data-type="word">Miles</div>
           <div class="stat-label">Productores representados</div>
         </div>
         <div class="impact-stat">
-          <div class="stat-number">100%</div>
+          <div class="stat-number" data-count="100" data-suffix="%" data-type="number">100%</div>
           <div class="stat-label">Presencia nacional</div>
         </div>
         <div class="impact-stat">
-          <div class="stat-number">365</div>
+          <div class="stat-number" data-count="365" data-suffix="" data-type="number">365</div>
           <div class="stat-label">Días de gestión gremial</div>
         </div>
       </div>
     </div>
   </section>
+
+  <script>
+    (function () {
+      const grid = document.getElementById('impact-grid');
+      if (!grid) return;
+
+      const DURATION   = 1400; // ms
+      const STAGGER    = 120;  // ms entre cada indicador
+      const THRESHOLD  = 0.40; // 40% visible
+
+      // easeOutCubic: deceleración natural y premium
+      function easeOutCubic(t) {
+        return 1 - Math.pow(1 - t, 3);
+      }
+
+      // Anima un número desde 0 hasta el valor objetivo
+      function animateCount(el, target, suffix, delay) {
+        setTimeout(() => {
+          const start = performance.now();
+
+          function tick(now) {
+            const elapsed = now - start;
+            const progress = Math.min(elapsed / DURATION, 1);
+            const eased = easeOutCubic(progress);
+            const current = Math.round(eased * target);
+
+            el.textContent = current + suffix;
+
+            if (progress < 1) {
+              requestAnimationFrame(tick);
+            } else {
+              // Microinteracción al terminar: pequeña pulsación
+              el.style.transition = 'transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease';
+              el.style.transform = 'translateY(-3px) scale(1.03)';
+              el.style.opacity = '0.9';
+              setTimeout(() => {
+                el.style.transform = 'translateY(0) scale(1)';
+                el.style.opacity = '1';
+              }, 250);
+            }
+          }
+
+          requestAnimationFrame(tick);
+        }, delay);
+      }
+
+      // Anima la palabra "Miles" con fade-in + translateY
+      function animateWord(el, delay) {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(12px) scale(0.98)';
+        el.style.transition = 'none';
+
+        setTimeout(() => {
+          el.style.transition = 'opacity 0.6s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)';
+          el.style.opacity = '1';
+          el.style.transform = 'translateY(0) scale(1)';
+        }, delay);
+      }
+
+      // IntersectionObserver: dispara una única vez al 40% de visibilidad
+      let fired = false;
+      const observer = new IntersectionObserver((entries) => {
+        if (fired) return;
+        const entry = entries[0];
+        if (!entry.isIntersecting) return;
+
+        fired = true;
+        observer.disconnect();
+
+        const stats = grid.querySelectorAll('.stat-number');
+        stats.forEach((el, i) => {
+          const delay = i * STAGGER;
+          const type  = el.dataset.type;
+
+          if (type === 'word') {
+            animateWord(el, delay);
+          } else {
+            const target = parseInt(el.dataset.count, 10);
+            const suffix = el.dataset.suffix || '';
+            // Ocultar el valor inicial hasta que arranque la animación
+            el.textContent = '0' + suffix;
+            animateCount(el, target, suffix, delay);
+          }
+        });
+      }, { threshold: THRESHOLD });
+
+      observer.observe(grid);
+    })();
+  </script>
 
   <!-- S3 Timeline -->
   <section class="section" style="padding-bottom: 120px;">
@@ -331,19 +420,11 @@ const academia = getLogosFromDir('academia');
         <p style="font-size: 19px; color: var(--color-text-sub); margin-top: 16px;">Conoce al equipo que trabaja diariamente para fortalecer el sector productor de leche en Colombia.</p>
       </div>
 
-      <style>
-        @media (min-width: 993px) {
-          .grid-4 { grid-template-columns: repeat(4, 1fr) !important; }
-        }
-        @media (max-width: 992px) and (min-width: 769px) {
-          .grid-4 { grid-template-columns: repeat(2, 1fr) !important; }
-        }
-      </style>
-      <div class="equipo-grid grid-4 fade-up">
-        
+      <div class="equipo-grid fade-up">
+
         <!-- Card 1 -->
         <div class="equipo-card-premium">
-          <div style="position: relative; overflow: hidden;">
+          <div class="equipo-img-wrapper">
             <img src="/images/equipo/andres_ramirez.png" alt="Andrés Ramírez" class="equipo-img" />
           </div>
           <div class="equipo-info">
@@ -351,11 +432,16 @@ const academia = getLogosFromDir('academia');
             <p class="equipo-cargo">Dirección Ejecutiva</p>
             <p class="equipo-desc">Lidera la estrategia institucional y representa a ANALAC ante los diferentes actores del sector.</p>
           </div>
+          <div class="equipo-footer">
+            <a href="#" class="linkedin-icon" aria-label="LinkedIn de Andrés Ramírez" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+          </div>
         </div>
 
         <!-- Card 2 -->
         <div class="equipo-card-premium">
-          <div style="position: relative; overflow: hidden;">
+          <div class="equipo-img-wrapper">
             <img src="/images/equipo/laura_hernandez.png" alt="Laura Hernández" class="equipo-img" />
           </div>
           <div class="equipo-info">
@@ -363,11 +449,16 @@ const academia = getLogosFromDir('academia');
             <p class="equipo-cargo">Área Técnica</p>
             <p class="equipo-desc">Desarrolla estudios, indicadores y análisis para apoyar la toma de decisiones del gremio.</p>
           </div>
+          <div class="equipo-footer">
+            <a href="#" class="linkedin-icon" aria-label="LinkedIn de Laura Hernández" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+          </div>
         </div>
 
         <!-- Card 3 -->
         <div class="equipo-card-premium">
-          <div style="position: relative; overflow: hidden;">
+          <div class="equipo-img-wrapper">
             <img src="/images/equipo/felipe_gonzalez.png" alt="Felipe González" class="equipo-img" />
           </div>
           <div class="equipo-info">
@@ -375,17 +466,27 @@ const academia = getLogosFromDir('academia');
             <p class="equipo-cargo">Comunicaciones</p>
             <p class="equipo-desc">Gestiona la comunicación institucional, campañas y relacionamiento con productores y aliados.</p>
           </div>
+          <div class="equipo-footer">
+            <a href="#" class="linkedin-icon" aria-label="LinkedIn de Felipe González" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+          </div>
         </div>
 
-        <!-- Card 4 -->
-        <div class="equipo-card-premium">
-          <div style="position: relative; overflow: hidden;">
+        <!-- Card 4 (Oculta temporalmente hasta aprobación del cliente) -->
+        <div class="equipo-card-premium" style="display: none;">
+          <div class="equipo-img-wrapper">
             <img src="/images/equipo/sandra_morales.png" alt="Sandra Morales" class="equipo-img" />
           </div>
           <div class="equipo-info">
             <h3 class="equipo-nombre">Sandra Morales</h3>
             <p class="equipo-cargo">Administración</p>
             <p class="equipo-desc">Coordina los procesos administrativos y el soporte operativo de la asociación.</p>
+          </div>
+          <div class="equipo-footer">
+            <a href="#" class="linkedin-icon" aria-label="LinkedIn de Sandra Morales" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
           </div>
         </div>
 
@@ -588,7 +689,7 @@ const academia = getLogosFromDir('academia');
       </div>
       <div class="equipo-grid fade-up">
         <div class="equipo-card-premium">
-          <div style="position: relative; overflow: hidden;">
+          <div class="equipo-img-wrapper">
             <img src="/images/equipo/javier_perez_new.png" alt="Javier Pérez" class="equipo-img" />
           </div>
           <div class="equipo-info">
@@ -596,9 +697,14 @@ const academia = getLogosFromDir('academia');
             <p class="equipo-cargo">Presidente Ejecutivo</p>
             <p class="equipo-desc">Lidera la estrategia institucional y representa a ANALAC ante organismos públicos y privados.</p>
           </div>
+          <div class="equipo-footer">
+            <a href="#" class="linkedin-icon" aria-label="LinkedIn de Javier Pérez" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+          </div>
         </div>
         <div class="equipo-card-premium">
-          <div style="position: relative; overflow: hidden;">
+          <div class="equipo-img-wrapper">
             <img src="/images/equipo/maria_lopez_new.png" alt="María López" class="equipo-img" />
           </div>
           <div class="equipo-info">
@@ -606,15 +712,25 @@ const academia = getLogosFromDir('academia');
             <p class="equipo-cargo">Directora Gremial</p>
             <p class="equipo-desc">Supervisa la integración regional, garantizando la articulación efectiva de todos los productores afiliados.</p>
           </div>
+          <div class="equipo-footer">
+            <a href="#" class="linkedin-icon" aria-label="LinkedIn de María López" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+          </div>
         </div>
         <div class="equipo-card-premium">
-          <div style="position: relative; overflow: hidden;">
+          <div class="equipo-img-wrapper">
             <img src="/images/equipo/carlos_gomez_new.png" alt="Carlos Gómez" class="equipo-img" />
           </div>
           <div class="equipo-info">
             <h3 class="equipo-nombre">Carlos Gómez</h3>
             <p class="equipo-cargo">Secretario General</p>
             <p class="equipo-desc">Coordina la estructura administrativa, legal y operativa, asegurando el cumplimiento normativo del gremio.</p>
+          </div>
+          <div class="equipo-footer">
+            <a href="#" class="linkedin-icon" aria-label="LinkedIn de Carlos Gómez" target="_blank" rel="noopener noreferrer">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
           </div>
         </div>
       </div>
@@ -831,14 +947,19 @@ const academia = getLogosFromDir('academia');
   </section>
 
   <!-- S7 CTA Final Customizado -->
-  <CtaFinal 
-    title="Únase a ANALAC"
-    text="Haga parte de la organización que representa y fortalece al sector productor de leche en Colombia mediante servicios, conocimiento y acompañamiento institucional."
-    primaryBtnText="Hazte afiliado"
-    primaryBtnLink="/afiliate"
-    secondaryBtnText="Conocer beneficios"
-    secondaryBtnLink="/servicios"
-  />
+  <section class="page-hero hero-dark fade-up" style="min-height: 70vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 120px 0; margin-top: 0;">
+    <div class="page-hero-bg" style="background-image: linear-gradient(rgba(6, 15, 7, 0.4), rgba(6, 15, 7, 0.8)), url('/images/cta-quienes-somos-bg.jpg');"></div>
+    <div class="container" style="position: relative; z-index: 2;">
+      <h2 class="h2" style="color: #ffffff; max-width: 800px; margin: 0 auto 24px; text-wrap: balance;">Únase a ANALAC</h2>
+      <p style="font-size: 19px; line-height: 1.6; max-width: 800px; margin: 0 auto 48px; color: #ffffff; text-wrap: balance;">
+        Haga parte de la organización que representa y fortalece al sector productor de leche en Colombia mediante servicios, conocimiento y acompañamiento institucional.
+      </p>
+      <div style="display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;">
+        <a href="/afiliate" class="btn btn--accent" style="padding: 14px 32px; font-size: 15px;">Hazte afiliado</a>
+        <a href="/servicios" class="btn btn--outline-white" style="padding: 14px 32px; font-size: 15px;">Conocer beneficios</a>
+      </div>
+    </div>
+  </section>
 </BaseLayout>
 
 <style>
@@ -862,7 +983,7 @@ const academia = getLogosFromDir('academia');
   .page-hero-content {
     position: relative;
     z-index: 1;
-    max-width: 900px;
+    max-width: 1200px;
     text-align: center;
     margin: 0 auto;
   }
@@ -1048,6 +1169,8 @@ const academia = getLogosFromDir('academia');
     border: 1px solid rgba(0,0,0,0.04);
     box-shadow: 0 4px 20px rgba(0,0,0,0.02);
     transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+    display: flex;
+    flex-direction: column;
   }
   .equipo-card-premium:hover {
     transform: translateY(-8px);
@@ -1084,11 +1207,40 @@ const academia = getLogosFromDir('academia');
     margin-bottom: 16px;
     opacity: 0.8;
   }
+  .equipo-img-wrapper {
+    position: relative;
+    overflow: hidden;
+  }
   .equipo-desc {
     font-size: 15px;
     line-height: 1.6;
     color: var(--color-text-main);
     margin: 0;
+    /* Line-clamp: máximo 3 líneas */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  /* Footer de tarjeta */
+  .equipo-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 16px 24px;
+    border-top: 1px solid rgba(0, 0, 0, 0.06);
+    margin-top: auto;
+  }
+  .linkedin-icon {
+    color: rgba(0, 0, 0, 0.35);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s ease;
+    flex-shrink: 0;
+  }
+  .equipo-card-premium:hover .linkedin-icon {
+    color: var(--color-green-dark);
   }
   /* Responsive */
   @media (max-width: 768px) {

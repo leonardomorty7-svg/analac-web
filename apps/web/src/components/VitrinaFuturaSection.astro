@@ -31,7 +31,10 @@ const features = [
       <span class="overline">VITRINA DIGITAL ANALAC</span>
     </div>
     <h2 class="vitrina-h2">Conecta con proveedores, productos y servicios del sector lácteo colombiano</h2>
-    <p class="vitrina-p">Explora empresas, soluciones, tecnología, genética, nutrición, equipos, servicios especializados y aliados estratégicos que impulsan el crecimiento del ecosistema lácteo nacional.</p>
+    <p class="vitrina-p">
+      <span class="nowrap-desktop">Explora empresas, soluciones, tecnología, genética, nutrición, equipos,</span> <br class="break-desktop" />
+      <span class="nowrap-desktop">servicios especializados y aliados estratégicos que impulsan el crecimiento del ecosistema lácteo nacional.</span>
+    </p>
   </div>
 
   <div class="vitrina-grid">
@@ -134,8 +137,25 @@ const features = [
     color: rgba(255,255,255,0.75);
     line-height: 1.6;
     margin: 0;
-    max-width: 820px;
+    max-width: 1040px;
     text-wrap: balance;
+  }
+
+  .break-desktop {
+    display: none;
+  }
+
+  .nowrap-desktop {
+    white-space: normal;
+  }
+
+  @media (min-width: 769px) {
+    .break-desktop {
+      display: inline;
+    }
+    .nowrap-desktop {
+      white-space: nowrap;
+    }
   }
 
   .vitrina-grid {

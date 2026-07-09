@@ -16,8 +16,8 @@
     <div class="statement-header">
       <span class="overline">NUESTRA RAZÓN DE SER</span>
       <h2 class="h2 statement-h2">
-        Un gremio que <em class="statement-italic">representa, informa, promueve y conecta</em> 
-        a los productores del sector lácteo colombiano.
+        <span class="nowrap-desktop">Un gremio que <em class="statement-italic">representa, informa, promueve y conecta</em></span> <br class="break-desktop" />
+        <span class="nowrap-desktop">a los productores del sector lácteo colombiano.</span>
       </h2>
       <p class="statement-p">
         Trabajamos arduamente por la defensa gremial del productor lechero, garantizando el acceso a información sectorial clave y fortaleciendo las alianzas estratégicas en toda la cadena agroindustrial.
@@ -40,7 +40,7 @@
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z"/></svg>
             </div>
             <h3 class="node-title">Representamos</h3>
-            <p class="node-desc">La voz de productores, empresas y organizaciones vinculadas al sector lácteo colombiano.</p>
+            <p class="node-desc"><span class="nowrap-desktop">La voz de productores, empresas y organizaciones</span> <br class="break-desktop" /><span class="nowrap-desktop">vinculadas al sector lácteo colombiano.</span></p>
           </div>
         </div>
 
@@ -50,7 +50,7 @@
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" x2="18" y1="20" y2="10"/><line x1="12" x2="12" y1="20" y2="4"/><line x1="6" x2="6" y1="20" y2="14"/></svg>
             </div>
             <h3 class="node-title">Informamos</h3>
-            <p class="node-desc">Boletines, indicadores y análisis para comprender los retos y oportunidades del sector.</p>
+            <p class="node-desc"><span class="nowrap-desktop">Boletines, indicadores y análisis para comprender</span> <br class="break-desktop" /><span class="nowrap-desktop">los retos y oportunidades del sector.</span></p>
           </div>
         </div>
 
@@ -60,7 +60,7 @@
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
             </div>
             <h3 class="node-title">Promovemos</h3>
-            <p class="node-desc">Contenidos educativos para impulsar el consumo informado de leche y lácteos.</p>
+            <p class="node-desc"><span class="nowrap-desktop">Contenidos educativos para impulsar</span> <br class="break-desktop" /><span class="nowrap-desktop">el consumo informado de leche y lácteos.</span></p>
           </div>
         </div>
 
@@ -70,7 +70,7 @@
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
             </div>
             <h3 class="node-title">Conectamos</h3>
-            <p class="node-desc">Asociados, aliados e instituciones que aportan al desarrollo del ecosistema lácteo.</p>
+            <p class="node-desc"><span class="nowrap-desktop">Asociados, aliados e instituciones que aportan</span> <br class="break-desktop" /><span class="nowrap-desktop">al desarrollo del ecosistema lácteo.</span></p>
           </div>
         </div>
       </div>
@@ -145,14 +145,14 @@
     font-weight: 600;
   }
   .statement-h2 {
-    font-size: clamp(36px, 4vw, 56px);
+    font-size: clamp(28px, 3.5vw, 48px);
     color: #0f2211;
     line-height: 1.15;
     font-weight: 400;
     margin-top: 24px;
     margin-bottom: 24px;
     letter-spacing: -0.02em;
-    text-wrap: balance;
+    max-width: 1400px;
   }
   .statement-italic {
     font-style: italic;
@@ -161,10 +161,21 @@
   .statement-p {
     font-size: 19px;
     color: rgba(15, 34, 17, 0.65);
-    max-width: 760px;
+    max-width: 1040px;
     margin: 0 auto;
     line-height: 1.6;
     text-wrap: balance;
+  }
+
+  .break-desktop {
+    display: none;
+  }
+  .nowrap-desktop {
+    white-space: normal;
+  }
+  @media (min-width: 769px) {
+    .break-desktop { display: inline; }
+    .nowrap-desktop { white-space: nowrap; }
   }
 
   /* Track & Nodes */
@@ -200,7 +211,7 @@
     left: 50%;
     top: 60px;
     transform: translateX(-50%) scale(0.85);
-    width: 320px;
+    width: 500px; /* Incrementado para permitir 2 líneas de texto descriptivo */
     display: flex;
     flex-direction: column;
     align-items: center;
