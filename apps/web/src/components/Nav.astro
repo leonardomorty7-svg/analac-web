@@ -28,6 +28,9 @@ const compLinks = [
 ];
 ---
 <nav class="nav" id="main-nav">
+  <div class="corner-ribbon" aria-hidden="true">
+    <img src="/images/cinta-colombia.svg" alt="" />
+  </div>
   <div class="nav-top-bar">
     <div class="top-bar-container">
       {topLinks.map((link) => (
@@ -35,13 +38,6 @@ const compLinks = [
           {link.label}
         </a>
       ))}
-      <span class="top-flag" role="img" aria-label="Colombia">
-        <svg viewBox="0 0 20 14" width="20" height="14">
-          <rect width="20" height="14" fill="#FCD116" />
-          <rect y="7" width="20" height="3.5" fill="#003893" />
-          <rect y="10.5" width="20" height="3.5" fill="#CE1126" />
-        </svg>
-      </span>
     </div>
   </div>
   <div class="nav-container">
@@ -265,6 +261,25 @@ const compLinks = [
     transition: all 0.3s ease;
   }
 
+  .corner-ribbon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 72px;
+    z-index: 10;
+    pointer-events: none;
+  }
+  .corner-ribbon img {
+    display: block;
+    width: 100%;
+    height: auto;
+  }
+  @media (max-width: 768px) {
+    .corner-ribbon {
+      width: 52px;
+    }
+  }
+
   .nav-top-bar {
     background: transparent;
     height: 36px;
@@ -325,17 +340,6 @@ const compLinks = [
   
   .nav.scrolled .top-cta {
     border-color: rgba(255,255,255,0.3);
-  }
-
-  .top-flag {
-    display: inline-flex;
-    border-radius: 3px;
-    overflow: hidden;
-    box-shadow: 0 0 0 1px rgba(255,255,255,0.2);
-    flex-shrink: 0;
-  }
-  .top-flag svg {
-    display: block;
   }
 
   .nav.scrolled {
