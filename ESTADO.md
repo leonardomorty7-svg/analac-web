@@ -1,31 +1,34 @@
 # Estado del proyecto analac-web
-Fecha: 7 julio 2026
+Fecha: 9 julio 2026
 
-## Deploy a Vercel: RESUELTO ✓
-URL producción: https://analac-web.vercel.app (ya sirve la versión más reciente, verificado)
+## Deploy a Vercel: RESUELTO ✓ (desde el 7 julio)
+URL producción: https://analac-web.vercel.app
 
-El bloqueo real nunca fue el `git push` (eso ya funcionaba). Fueron 3 problemas de build/deploy encadenados:
+El detalle completo del troubleshooting de deploy (migraciones de Supabase, `turbo.json`, Node version en Vercel) quedó documentado en el historial de git — ver commits `78618d7`, `ac60b7f` y el resto de esa sesión. Ese tema ya está cerrado, no hace falta retomarlo salvo que vuelva a fallar un deploy.
 
-1. **Migraciones de Supabase desincronizadas de git** — el fix de `uuid_generate_v4()` (usar `gen_random_uuid()` + extensión `uuid-ossp`) ya estaba aplicado en la base de datos remota, pero nunca se había hecho commit. Corregido en commit `78618d7`.
-2. **`turbo.json` no declaraba las env vars del build** — Turborepo en modo estricto bloqueaba `PUBLIC_SUPABASE_URL`, `PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, etc., aunque estuvieran configuradas en Vercel. Corregido en commit `ac60b7f` (se agregó el array `"env"` a la tarea `build`).
-3. **Node.js Version en Vercel mal configurado** — el adaptador `@astrojs/vercel@7.8.0` solo reconoce como runtime válido Node **18** o **20** (ver `SUPPORTED_NODE_VERSIONS` en su código fuente); cualquier otra versión (22, 24...) cae a `nodejs18.x`, que Vercel ya no acepta. Se cambió en **Project Settings → Build and Deployment → Node.js Version → 20.x** (esto es config del dashboard de Vercel, no queda en git).
+## Sesión de hoy (9 julio): mejoras visuales en Analac, hechas con Claude en vez de Antigravity
+A partir de hoy el usuario decidió seguir trabajando el frontend directamente conmigo (ya no aplica la restricción previa de "no tocar apps//frontend" — esa restricción era de una sesión anterior con otra herramienta). Cambios hechos, todos ya commiteados en local (**faltaba hacer push al cierre de la sesión** — confirmar con `git status` / `git log origin/main..HEAD`):
 
-## Cómo se hizo el push (sin credenciales git en este entorno)
-Este Mac no tiene credenciales de git configuradas para GitHub en el entorno de Claude Code (ni SSH ni token). Se generó una llave SSH (`~/.ssh/id_ed25519`) y se agregó a GitHub, pero en la práctica los pushes se terminaron haciendo con **GitHub Desktop** (ya autenticado con la cuenta de Andrés) — ese es el camino que funcionó cada vez.
+1. **`56f5736`** — Carrusel de scroll-hijack "Nodos de la Red" (`/asociados-y-aliados`): tarjetas en abanico controladas por scroll, estilo Apple. Implementado en `apps/web/src/pages/asociados-y-aliados/index.astro`.
+2. **`af26cbd`** — Rediseño de "Ciencia Láctea" (home): pasó de 1 tarjeta grande + 2 chicas a 3 tarjetas iguales, con firma de autor (avatar circular "AN" + "Equipo Técnico ANALAC"). Componente: `apps/web/src/components/CienciaLacteaSection.astro`.
+3. **`ac8e438`** — Tarjetas de recetas (home, sección "Consumo Lácteo"): se agregó texto descriptivo bajo cada título y se mejoró el hover (elevación, glow verde, zoom de imagen). `apps/web/src/components/ConsumoSection.astro`.
+4. **`2296a6d`** — Página `/noticias`: se agregó la sección "Ciencia Láctea" antes del footer y se eliminó el bloque "Archivo de Prensa / Actualidad y Análisis" que quedaba vacío (sin noticias publicadas en Supabase todavía).
+5. **`ba4996c`** — Sección "Datos Territoriales" (`/informacion-sectorial`): pasó de placeholder genérico a un mapa real de Colombia (SVG con 33 departamentos, provisto por el cliente, guardado en `apps/web/src/assets/mapa-colombia.svg`) con pines pulsantes, fondo oscuro estilo "Vitrina Digital", botón "Ver Territorios →" que lleva a `/afiliate` con nota "Disponible solo para afiliados".
+6. **`38423a5`** — Nav global: se agregó una bandera de Colombia junto a "Pagos" en la franja superior, y se corrigió que esa franja, al hacer scroll, tomaba el mismo verde que el botón "Hazte afiliado" y lo hacía ilegible.
 
-## Restricciones activas (del handoff previo del 6 julio)
-El frontend (Astro/React) se considera terminado. **No tocar** `apps/`, `packages/`, `backend/`, rutas, componentes ni UI. Todo lo de esta sesión se limitó a `supabase/` y `turbo.json` (raíz del monorepo) + configuración del dashboard de Vercel.
+### Patrón de diseño establecido (para mantener consistencia en próximas secciones)
+Cuando una sección necesita sentirse "premium": fondo oscuro casi negro (`#040a05`), glow radial verde (`rgba(109,181,109,0.12-0.22)`) + grilla sutil de 60px enmascarada con radial-gradient — es el mismo tratamiento que ya tenía "Vitrina Digital" en el home, y ahora se reutilizó en "Nodos de la Red" y "Datos Territoriales". Verde de acento: `#6db56d` / `var(--c-green)`.
 
-## Pendiente / a revisar
-- **Deployment Protection → Vercel Authentication** está activado ("Standard Protection"). Si el cliente entra sin cuenta de Vercel podría pedirle iniciar sesión. Desactivar si genera problemas.
-- El build final quedó "Ready" pero con 1 error / 3 warnings reportados en Build Logs — no bloqueó el deploy, pero no se investigó a fondo qué eran. Revisar si hay tiempo.
-- El proyecto `@analac/portal` seguía sin adaptador de Vercel configurado (nota heredada de estado anterior, no verificado en esta sesión).
+## Cómo se hace push (sin credenciales git en este entorno)
+Este Mac no tiene credenciales de git para GitHub en el entorno de Claude Code. El camino que funciona: abrir **GitHub Desktop** (ya autenticado) y darle "Push origin" ahí, cada vez que se pide guardar.
 
-## Para retomar
+## Para retomar mañana
 ```
 cd /Users/andres/Documents/analac-web
 git status
-git log --oneline -5
+git log --oneline -10
 ```
-Dashboard Vercel: vercel.com/andres-projects-f33d3017/analac-web
-Repo: github.com/leonardomorty7-svg/analac-web
+1. Verificar si ya se hizo push de los commits de hoy (`38423a5` es el más reciente); si no, abrir GitHub Desktop y darle "Push origin".
+2. El servidor de Astro dev (`pnpm dev`, puerto 4321) puede haber quedado corriendo desde ayer — revisar antes de levantar uno nuevo.
+3. Dashboard Vercel: vercel.com/andres-projects-f33d3017/analac-web
+4. Repo: github.com/leonardomorty7-svg/analac-web
