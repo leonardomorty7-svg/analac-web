@@ -35,6 +35,13 @@ const compLinks = [
           {link.label}
         </a>
       ))}
+      <span class="top-flag" role="img" aria-label="Colombia">
+        <svg viewBox="0 0 20 14" width="20" height="14">
+          <rect width="20" height="14" fill="#FCD116" />
+          <rect y="7" width="20" height="3.5" fill="#003893" />
+          <rect y="10.5" width="20" height="3.5" fill="#CE1126" />
+        </svg>
+      </span>
     </div>
   </div>
   <div class="nav-container">
@@ -268,7 +275,7 @@ const compLinks = [
   }
 
   .nav.scrolled .nav-top-bar {
-    background: rgba(17, 87, 36, 0.85); /* Verde institucional con transparencia */
+    background: transparent;
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     border-bottom: 1px solid rgba(255,255,255,0.1);
@@ -318,6 +325,17 @@ const compLinks = [
   
   .nav.scrolled .top-cta {
     border-color: rgba(255,255,255,0.3);
+  }
+
+  .top-flag {
+    display: inline-flex;
+    border-radius: 3px;
+    overflow: hidden;
+    box-shadow: 0 0 0 1px rgba(255,255,255,0.2);
+    flex-shrink: 0;
+  }
+  .top-flag svg {
+    display: block;
   }
 
   .nav.scrolled {
