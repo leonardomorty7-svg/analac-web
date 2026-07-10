@@ -23,7 +23,7 @@ const chartData = [
     <div class="container page-hero-content">
       <p class="overline overline-light">Información Sectorial</p>
       <h1 class="page-hero-title">
-        Observatorio ANALAC
+        Observatorio
       </h1>
       <p class="page-hero-desc">
         Información, indicadores y análisis del sector lácteo colombiano.
@@ -96,7 +96,7 @@ const chartData = [
     <div class="container text-center" style="max-width: 800px;">
       <h2 class="h3" style="color: var(--c-green-deep); margin-bottom: 24px;">¿Qué es el Observatorio ANALAC?</h2>
       <p style="font-size: 19px; color: var(--c-muted); line-height: 1.6; margin-bottom: 24px;">
-        Observatorio ANALAC es el espacio de Red ANALAC que reúne información, indicadores, análisis, informes y datos del sector lácteo colombiano para facilitar su comprensión y apoyar la toma de decisiones.
+        Es el espacio de Red ANALAC que reúne información, indicadores, análisis, informes y datos del sector lácteo colombiano para facilitar su comprensión y apoyar la toma de decisiones.
       </p>
       <p style="font-size: 16px; color: var(--c-muted); line-height: 1.6;">
         Su contenido público permite conocer cifras y tendencias generales. Los usuarios vinculados a la Red podrán acceder progresivamente a consultas ampliadas, comparaciones, descargas y herramientas especializadas según su afiliación y permisos.
@@ -214,11 +214,11 @@ const chartData = [
         <p style="font-size: 18px; color: rgba(255,255,255,0.7); line-height: 1.6; margin-bottom: 28px;">
           Una vista geográfica interactiva para consultar la presencia de organizaciones, vocación departamental y estadísticas territoriales del ecosistema lácteo.
         </p>
+        <a href="/afiliate" class="btn btn--primary territorial-cta">Ver Territorios →</a>
         <div class="territorial-badge">
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
           Disponible solo para afiliados
         </div>
-        <a href="/afiliate" class="btn btn--primary territorial-cta">Ver Territorios →</a>
       </div>
 
       <div class="territorial-visual" aria-hidden="true">
@@ -260,27 +260,27 @@ const chartData = [
       </p>
     </div>
 
-    <div class="container comunitaria-grid">
-      <div class="comunitaria-card">
-        <div class="comunitaria-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 2v6h-6"></path><path d="M3 12a9 9 0 0 1 15-6.7L21 8"></path><path d="M3 22v-6h6"></path><path d="M21 12a9 9 0 0 1-15 6.7L3 16"></path></svg>
+    <div class="container comunitaria-list">
+      <div class="comunitaria-row">
+        <span class="comunitaria-index">01</span>
+        <div class="comunitaria-row-text">
+          <h3>Actualización continua</h3>
+          <p>Organizaciones, profesionales y asociados de Red ANALAC actualizan progresivamente su información de capacidades, cobertura y actividades.</p>
         </div>
-        <h3>Actualización continua</h3>
-        <p>Organizaciones, profesionales y asociados de Red ANALAC actualizan progresivamente su información de capacidades, cobertura y actividades.</p>
       </div>
-      <div class="comunitaria-card">
-        <div class="comunitaria-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path><polyline points="9 12 11 14 15 10"></polyline></svg>
+      <div class="comunitaria-row">
+        <span class="comunitaria-index">02</span>
+        <div class="comunitaria-row-text">
+          <h3>Validación de ANALAC</h3>
+          <p>ANALAC organiza, valida y presenta estos datos de manera agregada para fortalecer el conocimiento del sector.</p>
         </div>
-        <h3>Validación de ANALAC</h3>
-        <p>ANALAC organiza, valida y presenta estos datos de manera agregada para fortalecer el conocimiento del sector.</p>
       </div>
-      <div class="comunitaria-card">
-        <div class="comunitaria-icon">
-          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+      <div class="comunitaria-row">
+        <span class="comunitaria-index">03</span>
+        <div class="comunitaria-row-text">
+          <h3>Privacidad y transparencia</h3>
+          <p>Los datos agregados protegen la privacidad de las organizaciones, diferenciando claramente fuentes oficiales de datos auto-declarados.</p>
         </div>
-        <h3>Privacidad y transparencia</h3>
-        <p>Los datos agregados protegen la privacidad de las organizaciones, diferenciando claramente fuentes oficiales de datos auto-declarados.</p>
       </div>
     </div>
   </section>
@@ -532,52 +532,50 @@ const chartData = [
     border-top: 1px solid rgba(0,0,0,0.05);
     border-bottom: 1px solid rgba(0,0,0,0.05);
   }
-  .comunitaria-grid {
+  .comunitaria-list {
+    max-width: 860px;
+    margin: 64px auto 0;
+    border-top: 1px solid rgba(15, 34, 17, 0.1);
+  }
+  .comunitaria-row {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: 72px 1fr;
     gap: 32px;
-    max-width: 1100px;
-    margin: 56px auto 0;
-  }
-  .comunitaria-card {
-    background: #ffffff;
-    border: 1px solid rgba(0,0,0,0.05);
-    border-radius: 20px;
-    padding: 36px 32px;
+    align-items: baseline;
+    padding: 36px 0;
+    border-bottom: 1px solid rgba(15, 34, 17, 0.1);
     text-align: left;
-    box-shadow: 0 4px 20px rgba(15, 34, 17, 0.03);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: opacity 0.3s ease;
   }
-  .comunitaria-card:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 16px 32px rgba(15, 34, 17, 0.06);
-  }
-  .comunitaria-icon {
-    width: 48px;
-    height: 48px;
-    border-radius: 12px;
-    background: rgba(109, 181, 109, 0.12);
-    color: var(--c-green-deep);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-bottom: 20px;
-  }
-  .comunitaria-card h3 {
-    font-size: 18px;
+  .comunitaria-index {
+    font-size: 15px;
     font-weight: 600;
+    letter-spacing: 0.04em;
+    color: #6db56d;
+    font-variant-numeric: tabular-nums;
+  }
+  .comunitaria-row-text h3 {
+    font-size: 21px;
+    font-weight: 500;
     color: var(--c-green-deep);
     margin: 0 0 10px;
+    letter-spacing: -0.01em;
   }
-  .comunitaria-card p {
-    font-size: 14px;
+  .comunitaria-row-text p {
+    font-size: 16px;
     color: var(--c-muted);
     line-height: 1.6;
     margin: 0;
+    max-width: 560px;
   }
-  @media (max-width: 900px) {
-    .comunitaria-grid {
-      grid-template-columns: 1fr;
+  @media (max-width: 640px) {
+    .comunitaria-row {
+      grid-template-columns: 36px 1fr;
+      gap: 16px;
+      padding: 28px 0;
+    }
+    .comunitaria-row-text h3 {
+      font-size: 19px;
     }
   }
 
@@ -616,13 +614,13 @@ const chartData = [
     align-items: center;
   }
   .territorial-badge {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     gap: 8px;
     font-size: 13px;
     font-weight: 500;
     color: rgba(255, 255, 255, 0.6);
-    margin-bottom: 28px;
+    margin-top: 16px;
   }
   .territorial-cta {
     flex-shrink: 0;
