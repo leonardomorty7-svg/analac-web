@@ -490,14 +490,6 @@ const aliadosGroups = [
             <p class="aliados-left-desc">
               Empresas que apoyan económicamente a ANALAC, fortalecen el desarrollo del sector lácteo colombiano y aportan soluciones y tecnología para nuestros productores.
             </p>
-            <div class="aliados-progress" id="aliadosProgress">
-              {aliadosGroups.map((g, i) => (
-                <button type="button" class="aliados-progress-dot" data-index={i} aria-label={`Ver ${g.titulo}`}>
-                  <span class="aliados-progress-mark"></span>
-                  <span class="aliados-progress-label">{g.titulo}</span>
-                </button>
-              ))}
-            </div>
           </div>
           <div class="aliados-right" id="aliadosRight">
             {aliadosGroups.map((g, i) => (
@@ -579,50 +571,6 @@ const aliadosGroups = [
       line-height: 1.6;
       margin-top: 16px;
     }
-    .aliados-progress {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      margin-top: 40px;
-      width: 100%;
-    }
-    .aliados-progress-dot {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      background: none;
-      border: none;
-      padding: 10px 0;
-      cursor: pointer;
-      text-align: left;
-      font-family: inherit;
-    }
-    .aliados-progress-mark {
-      flex-shrink: 0;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: rgba(15, 34, 17, 0.15);
-      transition: background 0.3s ease, transform 0.3s ease;
-    }
-    .aliados-progress-label {
-      font-size: 14px;
-      font-weight: 500;
-      color: rgba(15, 34, 17, 0.45);
-      transition: color 0.3s ease;
-    }
-    .aliados-progress-dot:hover .aliados-progress-label {
-      color: rgba(15, 34, 17, 0.75);
-    }
-    .aliados-progress-dot.active .aliados-progress-mark {
-      background: #6db56d;
-      transform: scale(1.4);
-    }
-    .aliados-progress-dot.active .aliados-progress-label {
-      color: #0f2211;
-      font-weight: 600;
-    }
-
     .aliados-right {
       position: relative;
       min-height: 440px;
@@ -664,7 +612,6 @@ const aliadosGroups = [
     ;(function () {
       const wrapper = document.querySelector<HTMLElement>('.aliados-scrollytelling')
       const panels = document.querySelectorAll<HTMLElement>('.aliados-panel')
-      const dots = document.querySelectorAll<HTMLElement>('.aliados-progress-dot')
       if (!wrapper || !panels.length) return
 
       const desktopMq = window.matchMedia('(min-width: 901px)')
@@ -676,7 +623,6 @@ const aliadosGroups = [
           const track = p.querySelector<HTMLElement>('.marquee-track')
           if (track) track.style.animationPlayState = isActive ? 'running' : 'paused'
         })
-        dots.forEach(d => d.classList.toggle('active', Number(d.dataset.index) === index))
       }
 
       function onScroll() {
@@ -691,18 +637,6 @@ const aliadosGroups = [
       window.addEventListener('scroll', onScroll, { passive: true })
       window.addEventListener('resize', onScroll)
       onScroll()
-
-      dots.forEach(dot => {
-        dot.addEventListener('click', () => {
-          if (!wrapper) return
-          const index = Number(dot.dataset.index)
-          const rect = wrapper.getBoundingClientRect()
-          const total = rect.height - window.innerHeight
-          const targetProgress = (index + 0.3) / panels.length
-          const targetY = window.scrollY + rect.top + targetProgress * total
-          window.scrollTo({ top: targetY, behavior: 'smooth' })
-        })
-      })
     })()
   </script>
 
