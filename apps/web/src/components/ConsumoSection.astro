@@ -1,49 +1,95 @@
 ---
 // src/components/ConsumoSection.astro
 
+import AuthorSignature from './AuthorSignature.astro'
+
+// Color distintivo por categoría de comida (secundario a la paleta de marca).
+const categoryColors: Record<string, string> = {
+  "DESAYUNO": "#c08a2e",
+  "ALMUERZO": "#a15c3e",
+  "POSTRE": "#a14e6e",
+  "MERIENDA": "#2f7d6b",
+  "BEBIDA": "#3d6ea8",
+}
+
 const recipes = [
   {
     categoria: "DESAYUNO",
     titulo: "Parfait de yogur con frutas",
     descripcion: "Capas de yogur natural, frutos rojos y granola crocante para empezar el día con energía.",
     tiempo: "15 min",
-    imagen: "/images/receta-parfait.jpg"
+    imagen: "/images/receta-parfait.jpg",
+    autorId: "laura-hernandez",
   },
   {
     categoria: "ALMUERZO",
     titulo: "Pasta cremosa con queso",
     descripcion: "Una pasta suave y reconfortante que resalta el sabor auténtico del queso colombiano.",
     tiempo: "25 min",
-    imagen: "/images/receta-pasta.jpg"
+    imagen: "/images/receta-pasta.jpg",
+    autorId: "felipe-gonzalez",
   },
   {
     categoria: "POSTRE",
     titulo: "Flan de leche tradicional",
     descripcion: "El postre clásico colombiano: suave, cremoso y hecho con leche fresca de nuestros productores.",
     tiempo: "40 min",
-    imagen: "/images/receta-flan.jpg"
-  }
+    imagen: "/images/receta-flan.jpg",
+    autorId: "andres-ramirez",
+  },
+  {
+    categoria: "DESAYUNO",
+    titulo: "Changua bogotana",
+    descripcion: "La sopa de leche con huevo y cilantro que despierta a la sabana: sencilla, calientita y reconfortante.",
+    tiempo: "20 min",
+    imagen: "/images/recetas/changua.jpg",
+    autorId: "laura-hernandez",
+  },
+  {
+    categoria: "POSTRE",
+    titulo: "Natilla navideña",
+    descripcion: "El postre infaltable de diciembre: leche, panela y canela cocidas a fuego lento hasta lograr su textura característica.",
+    tiempo: "45 min",
+    imagen: "/images/recetas/natilla.jpg",
+    autorId: "felipe-gonzalez",
+  },
+  {
+    categoria: "MERIENDA",
+    titulo: "Arequipe casero",
+    descripcion: "Leche y azúcar cocidas por horas hasta obtener el dulce de leche espeso que acompaña onces y postres colombianos.",
+    tiempo: "90 min",
+    imagen: "/images/recetas/arequipe.jpg",
+    autorId: "andres-ramirez",
+  },
+  {
+    categoria: "BEBIDA",
+    titulo: "Kumis con miel y granola",
+    descripcion: "El clásico lácteo fermentado colombiano, servido frío con un toque de miel y granola crocante.",
+    tiempo: "10 min",
+    imagen: "/images/recetas/kumis.jpg",
+    autorId: "laura-hernandez",
+  },
 ];
 ---
-<section class="recetario section-full fade-up">
-  <div class="recetario-inner">
-    <div class="recetario-header reveal" style="transition-delay: 0ms">
-      <span class="overline">CONSUMO LÁCTEO</span>
-      <h2 class="recetario-h2">Versatilidad del Lácteo Colombiano</h2>
-      <p class="recetario-p">
-        Iniciativas e información enfocada en promover y fortalecer el consumo nacional de leche y sus derivados en el día a día de los colombianos.
-      </p>
-    </div>
-    
-    <div class="recipe-grid">
-      {recipes.map((receta, idx) => (
-        <a href="/consumo-lacteo" class="recipe-card reveal" style={`transition-delay: ${(idx + 1) * 150}ms`}>
+<section class="recetario">
+  <div class="recetario-header reveal" style="transition-delay: 0ms">
+    <span class="overline">CONSUMO LÁCTEO</span>
+    <h2 class="recetario-h2">Versatilidad del Lácteo Colombiano</h2>
+    <p class="recetario-p">
+      Iniciativas e información enfocada en promover y fortalecer el consumo nacional de leche y sus derivados en el día a día de los colombianos.
+    </p>
+  </div>
+
+  <div class="recetario-carousel-wrap reveal" style="transition-delay: 150ms">
+    <div class="recetario-track" id="recetarioTrack">
+      {[...recipes, ...recipes, ...recipes].map((receta) => (
+        <a href="/consumo-lacteo" class="recipe-card">
           <div class="rc-img-wrapper">
             <img src={receta.imagen} alt={receta.titulo} class="rc-img" />
           </div>
           <div class="rc-content">
             <div class="rc-meta">
-              <span class="rc-category">{receta.categoria}</span>
+              <span class="rc-category" style={`--tag-color:${categoryColors[receta.categoria] ?? '#6db56d'}`}>{receta.categoria}</span>
               <span class="rc-time">
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
                 {receta.tiempo}
@@ -51,35 +97,39 @@ const recipes = [
             </div>
             <h3 class="rc-title">{receta.titulo}</h3>
             <p class="rc-desc">{receta.descripcion}</p>
+            <div class="byline">
+              <AuthorSignature id={receta.autorId} variant="byline" />
+            </div>
             <span class="rc-cta">Consultar preparación <span class="rc-cta-arrow">→</span></span>
           </div>
         </a>
       ))}
     </div>
 
-    <div class="recetario-actions reveal" style="transition-delay: 600ms">
-      <a href="/consumo-lacteo" class="btn-primary">Descubre los beneficios del consumo lácteo →</a>
+    <div class="recetario-nav">
+      <button type="button" class="recetario-nav-btn" id="recetarioPrev" aria-label="Receta anterior">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+      </button>
+      <button type="button" class="recetario-nav-btn recetario-nav-btn--active" id="recetarioNext" aria-label="Siguiente receta">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+      </button>
     </div>
+  </div>
+
+  <div class="recetario-actions reveal" style="transition-delay: 300ms">
+    <a href="/consumo-lacteo" class="btn-primary">Descubre los beneficios del consumo lácteo →</a>
   </div>
 </section>
 
 <style>
   .recetario {
-    background-color: #fff;
     min-height: 100vh;
-    padding: 120px 5vw;
+    background-color: #fff;
+    padding: 64px 5vw 120px;
     display: flex;
     flex-direction: column;
     align-items: center;
-  }
-
-  .recetario-inner {
-    max-width: 1200px;
-    width: 100%;
-    margin: 0 auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    gap: 48px;
   }
 
   .recetario-header {
@@ -88,7 +138,7 @@ const recipes = [
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 64px;
+    gap: 16px;
   }
 
   .overline {
@@ -97,16 +147,15 @@ const recipes = [
     letter-spacing: 0.12em;
     color: #6db56d;
     font-weight: 600;
-    margin-bottom: 16px;
   }
 
   .recetario-h2 {
     font-size: clamp(32px, 4vw, 48px);
     font-weight: 400;
     color: #0f2211;
-    margin-bottom: 24px;
     line-height: 1.15;
     letter-spacing: -0.02em;
+    margin: 0;
     text-wrap: balance;
   }
 
@@ -118,18 +167,70 @@ const recipes = [
     text-wrap: balance;
   }
 
-  /* Grid de recetas */
-  .recipe-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 32px;
+  /* Carrusel horizontal con "peek" de la siguiente receta */
+  .recetario-carousel-wrap {
+    width: calc(100vw - 5vw);
+    max-width: none;
+    align-self: flex-start;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .recetario-track {
+    display: flex;
+    gap: 28px;
     width: 100%;
-    margin-bottom: 64px;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    padding: 4px 4px 8px;
+  }
+  .recetario-track::-webkit-scrollbar {
+    display: none;
+  }
+
+  .recetario-nav {
+    display: flex;
+    gap: 12px;
+    margin-top: 32px;
+  }
+  .recetario-nav-btn {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid rgba(15, 34, 17, 0.12);
+    background: #ffffff;
+    color: #0f2211;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+  }
+  .recetario-nav-btn:hover {
+    transform: translateY(-2px);
+    border-color: #6db56d;
+    color: #6db56d;
+  }
+  .recetario-nav-btn--active {
+    background: #0f2211;
+    color: #ffffff;
+    border-color: #0f2211;
+  }
+  .recetario-nav-btn--active:hover {
+    background: #1a3a1e;
+    color: #ffffff;
   }
 
   .recipe-card {
     display: flex;
     flex-direction: column;
+    flex: 0 0 calc((100% - 84px) / 3.5);
+    width: calc((100% - 84px) / 3.5);
+    scroll-snap-align: start;
     text-decoration: none;
     border-radius: 16px;
     overflow: hidden;
@@ -151,8 +252,6 @@ const recipes = [
     width: 100%;
     aspect-ratio: 4/3;
     overflow: hidden;
-    border-radius: 0;
-    margin-bottom: 0;
   }
 
   .rc-img-wrapper::after {
@@ -198,7 +297,7 @@ const recipes = [
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    color: #6db56d;
+    color: var(--tag-color, #6db56d);
     font-weight: 600;
   }
 
@@ -212,7 +311,7 @@ const recipes = [
   }
 
   .rc-title {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 400;
     color: #0f2211;
     line-height: 1.3;
@@ -229,26 +328,32 @@ const recipes = [
     font-size: 14px;
     color: rgba(15, 34, 17, 0.6);
     line-height: 1.55;
-    margin: 0 0 24px;
+    margin: 0 0 20px;
+  }
+
+  /* Byline (firma de autor) */
+  .byline {
+    margin-top: auto;
+    padding-top: 16px;
+    border-top: 1px solid rgba(15, 34, 17, 0.08);
   }
 
   .rc-cta {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    font-size: 14px;
-    color: #0f2211;
+    font-size: 13px;
+    color: #6db56d;
     font-weight: 500;
-    border-bottom: 1px solid rgba(15,34,17,0.2);
-    padding-bottom: 2px;
-    width: fit-content;
-    transition: border-color 0.3s ease, color 0.3s ease;
-    margin-top: auto;
+    margin-top: 14px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
   }
 
   .recipe-card:hover .rc-cta {
-    border-color: #6db56d;
-    color: #6db56d;
+    opacity: 1;
+    transform: translateY(0);
   }
 
   .rc-cta-arrow {
@@ -283,7 +388,6 @@ const recipes = [
     box-shadow: 0 6px 16px rgba(109, 181, 109, 0.3);
   }
 
-
   .reveal {
     opacity: 0;
     transform: translateY(28px);
@@ -294,26 +398,19 @@ const recipes = [
     transform: translateY(0);
   }
 
-  @media (max-width: 992px) {
-    .recipe-grid {
-      grid-template-columns: repeat(2, 1fr);
-    }
-  }
-
   @media (max-width: 768px) {
     .recetario {
       padding: 64px 24px;
     }
-    .recipe-grid {
-      grid-template-columns: 1fr;
-      gap: 32px;
+    .recetario-carousel-wrap {
+      width: calc(100vw - 24px);
+    }
+    .recipe-card {
+      flex-basis: 280px;
+      width: 280px;
     }
     .recetario-h2 {
       font-size: 28px;
-    }
-    .recetario-actions .btn-primary {
-      width: 100%;
-      text-align: center;
     }
   }
 </style>
@@ -328,4 +425,81 @@ const recipes = [
   }, { threshold: 0.1 });
 
   document.querySelectorAll('.recetario .reveal').forEach(el => observer.observe(el));
+
+  // Carrusel horizontal de "Consumo Lácteo": auto-rotación infinita + botones
+  ;(function () {
+    const wrap = document.querySelector('.recetario-carousel-wrap')
+    const track = document.getElementById('recetarioTrack')
+    const prev = document.getElementById('recetarioPrev')
+    const next = document.getElementById('recetarioNext')
+    if (!wrap || !track || !prev || !next) return
+
+    const AUTOPLAY_MS = 3500
+
+    function cardStep() {
+      const card = track.querySelector('.recipe-card')
+      if (!card) return 0
+      const style = getComputedStyle(track)
+      const gap = parseFloat(style.columnGap || style.gap || '0') || 0
+      return card.getBoundingClientRect().width + gap
+    }
+
+    // El track contiene 3 copias del set de recetas. Mantenemos el scroll
+    // siempre dentro de la copia del medio y, cuando se sale de ese rango,
+    // saltamos instantáneamente una copia hacia el otro lado (contenido
+    // idéntico, así que el salto es invisible) => loop infinito.
+    function setWidth() {
+      return track.scrollWidth / 3
+    }
+
+    function normalize() {
+      const width = setWidth()
+      if (track.scrollLeft < width * 0.5) {
+        track.scrollTo({ left: track.scrollLeft + width, behavior: 'instant' })
+      } else if (track.scrollLeft > width * 1.5) {
+        track.scrollTo({ left: track.scrollLeft - width, behavior: 'instant' })
+      }
+    }
+
+    function advance(dir) {
+      track.scrollBy({ left: dir * cardStep(), behavior: 'smooth' })
+    }
+
+    let normalizeTimeout
+    track.addEventListener('scroll', () => {
+      clearTimeout(normalizeTimeout)
+      normalizeTimeout = setTimeout(normalize, 150)
+    })
+
+    let timer = null
+    function startAutoplay() {
+      stopAutoplay()
+      timer = setInterval(() => advance(1), AUTOPLAY_MS)
+    }
+    function stopAutoplay() {
+      if (timer) clearInterval(timer)
+      timer = null
+    }
+
+    next.addEventListener('click', () => {
+      advance(1)
+      startAutoplay()
+    })
+    prev.addEventListener('click', () => {
+      advance(-1)
+      startAutoplay()
+    })
+
+    wrap.addEventListener('mouseenter', stopAutoplay)
+    wrap.addEventListener('mouseleave', startAutoplay)
+
+    window.addEventListener('resize', () => {
+      normalize()
+    })
+
+    // Posiciona el scroll al inicio de la copia del medio antes de arrancar
+    // (el layout ya está resuelto de forma síncrona en este punto).
+    track.scrollTo({ left: setWidth(), behavior: 'instant' })
+    startAutoplay()
+  })()
 </script>
