@@ -644,8 +644,11 @@ const aliadosGroups = [
       if (!wrapper || !panels.length) return
 
       const desktopMq = window.matchMedia('(min-width: 901px)')
+      let activeIndex = -1
 
       function setActive(index: number) {
+        if (index === activeIndex) return
+        activeIndex = index
         panels.forEach(p => {
           const isActive = Number(p.dataset.index) === index
           p.classList.toggle('active', isActive)
@@ -654,7 +657,7 @@ const aliadosGroups = [
         })
       }
 
-      function onScroll() {
+      function updateActive() {
         if (!desktopMq.matches || !wrapper) { setActive(0); return }
         const rect = wrapper.getBoundingClientRect()
         const total = rect.height - window.innerHeight
@@ -663,9 +666,20 @@ const aliadosGroups = [
         setActive(index)
       }
 
+      // Solo recalcula una vez por frame, en vez de en cada evento de scroll.
+      let scrollTicking = false
+      function onScroll() {
+        if (scrollTicking) return
+        scrollTicking = true
+        requestAnimationFrame(() => {
+          updateActive()
+          scrollTicking = false
+        })
+      }
+
       window.addEventListener('scroll', onScroll, { passive: true })
       window.addEventListener('resize', onScroll)
-      onScroll()
+      updateActive()
     })()
   </script>
 
