@@ -17,36 +17,42 @@ const articles = [
     titulo: "El calcio de la leche y su absorción en adultos mayores",
     imagen: "/images/ciencia/nutricion.png",
     autorId: "laura-hernandez",
+    fecha: "18 jun 2026",
   },
   {
     categoria: "Producción",
     titulo: "Impacto del manejo de ordeño en la calidad composicional de la leche",
     imagen: "/images/ciencia/produccion.png",
     autorId: "andres-ramirez",
+    fecha: "24 jun 2026",
   },
   {
     categoria: "Consumo",
     titulo: "Leche entera vs. descremada: evidencia actualizada sobre salud cardiovascular",
     imagen: "/images/ciencia/consumo.png",
     autorId: "felipe-gonzalez",
+    fecha: "30 jun 2026",
   },
   {
     categoria: "Producción",
     titulo: "Bienestar animal: su relación con la calidad de la leche",
     imagen: "/images/ciencia/produccion.png",
     autorId: "laura-hernandez",
+    fecha: "3 jul 2026",
   },
   {
     categoria: "Nutrición",
     titulo: "Proteína láctea y su rol en la recuperación muscular",
     imagen: "/images/ciencia/nutricion.png",
     autorId: "andres-ramirez",
+    fecha: "7 jul 2026",
   },
   {
     categoria: "Sostenibilidad",
     titulo: "Huella hídrica y ambiental de la ganadería lechera colombiana",
     imagen: "/images/ciencia/consumo.png",
     autorId: "felipe-gonzalez",
+    fecha: "9 jul 2026",
   },
 ];
 ---
@@ -69,7 +75,10 @@ const articles = [
             <img src={art.imagen} alt={art.categoria} class="article-img" />
           </div>
           <div class="article-content">
-            <span class="editorial-tag-side" style={`--tag-color:${categoryColors[art.categoria] ?? '#6db56d'}`}><span class="tag-dot"></span>{art.categoria}</span>
+            <div class="article-meta-row">
+              <span class="editorial-tag-side" style={`--tag-color:${categoryColors[art.categoria] ?? '#6db56d'}`}><span class="tag-dot"></span>{art.categoria}</span>
+              <span class="article-date">{art.fecha}</span>
+            </div>
             <h3 class="article-title">{art.titulo}</h3>
             <div class="byline">
               <AuthorSignature id={art.autorId} variant="byline" />
@@ -261,6 +270,14 @@ const articles = [
     flex-direction: column;
   }
 
+  .article-meta-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 14px;
+  }
+
   .editorial-tag-side {
     display: inline-flex;
     align-items: center;
@@ -270,7 +287,6 @@ const articles = [
     letter-spacing: 0.12em;
     color: var(--tag-color, #6db56d);
     font-weight: 600;
-    margin-bottom: 14px;
   }
 
   .tag-dot {
@@ -278,6 +294,14 @@ const articles = [
     height: 5px;
     border-radius: 50%;
     background: var(--tag-color, #6db56d);
+  }
+
+  .article-date {
+    font-size: 11px;
+    color: #4b5563;
+    opacity: 0.6;
+    white-space: nowrap;
+    flex-shrink: 0;
   }
 
   .article-title {
