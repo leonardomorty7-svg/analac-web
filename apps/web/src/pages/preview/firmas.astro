@@ -1,0 +1,88 @@
+---
+// src/pages/preview/firmas.astro
+// Página oculta (no enlazada desde el menú, noindex) para revisar cómo se ven
+// las "firmas" de autor que se usan en blogs, noticias e investigaciones.
+// Se alimentan de la misma fuente de datos que /quienes-somos (src/data/equipo.ts).
+
+import BaseLayout from '../../layouts/BaseLayout.astro'
+import AuthorSignature from '../../components/AuthorSignature.astro'
+import { equipo } from '../../data/equipo'
+
+const equipoStaff = equipo.filter(m => m.grupo === 'equipo' && !m.oculto)
+const equipoJunta = equipo.filter(m => m.grupo === 'junta')
+---
+
+<BaseLayout title="Preview de firmas — ANALAC" noIndex={true}>
+  <section class="firmas-preview">
+    <div class="firmas-header">
+      <span class="overline">Preview interno</span>
+      <h1>Firmas de autor</h1>
+      <p>Así se ven las firmas que se pueden asignar a blogs, noticias e investigaciones. Cada una está enlazada al perfil correspondiente en "Quiénes somos".</p>
+    </div>
+
+    <h2 class="firmas-group-title">Equipo</h2>
+    <div class="firmas-grid">
+      {equipoStaff.map(m => (
+        <AuthorSignature id={m.id} variant="firma" />
+      ))}
+    </div>
+
+    <h2 class="firmas-group-title">Junta Directiva</h2>
+    <div class="firmas-grid">
+      {equipoJunta.map(m => (
+        <AuthorSignature id={m.id} variant="firma" />
+      ))}
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .firmas-preview {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 80px 24px 120px;
+  }
+
+  .firmas-header {
+    max-width: 640px;
+    margin-bottom: 56px;
+  }
+
+  .overline {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    color: #6db56d;
+    font-weight: 600;
+  }
+
+  .firmas-header h1 {
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 400;
+    color: #0f2211;
+    margin: 12px 0 12px;
+    letter-spacing: -0.02em;
+  }
+
+  .firmas-header p {
+    color: #4b5563;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  .firmas-group-title {
+    font-size: 13px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: #0f2211;
+    opacity: 0.6;
+    font-weight: 600;
+    margin: 40px 0 16px;
+  }
+
+  .firmas-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 16px;
+  }
+</style>

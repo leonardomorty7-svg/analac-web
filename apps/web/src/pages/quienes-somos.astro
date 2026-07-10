@@ -4,6 +4,10 @@ import BaseLayout from '../layouts/BaseLayout.astro'
 import LogoShowcase from '../components/LogoShowcase.astro'
 import fs from 'node:fs'
 import path from 'node:path'
+import { equipo } from '../data/equipo'
+
+const equipoStaff = equipo.filter(m => m.grupo === 'equipo')
+const equipoJunta = equipo.filter(m => m.grupo === 'junta')
 
 // Diccionario de normalización óptica
 // Ajustamos visualmente marcas que naturalmente se ven muy grandes o muy pequeñas
@@ -421,75 +425,23 @@ const academia = getLogosFromDir('academia');
       </div>
 
       <div class="equipo-grid fade-up">
-
-        <!-- Card 1 -->
-        <div class="equipo-card-premium">
-          <div class="equipo-img-wrapper">
-            <img src="/images/equipo/andres_ramirez.png" alt="Andrés Ramírez" class="equipo-img" />
+        {equipoStaff.map(miembro => (
+          <div class="equipo-card-premium" style={miembro.oculto ? "display: none;" : undefined}>
+            <div class="equipo-img-wrapper">
+              <img src={miembro.imagen} alt={miembro.nombre} class="equipo-img" />
+            </div>
+            <div class="equipo-info">
+              <h3 class="equipo-nombre">{miembro.nombre}</h3>
+              <p class="equipo-cargo">{miembro.cargo}</p>
+              <p class="equipo-desc">{miembro.descripcion}</p>
+            </div>
+            <div class="equipo-footer">
+              <a href={miembro.linkedin} class="linkedin-icon" aria-label={`LinkedIn de ${miembro.nombre}`} target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              </a>
+            </div>
           </div>
-          <div class="equipo-info">
-            <h3 class="equipo-nombre">Andrés Ramírez</h3>
-            <p class="equipo-cargo">Dirección Ejecutiva</p>
-            <p class="equipo-desc">Lidera la estrategia institucional y representa a ANALAC ante los diferentes actores del sector.</p>
-          </div>
-          <div class="equipo-footer">
-            <a href="#" class="linkedin-icon" aria-label="LinkedIn de Andrés Ramírez" target="_blank" rel="noopener noreferrer">
-              <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-            </a>
-          </div>
-        </div>
-
-        <!-- Card 2 -->
-        <div class="equipo-card-premium">
-          <div class="equipo-img-wrapper">
-            <img src="/images/equipo/laura_hernandez.png" alt="Laura Hernández" class="equipo-img" />
-          </div>
-          <div class="equipo-info">
-            <h3 class="equipo-nombre">Laura Hernández</h3>
-            <p class="equipo-cargo">Área Técnica</p>
-            <p class="equipo-desc">Desarrolla estudios, indicadores y análisis para apoyar la toma de decisiones del gremio.</p>
-          </div>
-          <div class="equipo-footer">
-            <a href="#" class="linkedin-icon" aria-label="LinkedIn de Laura Hernández" target="_blank" rel="noopener noreferrer">
-              <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-            </a>
-          </div>
-        </div>
-
-        <!-- Card 3 -->
-        <div class="equipo-card-premium">
-          <div class="equipo-img-wrapper">
-            <img src="/images/equipo/felipe_gonzalez.png" alt="Felipe González" class="equipo-img" />
-          </div>
-          <div class="equipo-info">
-            <h3 class="equipo-nombre">Felipe González</h3>
-            <p class="equipo-cargo">Comunicaciones</p>
-            <p class="equipo-desc">Gestiona la comunicación institucional, campañas y relacionamiento con productores y aliados.</p>
-          </div>
-          <div class="equipo-footer">
-            <a href="#" class="linkedin-icon" aria-label="LinkedIn de Felipe González" target="_blank" rel="noopener noreferrer">
-              <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-            </a>
-          </div>
-        </div>
-
-        <!-- Card 4 (Oculta temporalmente hasta aprobación del cliente) -->
-        <div class="equipo-card-premium" style="display: none;">
-          <div class="equipo-img-wrapper">
-            <img src="/images/equipo/sandra_morales.png" alt="Sandra Morales" class="equipo-img" />
-          </div>
-          <div class="equipo-info">
-            <h3 class="equipo-nombre">Sandra Morales</h3>
-            <p class="equipo-cargo">Administración</p>
-            <p class="equipo-desc">Coordina los procesos administrativos y el soporte operativo de la asociación.</p>
-          </div>
-          <div class="equipo-footer">
-            <a href="#" class="linkedin-icon" aria-label="LinkedIn de Sandra Morales" target="_blank" rel="noopener noreferrer">
-              <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-            </a>
-          </div>
-        </div>
-
+        ))}
       </div>
 
     </div>
@@ -688,51 +640,23 @@ const academia = getLogosFromDir('academia');
         <p style="font-size: 19px; color: var(--color-text-sub); margin-top: 16px;">El liderazgo que guía las decisiones gremiales de nuestra asociación.</p>
       </div>
       <div class="equipo-grid fade-up">
-        <div class="equipo-card-premium">
-          <div class="equipo-img-wrapper">
-            <img src="/images/equipo/javier_perez_new.png" alt="Javier Pérez" class="equipo-img" />
+        {equipoJunta.map(miembro => (
+          <div class="equipo-card-premium">
+            <div class="equipo-img-wrapper">
+              <img src={miembro.imagen} alt={miembro.nombre} class="equipo-img" />
+            </div>
+            <div class="equipo-info">
+              <h3 class="equipo-nombre">{miembro.nombre}</h3>
+              <p class="equipo-cargo">{miembro.cargo}</p>
+              <p class="equipo-desc">{miembro.descripcion}</p>
+            </div>
+            <div class="equipo-footer">
+              <a href={miembro.linkedin} class="linkedin-icon" aria-label={`LinkedIn de ${miembro.nombre}`} target="_blank" rel="noopener noreferrer">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+              </a>
+            </div>
           </div>
-          <div class="equipo-info">
-            <h3 class="equipo-nombre">Javier Pérez</h3>
-            <p class="equipo-cargo">Presidente Ejecutivo</p>
-            <p class="equipo-desc">Lidera la estrategia institucional y representa a ANALAC ante organismos públicos y privados.</p>
-          </div>
-          <div class="equipo-footer">
-            <a href="#" class="linkedin-icon" aria-label="LinkedIn de Javier Pérez" target="_blank" rel="noopener noreferrer">
-              <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-            </a>
-          </div>
-        </div>
-        <div class="equipo-card-premium">
-          <div class="equipo-img-wrapper">
-            <img src="/images/equipo/maria_lopez_new.png" alt="María López" class="equipo-img" />
-          </div>
-          <div class="equipo-info">
-            <h3 class="equipo-nombre">María López</h3>
-            <p class="equipo-cargo">Directora Gremial</p>
-            <p class="equipo-desc">Supervisa la integración regional, garantizando la articulación efectiva de todos los productores afiliados.</p>
-          </div>
-          <div class="equipo-footer">
-            <a href="#" class="linkedin-icon" aria-label="LinkedIn de María López" target="_blank" rel="noopener noreferrer">
-              <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-            </a>
-          </div>
-        </div>
-        <div class="equipo-card-premium">
-          <div class="equipo-img-wrapper">
-            <img src="/images/equipo/carlos_gomez_new.png" alt="Carlos Gómez" class="equipo-img" />
-          </div>
-          <div class="equipo-info">
-            <h3 class="equipo-nombre">Carlos Gómez</h3>
-            <p class="equipo-cargo">Secretario General</p>
-            <p class="equipo-desc">Coordina la estructura administrativa, legal y operativa, asegurando el cumplimiento normativo del gremio.</p>
-          </div>
-          <div class="equipo-footer">
-            <a href="#" class="linkedin-icon" aria-label="LinkedIn de Carlos Gómez" target="_blank" rel="noopener noreferrer">
-              <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
-            </a>
-          </div>
-        </div>
+        ))}
       </div>
     </div>
   </section>  <!-- S6.5 Ecosistema Digital -->

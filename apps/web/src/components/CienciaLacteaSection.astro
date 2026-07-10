@@ -1,42 +1,52 @@
 ---
 // src/components/CienciaLacteaSection.astro
 
+import AuthorSignature from './AuthorSignature.astro'
+
+// Color distintivo por categoría (secundario a la paleta de marca, hace juego con el verde de acento).
+const categoryColors: Record<string, string> = {
+  "Nutrición": "#c08a2e",
+  "Producción": "#a15c3e",
+  "Consumo": "#3d6ea8",
+  "Sostenibilidad": "#2f7d6b",
+}
+
 const articles = [
   {
     categoria: "Nutrición",
     titulo: "El calcio de la leche y su absorción en adultos mayores",
     imagen: "/images/ciencia/nutricion.png",
-    autor: "Equipo Técnico ANALAC",
+    autorId: "laura-hernandez",
   },
   {
     categoria: "Producción",
     titulo: "Impacto del manejo de ordeño en la calidad composicional de la leche",
     imagen: "/images/ciencia/produccion.png",
-    autor: "Equipo Técnico ANALAC",
+    autorId: "andres-ramirez",
   },
   {
     categoria: "Consumo",
     titulo: "Leche entera vs. descremada: evidencia actualizada sobre salud cardiovascular",
     imagen: "/images/ciencia/consumo.png",
-    autor: "Equipo Técnico ANALAC",
+    autorId: "felipe-gonzalez",
   },
   {
     categoria: "Producción",
     titulo: "Bienestar animal: su relación con la calidad de la leche",
     imagen: "/images/ciencia/produccion.png",
-    autor: "Equipo Técnico ANALAC",
+    autorId: "laura-hernandez",
   },
   {
     categoria: "Nutrición",
     titulo: "Proteína láctea y su rol en la recuperación muscular",
     imagen: "/images/ciencia/nutricion.png",
-    autor: "Equipo Técnico ANALAC",
+    autorId: "andres-ramirez",
   },
   {
     categoria: "Sostenibilidad",
     titulo: "Huella hídrica y ambiental de la ganadería lechera colombiana",
     imagen: "/images/ciencia/consumo.png",
-    autor: "Equipo Técnico ANALAC",
+    autorId: "felipe-gonzalez",
   },
 ];
 ---
@@ -59,11 +69,10 @@ const articles = [
             <img src={art.imagen} alt={art.categoria} class="article-img" />
           </div>
           <div class="article-content">
-            <span class="editorial-tag-side"><span class="tag-dot"></span>{art.categoria}</span>
+            <span class="editorial-tag-side" style={`--tag-color:${categoryColors[art.categoria] ?? '#6db56d'}`}><span class="tag-dot"></span>{art.categoria}</span>
             <h3 class="article-title">{art.titulo}</h3>
             <div class="byline">
-              <span class="byline-avatar">AN</span>
-              <span class="byline-name">{art.autor}</span>
+              <AuthorSignature id={art.autorId} variant="byline" />
             </div>
             <span class="article-read">Leer artículo &rarr;</span>
           </div>
@@ -259,7 +268,7 @@ const articles = [
     font-size: 11px;
     text-transform: uppercase;
     letter-spacing: 0.12em;
-    color: #6db56d;
+    color: var(--tag-color, #6db56d);
     font-weight: 600;
     margin-bottom: 14px;
   }
@@ -268,7 +277,7 @@ const articles = [
     width: 5px;
     height: 5px;
     border-radius: 50%;
-    background: #6db56d;
+    background: var(--tag-color, #6db56d);
   }
 
   .article-title {
@@ -284,36 +293,11 @@ const articles = [
     color: #6db56d;
   }
 
-  /* Byline (author avatar + name) */
+  /* Byline (firma de autor) */
   .byline {
-    display: flex;
-    align-items: center;
-    gap: 10px;
     margin-top: auto;
     padding-top: 16px;
     border-top: 1px solid rgba(15, 34, 17, 0.08);
-  }
-
-  .byline-avatar {
-    flex-shrink: 0;
-    width: 28px;
-    height: 28px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.02em;
-    background: #6db56d;
-    color: #ffffff;
-  }
-
-  .byline-name {
-    font-size: 13px;
-    font-weight: 500;
-    color: #0f2211;
-    opacity: 0.7;
   }
 
   .article-read {

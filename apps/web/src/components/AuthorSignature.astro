@@ -1,0 +1,129 @@
+---
+// src/components/AuthorSignature.astro
+// "Firma" de autor reutilizable: foto + nombre + cargo (+ LinkedIn en la variante "firma").
+// Se alimenta de la fuente única src/data/equipo.ts, la misma que usa /quienes-somos,
+// para que un colaborador solo se edite en un lugar y quede enlazado en todos lados.
+
+import { getAutor } from '../data/equipo'
+
+interface Props {
+  id: string
+  variant?: 'byline' | 'firma'
+}
+
+const { id, variant = 'byline' } = Astro.props
+const author = getAutor(id)
+---
+
+{author && (
+  <div class={`author-sig author-sig--${variant}`}>
+    <div class="author-sig-avatar">
+      <img src={author.imagen} alt={author.nombre} loading="lazy" />
+    </div>
+    <div class="author-sig-text">
+      <span class="author-sig-name">{author.nombre}</span>
+      <span class="author-sig-cargo">{author.cargo}</span>
+    </div>
+    {variant === 'firma' && author.linkedin && (
+      <a
+        href={author.linkedin}
+        class="author-sig-linkedin"
+        aria-label={`LinkedIn de ${author.nombre}`}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+      </a>
+    )}
+  </div>
+)}
+
+<style>
+  .author-sig {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .author-sig-avatar {
+    flex-shrink: 0;
+    border-radius: 50%;
+    overflow: hidden;
+    background: #6db56d;
+  }
+  .author-sig-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+
+  .author-sig-text {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+  }
+
+  .author-sig-name {
+    font-weight: 600;
+    color: #0f2211;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .author-sig-cargo {
+    color: #4b5563;
+    opacity: 0.85;
+  }
+
+  /* Variante compacta: byline dentro de las tarjetas de artículo */
+  .author-sig--byline .author-sig-avatar {
+    width: 32px;
+    height: 32px;
+  }
+  .author-sig--byline .author-sig-name {
+    font-size: 13px;
+  }
+  .author-sig--byline .author-sig-cargo {
+    font-size: 11px;
+  }
+
+  /* Variante firma: card horizontal completa para blogs/preview */
+  .author-sig--firma {
+    padding: 16px 20px;
+    background: #ffffff;
+    border: 1px solid rgba(15, 34, 17, 0.1);
+    border-radius: 16px;
+    box-shadow: 0 4px 16px rgba(15, 34, 17, 0.05);
+    gap: 14px;
+  }
+  .author-sig--firma .author-sig-avatar {
+    width: 56px;
+    height: 56px;
+  }
+  .author-sig--firma .author-sig-name {
+    font-size: 16px;
+  }
+  .author-sig--firma .author-sig-cargo {
+    font-size: 13px;
+  }
+  .author-sig--firma .author-sig-linkedin {
+    margin-left: auto;
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #0f2211;
+    background: #f5f3ee;
+    transition: background 0.25s ease, color 0.25s ease;
+  }
+  .author-sig--firma .author-sig-linkedin:hover {
+    background: #6db56d;
+    color: #ffffff;
+  }
+</style>
