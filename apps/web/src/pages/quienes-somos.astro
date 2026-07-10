@@ -484,27 +484,29 @@ const aliadosGroups = [
       <!-- Desktop: panel con scroll (sticky izquierda + derecha que cambia) -->
       <div class="aliados-scrollytelling fade-up" style={`height: calc(${aliadosGroups.length} * 62vh)`}>
         <div class="aliados-sticky-wrap">
-          <div class="aliados-left">
-            <p class="overline">Red de Apoyo</p>
-            <h2 class="h2">Aliados Estratégicos</h2>
-            <p class="aliados-left-desc">
-              Empresas que apoyan económicamente a ANALAC, fortalecen el desarrollo del sector lácteo colombiano y aportan soluciones y tecnología para nuestros productores.
-            </p>
-          </div>
-          <div class="aliados-right" id="aliadosRight">
-            {aliadosGroups.map((g, i) => (
-              <div class="aliados-panel" data-index={i}>
-                <AliadosGroup
-                  titulo={g.titulo}
-                  desc={g.desc}
-                  items={g.items}
-                  gridType={g.gridType}
-                  tierClass={g.tierClass}
-                  gap={g.gap}
-                  duration={g.duration}
-                />
-              </div>
-            ))}
+          <div class="aliados-sticky-inner">
+            <div class="aliados-left">
+              <p class="overline">Red de Apoyo</p>
+              <h2 class="h2">Aliados Estratégicos</h2>
+              <p class="aliados-left-desc">
+                Empresas que apoyan económicamente a ANALAC, fortalecen el desarrollo del sector lácteo colombiano y aportan soluciones y tecnología para nuestros productores.
+              </p>
+            </div>
+            <div class="aliados-right" id="aliadosRight">
+              {aliadosGroups.map((g, i) => (
+                <div class="aliados-panel" data-index={i}>
+                  <AliadosGroup
+                    titulo={g.titulo}
+                    desc={g.desc}
+                    items={g.items}
+                    gridType={g.gridType}
+                    tierClass={g.tierClass}
+                    gap={g.gap}
+                    duration={g.duration}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -544,10 +546,16 @@ const aliadosGroups = [
     .aliados-sticky-wrap {
       position: sticky;
       top: 184px;
+      height: calc(100vh - 184px);
+      display: flex;
+      align-items: center;
+    }
+    .aliados-sticky-inner {
       display: grid;
       grid-template-columns: 360px 1fr;
       gap: 72px;
-      align-items: start;
+      align-items: center;
+      width: 100%;
     }
     .aliados-left {
       display: flex;
