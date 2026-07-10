@@ -252,36 +252,11 @@ const chartData = [
   
   <!-- S4C Información Comunitaria -->
   <section class="section fade-up comunitaria-section">
-    <div class="container" style="max-width: 780px; text-align: center; margin-left: auto; margin-right: auto;">
+    <div class="container comunitaria-statement">
       <p class="overline">Método y transparencia</p>
-      <h2 class="h2" style="color: var(--c-green-deep); margin-bottom: 20px;">Información construida con el ecosistema</h2>
-      <p style="font-size: 18px; color: var(--c-muted); line-height: 1.6;">
-        Así se mantiene actualizado y confiable el Observatorio: entre la comunidad de Red ANALAC y el equipo técnico que organiza y valida los datos.
+      <p class="comunitaria-big-text">
+        El Observatorio se construye entre toda la Red: los afiliados actualizan la información, ANALAC la valida y organiza, y cada dato se presenta protegiendo la privacidad de quienes lo comparten.
       </p>
-    </div>
-
-    <div class="container comunitaria-list">
-      <div class="comunitaria-row">
-        <span class="comunitaria-index">01</span>
-        <div class="comunitaria-row-text">
-          <h3>Actualización continua</h3>
-          <p>Organizaciones, profesionales y asociados de Red ANALAC actualizan progresivamente su información de capacidades, cobertura y actividades.</p>
-        </div>
-      </div>
-      <div class="comunitaria-row">
-        <span class="comunitaria-index">02</span>
-        <div class="comunitaria-row-text">
-          <h3>Validación de ANALAC</h3>
-          <p>ANALAC organiza, valida y presenta estos datos de manera agregada para fortalecer el conocimiento del sector.</p>
-        </div>
-      </div>
-      <div class="comunitaria-row">
-        <span class="comunitaria-index">03</span>
-        <div class="comunitaria-row-text">
-          <h3>Privacidad y transparencia</h3>
-          <p>Los datos agregados protegen la privacidad de las organizaciones, diferenciando claramente fuentes oficiales de datos auto-declarados.</p>
-        </div>
-      </div>
     </div>
   </section>
 
@@ -532,50 +507,23 @@ const chartData = [
     border-top: 1px solid rgba(0,0,0,0.05);
     border-bottom: 1px solid rgba(0,0,0,0.05);
   }
-  .comunitaria-list {
-    max-width: 860px;
-    margin: 64px auto 0;
-    border-top: 1px solid rgba(15, 34, 17, 0.1);
+  .comunitaria-statement {
+    max-width: 980px;
+    text-align: center;
+    margin: 0 auto;
   }
-  .comunitaria-row {
-    display: grid;
-    grid-template-columns: 72px 1fr;
-    gap: 32px;
-    align-items: baseline;
-    padding: 36px 0;
-    border-bottom: 1px solid rgba(15, 34, 17, 0.1);
-    text-align: left;
-    transition: opacity 0.3s ease;
-  }
-  .comunitaria-index {
-    font-size: 15px;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    color: #6db56d;
-    font-variant-numeric: tabular-nums;
-  }
-  .comunitaria-row-text h3 {
-    font-size: 21px;
-    font-weight: 500;
+  .comunitaria-big-text {
+    font-size: clamp(28px, 4vw, 44px);
+    font-weight: 400;
     color: var(--c-green-deep);
-    margin: 0 0 10px;
+    line-height: 1.35;
     letter-spacing: -0.01em;
-  }
-  .comunitaria-row-text p {
-    font-size: 16px;
-    color: var(--c-muted);
-    line-height: 1.6;
-    margin: 0;
-    max-width: 560px;
+    margin: 28px 0 0;
+    text-wrap: balance;
   }
   @media (max-width: 640px) {
-    .comunitaria-row {
-      grid-template-columns: 36px 1fr;
-      gap: 16px;
-      padding: 28px 0;
-    }
-    .comunitaria-row-text h3 {
-      font-size: 19px;
+    .comunitaria-big-text {
+      line-height: 1.3;
     }
   }
 
