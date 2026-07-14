@@ -235,7 +235,7 @@ const articles = [
        "Versatilidad del Lácteo Colombiano" (contenedor de 95vw). */
     flex: 0 0 calc((95vw - 84px) / 3.5);
     width: calc((95vw - 84px) / 3.5);
-    scroll-snap-align: start;
+    scroll-snap-align: center;
     background: white;
     border-radius: 20px;
     overflow: hidden;
@@ -417,12 +417,23 @@ const articles = [
 
     const AUTOPLAY_MS = 3500
 
-    function cardStep() {
+    function cardWidth() {
       const card = track.querySelector('.article-card')
-      if (!card) return 0
+      return card ? card.getBoundingClientRect().width : 0
+    }
+
+    function cardStep() {
       const style = getComputedStyle(track)
       const gap = parseFloat(style.columnGap || style.gap || '0') || 0
-      return card.getBoundingClientRect().width + gap
+      return cardWidth() + gap
+    }
+
+    // Las cards usan scroll-snap-align:center, así que en reposo quedan
+    // centradas y el sobrante se reparte en ambos bordes (peek simétrico).
+    // El offset entre "scrollLeft" y "posición lógica de inicio de copia"
+    // es la mitad del espacio que sobra alrededor de la card centrada.
+    function centerOffset() {
+      return (track.clientWidth - cardWidth()) / 2
     }
 
     // El track contiene 3 copias del set de artículos. Mantenemos el
@@ -435,9 +446,10 @@ const articles = [
 
     function normalize() {
       const width = setWidth()
-      if (track.scrollLeft < width * 0.5) {
+      const logical = track.scrollLeft + centerOffset()
+      if (logical < width * 0.5) {
         track.scrollTo({ left: track.scrollLeft + width, behavior: 'instant' })
-      } else if (track.scrollLeft > width * 1.5) {
+      } else if (logical > width * 1.5) {
         track.scrollTo({ left: track.scrollLeft - width, behavior: 'instant' })
       }
     }
@@ -480,7 +492,7 @@ const articles = [
 
     // Posiciona el scroll al inicio de la copia del medio antes de arrancar
     // (el layout ya está resuelto de forma síncrona en este punto).
-    track.scrollTo({ left: setWidth(), behavior: 'instant' })
+    track.scrollTo({ left: setWidth() - centerOffset(), behavior: 'instant' })
     startAutoplay()
   })()
 </script>
