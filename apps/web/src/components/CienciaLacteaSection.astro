@@ -169,9 +169,10 @@ const articles = [
 
   /* Carrusel horizontal con "peek" del siguiente artículo */
   .ciencia-carousel-wrap {
-    width: calc(100vw - 5vw);
+    width: 100vw;
     max-width: none;
     align-self: flex-start;
+    margin-left: -5vw;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -196,6 +197,7 @@ const articles = [
     display: flex;
     gap: 12px;
     margin-top: 32px;
+    margin-left: 5vw;
   }
   .ciencia-nav-btn {
     width: 48px;
@@ -378,7 +380,11 @@ const articles = [
       padding: 64px 24px;
     }
     .ciencia-carousel-wrap {
-      width: calc(100vw - 24px);
+      width: 100vw;
+      margin-left: -24px;
+    }
+    .ciencia-nav {
+      margin-left: 24px;
     }
     .article-card {
       flex-basis: 280px;
