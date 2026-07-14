@@ -187,6 +187,10 @@ const articles = [
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
     padding: 4px 4px 8px;
+    /* Difumina solo el borde izquierdo (por donde las cards salen de vista);
+       el derecho queda nítido a propósito, para el efecto "peek" de la card cortada. */
+    -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 100%);
+    mask-image: linear-gradient(90deg, transparent 0%, #000 8%, #000 100%);
   }
   .ciencia-track::-webkit-scrollbar {
     display: none;
@@ -228,8 +232,8 @@ const articles = [
   .article-card {
     display: flex;
     flex-direction: column;
-    flex: 0 0 calc((100% - 112px) / 4.5);
-    width: calc((100% - 112px) / 4.5);
+    flex: 0 0 calc((100% - 84px) / 3.5);
+    width: calc((100% - 84px) / 3.5);
     scroll-snap-align: start;
     background: white;
     border-radius: 20px;
@@ -381,8 +385,8 @@ const articles = [
       width: calc(100vw - 24px);
     }
     .article-card {
-      flex-basis: 260px;
-      width: 260px;
+      flex-basis: 280px;
+      width: 280px;
     }
   }
 </style>
