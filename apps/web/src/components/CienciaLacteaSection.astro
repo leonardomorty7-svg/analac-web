@@ -230,8 +230,11 @@ const articles = [
   .article-card {
     display: flex;
     flex-direction: column;
-    flex: 0 0 calc((100% - 84px) / 3.5);
-    width: calc((100% - 84px) / 3.5);
+    /* En vw (no % del contenedor) para que el ancho no varíe aunque el
+       wrap sea full-bleed a 100vw: debe medir igual que las cards de
+       "Versatilidad del Lácteo Colombiano" (contenedor de 95vw). */
+    flex: 0 0 calc((95vw - 84px) / 3.5);
+    width: calc((95vw - 84px) / 3.5);
     scroll-snap-align: start;
     background: white;
     border-radius: 20px;
