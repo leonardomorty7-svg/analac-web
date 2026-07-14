@@ -169,9 +169,10 @@ const recipes = [
 
   /* Carrusel horizontal con "peek" de la siguiente receta */
   .recetario-carousel-wrap {
-    width: calc(100vw - 5vw);
+    width: 100vw;
     max-width: none;
     align-self: flex-start;
+    margin-left: -5vw;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
@@ -196,6 +197,7 @@ const recipes = [
     display: flex;
     gap: 12px;
     margin-top: 32px;
+    margin-left: 5vw;
   }
   .recetario-nav-btn {
     width: 48px;
@@ -228,9 +230,11 @@ const recipes = [
   .recipe-card {
     display: flex;
     flex-direction: column;
-    flex: 0 0 calc((100% - 84px) / 3.5);
-    width: calc((100% - 84px) / 3.5);
-    scroll-snap-align: start;
+    /* En vw (no % del contenedor) para que el ancho no varíe aunque el
+       wrap sea full-bleed a 100vw. */
+    flex: 0 0 calc((95vw - 84px) / 3.5);
+    width: calc((95vw - 84px) / 3.5);
+    scroll-snap-align: center;
     text-decoration: none;
     border-radius: 16px;
     overflow: hidden;
@@ -403,7 +407,11 @@ const recipes = [
       padding: 64px 24px;
     }
     .recetario-carousel-wrap {
-      width: calc(100vw - 24px);
+      width: 100vw;
+      margin-left: -24px;
+    }
+    .recetario-nav {
+      margin-left: 24px;
     }
     .recipe-card {
       flex-basis: 280px;
@@ -436,12 +444,23 @@ const recipes = [
 
     const AUTOPLAY_MS = 3500
 
-    function cardStep() {
+    function cardWidth() {
       const card = track.querySelector('.recipe-card')
-      if (!card) return 0
+      return card ? card.getBoundingClientRect().width : 0
+    }
+
+    function cardStep() {
       const style = getComputedStyle(track)
       const gap = parseFloat(style.columnGap || style.gap || '0') || 0
-      return card.getBoundingClientRect().width + gap
+      return cardWidth() + gap
+    }
+
+    // Las cards usan scroll-snap-align:center, así que en reposo quedan
+    // centradas y el sobrante se reparte en ambos bordes (peek simétrico).
+    // El offset entre "scrollLeft" y "posición lógica de inicio de copia"
+    // es la mitad del espacio que sobra alrededor de la card centrada.
+    function centerOffset() {
+      return (track.clientWidth - cardWidth()) / 2
     }
 
     // El track contiene 3 copias del set de recetas. Mantenemos el scroll
@@ -454,9 +473,10 @@ const recipes = [
 
     function normalize() {
       const width = setWidth()
-      if (track.scrollLeft < width * 0.5) {
+      const logical = track.scrollLeft + centerOffset()
+      if (logical < width * 0.5) {
         track.scrollTo({ left: track.scrollLeft + width, behavior: 'instant' })
-      } else if (track.scrollLeft > width * 1.5) {
+      } else if (logical > width * 1.5) {
         track.scrollTo({ left: track.scrollLeft - width, behavior: 'instant' })
       }
     }
@@ -499,7 +519,7 @@ const recipes = [
 
     // Posiciona el scroll al inicio de la copia del medio antes de arrancar
     // (el layout ya está resuelto de forma síncrona en este punto).
-    track.scrollTo({ left: setWidth(), behavior: 'instant' })
+    track.scrollTo({ left: setWidth() - centerOffset(), behavior: 'instant' })
     startAutoplay()
   })()
 </script>
