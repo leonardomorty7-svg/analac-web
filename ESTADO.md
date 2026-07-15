@@ -1,5 +1,5 @@
 # Estado del proyecto analac-web
-Fecha: 10 julio 2026
+Fecha: 14 julio 2026
 
 ## Deploy a Vercel: RESUELTO ✓ (desde el 7 julio)
 URL producción: https://analac-web.vercel.app
@@ -7,42 +7,39 @@ URL producción: https://analac-web.vercel.app
 El detalle completo del troubleshooting de deploy (migraciones de Supabase, `turbo.json`, Node version en Vercel) quedó documentado en el historial de git — ver commits `78618d7`, `ac60b7f` y el resto de esa sesión. Ese tema ya está cerrado, no hace falta retomarlo salvo que vuelva a fallar un deploy.
 
 ## Estado de push
-**Todo lo de hoy (10 julio) y de ayer (9 julio) ya está pusheado a `origin/main`** (confirmado con `git fetch` + comparación de hash — `HEAD` y `origin/main` apuntan al mismo commit, `5581445`). No hay nada pendiente de subir.
+**Todo lo de hoy (14 julio) está commiteado localmente pero NO pusheado todavía.** Falta abrir GitHub Desktop y darle "Push origin" (ver sección de abajo). Antes de esta sesión, todo hasta `d25b0a4` ya estaba en `origin/main`.
 
-## Sesión del 10 julio
+## Sesión del 14 julio
 
-1. **`286ad4d`** — Home/`/noticias` "Ciencia Láctea": cada categoría (Nutrición, Producción, Consumo, Sostenibilidad) tiene su propio color de acento. El byline genérico "Equipo Técnico ANALAC" se reemplazó por la firma real del colaborador (foto, nombre, cargo), alimentada por una fuente de datos única (`src/data/equipo.ts`) que también usa `/quienes-somos`. Nuevo componente `AuthorSignature.astro` (variantes `byline`/`firma`, la variante firma incluye LinkedIn). Página oculta `/preview/firmas` (noindex) para revisar todas las firmas.
-2. **`bee74f1`** — Se agregó fecha de publicación a las cards de Ciencia Láctea, alineada a la derecha de la categoría.
-3. **`0ded603`** — Home "Consumo Lácteo": mismo tratamiento que Ciencia Láctea — carrusel horizontal infinito full-bleed, color por categoría de comida, firma de autor real, botón "Consultar preparación" ahora solo visible en hover. Se agregaron 4 recetas colombianas nuevas (changua, natilla, arequipe, kumis) usando fotos que ya estaban en `public/images/recetas/`.
-4. **`44f2ac2`** — Home "Nuestro Impacto": se quitó la línea separadora verde bajo el título y se capitalizaron las tres etiquetas (Productores/Departamentos/Precio).
-5. **`dfac688`** — `/quienes-somos` "Nuestra Historia" (timeline): el hover de los puntos no se notaba porque usaba variables CSS (`--color-green-dark`, `--color-bg-page`) que **no estaban definidas en ningún lado del proyecto** (confirmado con `getComputedStyle` — devolvían string vacío). Se reemplazaron por colores reales; ahora el hover rellena en verde, agranda y tiene glow. Los años pasaron de weight 300 a 600.
-6. **`9352670`** + **`cb12493`** + **`cb7a23d`** + **`904f5c5`** — `/quienes-somos` "Aliados Estratégicos": rediseño completo de lista larga apilada a panel de scrollytelling — texto fijo centrado verticalmente a la izquierda, panel derecho que cambia de grupo de logos según el progreso de scroll (con `position:sticky` + cálculo de progreso, sin hijackear el scroll). Se agregó texto descriptivo a los 3 grupos que no lo tenían (Aliados Premium, Aliados Estratégicos, Empresas Aliadas). Nuevo componente reutilizable `AliadosGroup.astro`.
-7. **`30ec5e7`** — `/quienes-somos` "Valores Institucionales": ícono de "Sostenibilidad" cambiado de signo de pesos ($) a una hoja.
-8. **`1f931f4`** + **`1fa8655`** — `/informacion-sectorial` (Observatorio): hero "Observatorio ANALAC" → "Observatorio" (ya no se repite); el párrafo de "¿Qué es el Observatorio?" ya no repite el título; el badge "Disponible solo para afiliados" en Datos Territoriales ahora va debajo del botón "Ver Territorios" (antes flotaba al lado por ser `inline-flex`); la sección "Información construida con el ecosistema" pasó de 3 cards con ícono a **una sola frase grande y centrada**, muy tipográfica (estilo inspirado en la referencia de Antigravity que envió el cliente), resumiendo actualización + validación + privacidad.
-9. **`5581445`** — Fix de performance: dos listeners de `scroll` a nivel de `window` (Nav.astro y el scrollytelling de Aliados) corrían sin límite de frecuencia, haciendo trabajo pesado (`getBoundingClientRect`, toggles de clase) en cada evento. Se limitaron a recalcular una vez por frame con `requestAnimationFrame`. Esto se hizo porque el cliente reportó "parpadeo" al hacer scroll en varias páginas.
+1. **`97831bb`** — Se recortó el relleno transparente sobrante en 18 archivos de logos de aliados (Carval, Grupo Bios, Solla, Ganasal, Genética Selecta, Lares, Nutrimixes, Ourofino, Partner, Silveragro, ANDI, Asoleche, Consejo Nacional Lácteo, Invima, SIC, Uniagraria, Universidad de La Sabana). El problema real no era que los archivos tuvieran distinto tamaño, sino que algunos traían mucho margen transparente adentro del archivo, así que a la misma altura en CSS se veían más chicos. Cada recorte se verificó visualmente uno por uno para no cortar ningún logo. Se detectaron 4 casos con "canal alfa falso" (marcado transparente pero en realidad opaco) que el primer script saltó por error y se corrigieron en una segunda pasada.
+2. **`a4fd758`** — `/quienes-somos` sección "Aliados y Colaboradores" (antes "Aliados Estratégicos"):
+   - Se reemplazó el panel de scrollytelling (título fijo a la izquierda que no cambiaba con el grupo mostrado a la derecha — causaba confusión real del cliente) por **pestañas clicables** con los 6 nombres de grupo (Premium, Estratégicos, Empresas Aliadas, Representación Gremial, Articulación Institucional, Academia) siempre visibles en una sola línea.
+   - Título, descripción y grilla de logos del panel activo quedan centrados en el viewport.
+   - Se descubrió que la clase `text-center`, usada en 7 títulos de esta página (y en ~10 páginas más del sitio), **nunca tuvo efecto real** — es una utilidad de Tailwind pero esta página carga `global.css`, que no tiene Tailwind. Se agregó la regla real (`text-align:center`) directamente en `global.css`, lo que corrige el centrado en todos esos títulos de una vez.
+   - Se reafinó el diccionario `opticalScales` (multiplicadores de tamaño por logo) ahora que las imágenes ya vienen recortadas: se quitaron los ajustes que compensaban relleno que ya no existe, dejando solo los que reflejan una diferencia real de diseño (ej. DeLaval, ICA).
+   - Las descripciones de cada grupo se ensancharon a 800px (antes 620px) para que ninguna pase de 2 líneas, a pedido del cliente.
+3. **`a4fd758`** (mismo commit) — `/quienes-somos` sección "Ecosistema Digital ANALAC": se portó el mecanismo de **carrusel en abanico con scroll-hijack** de "Nodos de la Red" (`/asociados-y-aliados`), pero con **fondo claro/crema** en vez de oscuro (pedido explícito del cliente, para no chocar con la transición hacia la sección siguiente). En desktop (≥900px) la sección se fija y el scroll avanza las 8 tarjetas de servicio una por una en abanico, con puntos de navegación; en mobile cae a una grilla simple apilada. Mecanismo verificado con eventos de wheel simulados (avanza, respeta el límite de animación, libera el hijack correctamente al llegar a la última tarjeta).
+4. **`d25b0a4`** (de la sesión anterior, confirmar que ya se revisó) — `/asociados-y-aliados` CTA final: se quitó la foto de fondo oscura, ahora usa fondo crema con texto verde oscuro/gris.
 
-### ⚠️ Pendiente de verificar (parpadeo al hacer scroll)
-El cliente reportó un parpadeo general al hacer scroll en varias páginas. Se identificó y corrigió la causa más probable (scroll listeners sin throttle, ver punto 9 arriba), pero **no se pudo verificar visualmente en vivo** porque el navegador automatizado (claude-in-chrome) quedó caído por una falla temporal de infraestructura justo al final de la sesión. Antes de dar esto por cerrado:
-1. Abrir `localhost:4321` en un navegador real y scrollear rápido por el home y por `/quienes-somos` (sección "Aliados Estratégicos", la más pesada).
-2. Si el parpadeo sigue apareciendo, pedirle al usuario que precise en qué página/sección exacta lo ve, para investigar puntualmente ahí.
-3. También quedó pendiente una revisión visual del responsive en varios anchos de pantalla (se hizo una auditoría estática del CSS de todo lo tocado esta sesión y no se encontraron problemas evidentes, pero no se pudo confirmar visualmente por la misma falla del navegador automatizado).
+### Patrón técnico: carrusel en abanico con scroll-hijack
+Nuevo patrón (adaptado de "Nodos de la Red", ahora también en "Ecosistema Digital ANALAC"). Desktop-only (`min-width:900px` + `prefers-reduced-motion:no-preference`); la sección se pone `height:100vh` y un listener de `wheel` en `window` (`passive:false`) hace `preventDefault()` mientras la sección está "pineada" (`Math.abs(rect.top) <= 100`) y traduce el `wheel` en avanzar/retroceder una tarjeta activa (`translateX` calculado para centrar la tarjeta activa, con tarjetas antes/después escaladas y rotadas para el efecto abanico). Al llegar a la primera/última tarjeta y seguir scrolleando hacia afuera, se libera el hijack y el scroll nativo continúa a la siguiente sección. En mobile el mismo track cae a una grilla CSS simple (sin JS de carrusel). Ver `apps/web/src/pages/asociados-y-aliados/index.astro` (original) y `apps/web/src/pages/quienes-somos.astro` (variante clara).
 
 ### Patrón de diseño establecido (para mantener consistencia en próximas secciones)
-Cuando una sección necesita sentirse "premium": fondo oscuro casi negro (`#040a05`), glow radial verde (`rgba(109,181,109,0.12-0.22)`) + grilla sutil de 60px enmascarada con radial-gradient. Ya aplicado en: Vitrina Digital (home), Nodos de la Red, Datos Territoriales, Nodos de Conocimiento (noticias). Verde de acento: `#6db56d` / `var(--c-green)`.
+Variante oscura: fondo casi negro (`#040a05`), glow radial verde (`rgba(109,181,109,0.12-0.22)`) + grilla sutil de 60px enmascarada con radial-gradient. Ya aplicado en: Vitrina Digital (home), Nodos de la Red, Datos Territoriales, Nodos de Conocimiento (noticias).
+Variante clara (nueva, 14 julio): mismo glow radial verde pero sobre fondo crema (`var(--c-cream)`) y grilla sutil oscura (`rgba(15,34,17,0.035)`) en vez de blanca. Usada en "Ecosistema Digital ANALAC".
+Verde de acento: `#6db56d` / `var(--c-green)`.
 
 ### Patrón técnico: carrusel horizontal infinito con auto-rotación
-Ya usado en Ciencia Láctea y Consumo Lácteo. Para reutilizar: renderizar 3 copias del array de items en el track (`[...items, ...items, ...items]`), posicionar el scroll inicial en `track.scrollWidth / 3` de forma **síncrona** (no usar `requestAnimationFrame` para esto — no se dispara de forma confiable en algunos entornos), y en cada evento `scroll` (debounced ~150ms) revisar si `scrollLeft` salió del tercio del medio; si es así, saltar una copia con `scrollTo({ left, behavior: 'instant' })` (nunca asignar `scrollLeft` directamente si el contenedor tiene `scroll-behavior: smooth` en CSS).
-
-### Patrón técnico: panel de scrollytelling (sticky + progreso de scroll)
-Usado en "Aliados Estratégicos". Wrapper con altura real = N pasos × alto de viewport (ej. `calc(N * 62vh)`), y adentro un `position: sticky` que se queda pegado mientras se hace scroll por esa altura. La lógica en JS calcula progreso con `-rect.top / (rect.height - innerHeight)` y determina el paso activo con `Math.floor(progress * N)`. **Importante**: throttlear el listener de scroll con `requestAnimationFrame` (no correrlo en cada evento crudo).
+Ya usado en Ciencia Láctea y Consumo Lácteo. Para reutilizar: renderizar 3 copias del array de items en el track (`[...items, ...items, ...items]`), posicionar el scroll inicial en `track.scrollWidth / 3` de forma **síncrona**, y en cada evento `scroll` (debounced ~150ms) revisar si `scrollLeft` salió del tercio del medio; si es así, saltar una copia con `scrollTo({ left, behavior: 'instant' })`. Para el efecto "peek" simétrico en ambos bordes: usar `scroll-snap-align: center` (no `start`) en las cards, y ancho de card en `vw` (no `%`) si el wrap del carrusel es full-bleed, para que no cambie de tamaño según el ancho del wrap.
 
 ### Fuente única de datos del equipo
 `src/data/equipo.ts` — usado por `/quienes-somos`, por `AuthorSignature.astro` (firmas de blogs/noticias) y por `/preview/firmas`. Cambiar el nombre/foto/cargo de una persona ahí lo actualiza en todos lados.
 
 ## Pendiente / para decidir con el usuario
-1. **Verificar el fix del parpadeo en scroll** (ver sección de arriba) antes de considerar esto cerrado.
-2. Sigue pendiente definir las URLs reales de LinkedIn del equipo en `src/data/equipo.ts` (hoy están en `#` como placeholder).
-3. Tarea sugerida (no urgente, ver chip de sesión `task_c6793c49`): varias páginas usan variables CSS (`--color-green-dark`, `--color-bg-page`, `--color-text-main`) que nunca fueron definidas en ningún `:root` del proyecto — funcionan "por accidente" (fallback a `currentColor`/`transparent`). Ya se corrigió el caso puntual de la timeline en `/quienes-somos`; falta revisar el resto (gobernanza, afiliate, servicios, contacto, etc.).
+1. **Variables CSS `--color-*` nunca definidas** (`--color-text-sub`, `--color-green-main`, `--color-text-main`, `--color-bg-page`, `--color-green-dark`, `--color-green-soft`, etc.): causan que textos/colores en `quienes-somos.astro` (y probablemente otras páginas: consumo-lacteo, servicios, gobernanza, afiliate, informacion-sectorial, portal) caigan en el color por defecto en vez del color de marca real. Hay un chip de sesión pendiente para esto (`task_eb54eba0`) — falta que el usuario lo dispare o lo pida.
+2. **Logo del Ministerio de Agricultura** (`Logo_Ministerio_de_Agricultura...svg.webp` en `instituciones/`) viene con el texto "Agricultura" tocando el borde izquierdo/derecho del archivo original — no es relleno de sobra que se pueda recortar, el texto ya llega al borde en el archivo fuente. Habría que pedir un archivo nuevo con más margen si el cliente lo nota.
+3. Las 8 tarjetas de "Ecosistema Digital ANALAC" (Portal de Afiliados, Zona de Pagos, etc.) no tienen links reales — el texto "Acceder" es solo decorativo, sin `href`. Esto ya era así antes del carrusel; no se tocó porque no había URLs claras para cada una. Si el cliente quiere que sean clicables, hay que definir a dónde va cada una.
+4. Sigue pendiente definir las URLs reales de LinkedIn del equipo en `src/data/equipo.ts` (hoy están en `#` como placeholder).
 
 ## Cómo se hace push (sin credenciales git en este entorno)
 Este Mac no tiene credenciales de git para GitHub en el entorno de Claude Code. El camino que funciona: abrir **GitHub Desktop** (ya autenticado) y darle "Push origin" ahí, cada vez que se pide guardar.
@@ -53,7 +50,7 @@ cd /Users/andres/Documents/analac-web
 git status
 git log --oneline -15
 ```
-1. Revisar el punto de "parpadeo al hacer scroll" (arriba) — probar en vivo en el navegador antes de seguir.
+1. Confirmar que el push desde GitHub Desktop de la sesión del 14 julio se hizo (commits `97831bb` y `a4fd758`, más este de docs).
 2. El servidor de Astro dev (`pnpm dev`, puerto 4321) puede haber quedado corriendo de una sesión anterior — revisar antes de levantar uno nuevo.
 3. Dashboard Vercel: vercel.com/andres-projects-f33d3017/analac-web
 4. Repo: github.com/leonardomorty7-svg/analac-web
