@@ -12,43 +12,26 @@ const equipoJunta = equipo.filter(m => m.grupo === 'junta')
 
 // Diccionario de normalización óptica
 // Ajustamos visualmente marcas que naturalmente se ven muy grandes o muy pequeñas
-// manteniendo el mismo tamaño de caja.
+// manteniendo el mismo tamaño de caja. Los logos ya vienen recortados sin
+// relleno transparente sobrante, así que la mayoría no necesita ajuste (1).
 const opticalScales: Record<string, number> = {
-  // Aliados Tier 1 (Premium: Microajuste visual de ~15% adicional)
-  'carval': 1.55,
-  'grupo-bios': 1.65,
-  'solla': 1.65,
-  // Aliados Tier 2 (Estratégicos: Reducción visual de ~15%)
+  // Aliados Tier 2
   'delaval': 0.55,      // DeLaval ajustado para no dominar visualmente
   'saenz-fety': 0.95,   // Proporción equivalente a DeLaval
   // Aliados Tier 3
   'biogenesis': 0.85,
-  'ganasal': 0.9,
-  'genetica-selecta': 0.85,
-  'lares': 0.9,
   'noga': 0.9,
-  'nutrimixes': 0.9,
   'nutryr': 0.9,
-  'ourofino': 0.85,
-  'partner': 0.9,
   'semex': 0.9,
-  'silveragro': 0.9,
   // Gremios
-  'andi': 0.9,
-  'asoleche': 0.9,
-  'consejo-nacional-lacteo': 0.85,
   'fedegan': 0.9,
   // Instituciones
   'ica': 0.55,         // Logo muy cuadrado y alto, domina demasiado
   'icontec': 0.75,     // Tiende a verse prominente
   'Logo_Ministerio_de_Agricultura_y_Desarrollo_Rural_Colombia': 0.85,
   'Logo_Ministerio_de_Ambiente_y_Desarrollo_Sostenible_Colombia': 0.85,
-  'Logo_Invima': 0.85,
-  'sic': 0.8,
   // Academia
-  'unisabana': 0.7,     // Logo muy alargado horizontalmente
-  'sena': 1.15,         // Para balancear el peso visual frente a unisabana
-  'uniagraria': 0.85,
+  'sena': 1.15,         // Para balancear el peso visual frente a los demás logos de academia
 };
 
 // Función para leer dinámicamente las carpetas de imágenes
@@ -502,47 +485,25 @@ const aliadosGroups = [
   <section class="section aliados-section" id="organizaciones" style="background: #ffffff; padding: 120px 0; border-top: 1px solid rgba(0,0,0,0.05);">
     <div class="container">
 
-      <!-- Desktop: panel con scroll (sticky izquierda + derecha que cambia) -->
-      <div class="aliados-scrollytelling fade-up" style={`height: calc(${aliadosGroups.length} * 62vh)`}>
-        <div class="aliados-sticky-wrap">
-          <div class="aliados-sticky-inner">
-            <div class="aliados-left">
-              <p class="overline">Red de Apoyo</p>
-              <h2 class="h2">Aliados Estratégicos</h2>
-              <p class="aliados-left-desc">
-                Empresas que apoyan económicamente a ANALAC, fortalecen el desarrollo del sector lácteo colombiano y aportan soluciones y tecnología para nuestros productores.
-              </p>
-            </div>
-            <div class="aliados-right" id="aliadosRight">
-              {aliadosGroups.map((g, i) => (
-                <div class="aliados-panel" data-index={i}>
-                  <AliadosGroup
-                    titulo={g.titulo}
-                    desc={g.desc}
-                    items={g.items}
-                    gridType={g.gridType}
-                    tierClass={g.tierClass}
-                    gap={g.gap}
-                    duration={g.duration}
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        </div>
+      <div class="section-header text-center fade-up" style="max-width: 700px; margin: 0 auto 48px;">
+        <p class="overline">Red de Apoyo</p>
+        <h2 class="h2">Aliados y Colaboradores</h2>
+        <p style="font-size: 17px; color: var(--color-text-sub); margin-top: 16px;">
+          Empresas, gremios, instituciones y academia que respaldan la gestión de ANALAC en beneficio del sector lácteo colombiano.
+        </p>
       </div>
 
-      <!-- Mobile: lista simple apilada (sin scroll-driven panels) -->
-      <div class="aliados-mobile">
-        <div class="section-header text-center" style="max-width: 800px; margin: 0 auto 48px;">
-          <p class="overline">Red de Apoyo</p>
-          <h2 class="h2">Aliados Estratégicos</h2>
-          <p style="font-size: 17px; color: var(--color-text-sub); margin-top: 16px;">
-            Empresas que apoyan económicamente a ANALAC, fortalecen el desarrollo del sector lácteo colombiano y aportan soluciones y tecnología para nuestros productores.
-          </p>
-        </div>
+      <div class="aliados-tabs fade-up" role="tablist">
         {aliadosGroups.map((g, i) => (
-          <div class="aliados-mobile-group" style={i > 0 ? 'padding-top: 48px; border-top: 1px solid rgba(0,0,0,0.05);' : ''}>
+          <button class="aliados-tab" data-index={i} type="button" role="tab" aria-selected={i === 0 ? 'true' : 'false'}>
+            {g.titulo}
+          </button>
+        ))}
+      </div>
+
+      <div class="aliados-panels fade-up">
+        {aliadosGroups.map((g, i) => (
+          <div class="aliados-panel" data-index={i}>
             <AliadosGroup
               titulo={g.titulo}
               desc={g.desc}
@@ -560,95 +521,71 @@ const aliadosGroups = [
   </section>
 
   <style>
-    /* Panel con scroll: sticky izquierda + derecha que cambia de contenido */
-    .aliados-scrollytelling {
-      position: relative;
-    }
-    .aliados-sticky-wrap {
-      position: sticky;
-      top: 184px;
-      height: calc(100vh - 184px);
+    .aliados-tabs {
       display: flex;
-      align-items: center;
+      flex-wrap: nowrap;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 56px;
+      overflow-x: auto;
+      scrollbar-width: none;
+      padding: 4px;
     }
-    .aliados-sticky-inner {
-      display: grid;
-      grid-template-columns: 360px 1fr;
-      gap: 72px;
-      align-items: center;
-      width: 100%;
-    }
-    .aliados-left {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      text-align: left;
-    }
-    .aliados-left .overline {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.12em;
-      color: #6db56d;
-      font-weight: 600;
-    }
-    .aliados-left .h2 {
-      margin-top: 12px;
-    }
-    .aliados-left-desc {
-      font-size: 17px;
-      color: rgba(15, 34, 17, 0.6);
-      line-height: 1.6;
-      margin-top: 16px;
-    }
-    .aliados-right {
-      position: relative;
-      min-height: 440px;
-    }
-    .aliados-panel {
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      transform: translateY(18px);
-      pointer-events: none;
-      transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .aliados-panel.active {
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
-    }
-
-    .aliados-mobile {
+    .aliados-tabs::-webkit-scrollbar {
       display: none;
     }
+    .aliados-tab {
+      flex: 0 0 auto;
+      padding: 9px 16px;
+      border-radius: 999px;
+      border: 1px solid rgba(15, 34, 17, 0.15);
+      background: transparent;
+      color: rgba(15, 34, 17, 0.6);
+      font-size: 13.5px;
+      font-weight: 500;
+      white-space: nowrap;
+      cursor: pointer;
+      transition: background 0.25s ease, color 0.25s ease, border-color 0.25s ease;
+    }
+    .aliados-tab:hover {
+      border-color: rgba(15, 34, 17, 0.3);
+      color: #0f2211;
+    }
+    .aliados-tab.active {
+      background: #0f2211;
+      border-color: #0f2211;
+      color: #fff;
+    }
 
-    @media (max-width: 900px) {
-      .aliados-scrollytelling {
-        display: none;
-      }
-      .aliados-mobile {
-        display: block;
-      }
-      .aliados-mobile-group {
-        margin-bottom: 48px;
+    .aliados-panel {
+      display: none;
+    }
+    .aliados-panel.active {
+      display: block;
+    }
+
+    @media (max-width: 640px) {
+      .aliados-tabs {
+        justify-content: flex-start;
+        padding-bottom: 8px;
+        margin-bottom: 40px;
       }
     }
   </style>
 
   <script>
-    // Aliados Estratégicos: el panel derecho cambia de grupo según el progreso
-    // de scroll dentro de la sección (sin hijackear el scroll nativo).
+    // Aliados y Colaboradores: pestañas clicables que muestran un grupo de logos a la vez.
     ;(function () {
-      const wrapper = document.querySelector<HTMLElement>('.aliados-scrollytelling')
+      const tabs = document.querySelectorAll<HTMLButtonElement>('.aliados-tab')
       const panels = document.querySelectorAll<HTMLElement>('.aliados-panel')
-      if (!wrapper || !panels.length) return
-
-      const desktopMq = window.matchMedia('(min-width: 901px)')
-      let activeIndex = -1
+      if (!tabs.length || !panels.length) return
 
       function setActive(index: number) {
-        if (index === activeIndex) return
-        activeIndex = index
+        tabs.forEach(t => {
+          const isActive = Number(t.dataset.index) === index
+          t.classList.toggle('active', isActive)
+          t.setAttribute('aria-selected', isActive ? 'true' : 'false')
+        })
         panels.forEach(p => {
           const isActive = Number(p.dataset.index) === index
           p.classList.toggle('active', isActive)
@@ -657,29 +594,11 @@ const aliadosGroups = [
         })
       }
 
-      function updateActive() {
-        if (!desktopMq.matches || !wrapper) { setActive(0); return }
-        const rect = wrapper.getBoundingClientRect()
-        const total = rect.height - window.innerHeight
-        const progress = total > 0 ? Math.min(1, Math.max(0, -rect.top / total)) : 0
-        const index = Math.min(panels.length - 1, Math.floor(progress * panels.length))
-        setActive(index)
-      }
+      tabs.forEach(tab => {
+        tab.addEventListener('click', () => setActive(Number(tab.dataset.index)))
+      })
 
-      // Solo recalcula una vez por frame, en vez de en cada evento de scroll.
-      let scrollTicking = false
-      function onScroll() {
-        if (scrollTicking) return
-        scrollTicking = true
-        requestAnimationFrame(() => {
-          updateActive()
-          scrollTicking = false
-        })
-      }
-
-      window.addEventListener('scroll', onScroll, { passive: true })
-      window.addEventListener('resize', onScroll)
-      updateActive()
+      setActive(0)
     })()
   </script>
 
@@ -711,116 +630,18 @@ const aliadosGroups = [
       </div>
     </div>
   </section>  <!-- S6.5 Ecosistema Digital -->
-  <section class="section" id="ecosistema" style="background: #ffffff; padding: 120px 0;">
+  <section class="section eco-carousel-section fade-up" id="ecosistema">
     <div class="container">
-      <div class="section-header text-center fade-up" style="max-width: 800px; margin: 0 auto 80px;">
-        <div class="overline-light" style="color: var(--color-green-main); border-color: rgba(62,142,65,0.2); margin-bottom: 16px; display: inline-block;">PLATAFORMA DIGITAL</div>
-        <h2 class="h2">Ecosistema Digital ANALAC</h2>
-        <p style="font-size: 19px; color: var(--color-text-sub); margin-top: 24px; line-height: 1.6;">Todos los servicios institucionales disponibles desde una única plataforma para fortalecer la productividad, la gestión gremial y el acceso a la información.</p>
+      <div class="eco-heading">
+        <div class="overline-light" style="color: var(--c-green); border-color: rgba(109,181,109,0.35); margin-bottom: 16px; display: inline-block;">PLATAFORMA DIGITAL</div>
+        <h2 class="h2" style="color: var(--c-green-deep);">Ecosistema Digital ANALAC</h2>
+        <p style="font-size: 19px; color: var(--c-muted); margin-top: 24px; line-height: 1.6; max-width: 700px; margin-left: auto; margin-right: auto;">Todos los servicios institucionales disponibles desde una única plataforma para fortalecer la productividad, la gestión gremial y el acceso a la información.</p>
       </div>
+    </div>
 
-      <style>
-        .ecosistema-grid {
-          display: grid;
-          gap: 40px;
-          grid-template-columns: repeat(4, 1fr);
-        }
-        .eco-card {
-          background: #ffffff;
-          border: 1px solid rgba(0,0,0,0.06);
-          border-radius: 16px;
-          padding: 40px 32px;
-          transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-          display: flex;
-          flex-direction: column;
-          height: 100%;
-          cursor: pointer;
-          position: relative;
-          overflow: hidden;
-        }
-        .eco-card::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          border-radius: 16px;
-          border: 1px solid transparent;
-          transition: border-color 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-          pointer-events: none;
-        }
-        .eco-card:hover {
-          transform: translateY(-4px) scale(1.01);
-          box-shadow: 0 10px 40px -10px rgba(0,0,0,0.08);
-          border-color: transparent;
-        }
-        .eco-card:hover::before {
-          border-color: rgba(62, 142, 65, 0.15); /* var(--color-green-main) lightened */
-        }
-        .eco-icon {
-          width: 56px;
-          height: 56px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: var(--color-green-main);
-          margin-bottom: 24px;
-          background: rgba(62, 142, 65, 0.04);
-          border-radius: 14px;
-          transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), background 0.5s ease;
-        }
-        .eco-card:hover .eco-icon {
-          transform: scale(1.05);
-          background: rgba(62, 142, 65, 0.08);
-        }
-        .eco-title {
-          font-size: 20px;
-          font-weight: 600;
-          color: var(--color-text-main);
-          margin-bottom: 12px;
-          letter-spacing: -0.01em;
-        }
-        .eco-desc {
-          font-size: 15px;
-          line-height: 1.6;
-          color: var(--color-text-sub);
-          flex-grow: 1;
-        }
-        .eco-arrow {
-          margin-top: 24px;
-          display: flex;
-          align-items: center;
-          color: var(--color-green-main);
-          font-size: 14px;
-          font-weight: 600;
-          opacity: 0.7;
-          transition: opacity 0.3s ease, transform 0.3s ease;
-        }
-        .eco-arrow svg {
-          margin-left: 8px;
-          transition: transform 0.3s ease;
-        }
-        .eco-card:hover .eco-arrow {
-          opacity: 1;
-        }
-        .eco-card:hover .eco-arrow svg {
-          transform: translateX(4px);
-        }
-        
-        @media (max-width: 1024px) {
-          .ecosistema-grid {
-            grid-template-columns: repeat(2, 1fr);
-            gap: 24px;
-          }
-        }
-        @media (max-width: 600px) {
-          .ecosistema-grid {
-            grid-template-columns: 1fr;
-            gap: 20px;
-          }
-        }
-      </style>
+    <div class="eco-carousel" id="ecoCarousel">
+      <div class="eco-track" id="ecoTrack">
 
-      <div class="ecosistema-grid fade-up">
-        
         <!-- Service 1 -->
         <div class="eco-card">
           <div class="eco-icon">
@@ -919,7 +740,340 @@ const aliadosGroups = [
 
       </div>
     </div>
+
+    <div class="eco-dots" id="ecoDots">
+      <button type="button" class="eco-dot" data-index="0" aria-label="Ir a Portal de Afiliados"></button>
+      <button type="button" class="eco-dot" data-index="1" aria-label="Ir a Portal de Aliados"></button>
+      <button type="button" class="eco-dot" data-index="2" aria-label="Ir a Zona de Pagos"></button>
+      <button type="button" class="eco-dot" data-index="3" aria-label="Ir a Academia ANALAC"></button>
+      <button type="button" class="eco-dot" data-index="4" aria-label="Ir a Información Sectorial"></button>
+      <button type="button" class="eco-dot" data-index="5" aria-label="Ir a Biblioteca Digital"></button>
+      <button type="button" class="eco-dot" data-index="6" aria-label="Ir a Certificados"></button>
+      <button type="button" class="eco-dot" data-index="7" aria-label="Ir a Mesa de Ayuda"></button>
+    </div>
   </section>
+
+  <style>
+    /* Ecosistema Digital - fondo claro/crema (a diferencia de Nodos de la Red, que es oscuro) */
+    .eco-carousel-section {
+      position: relative;
+      background-color: var(--c-cream);
+      overflow: hidden;
+      padding-block: 120px;
+    }
+    .eco-carousel-section::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 50% 20%, rgba(109, 181, 109, 0.10), transparent 50%),
+                  radial-gradient(circle at 80% 80%, rgba(109, 181, 109, 0.08), transparent 40%);
+      z-index: 0;
+    }
+    .eco-carousel-section::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: linear-gradient(rgba(15, 34, 17, 0.035) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(15, 34, 17, 0.035) 1px, transparent 1px);
+      background-size: 60px 60px;
+      mask-image: radial-gradient(ellipse at center, black 10%, transparent 80%);
+      -webkit-mask-image: radial-gradient(ellipse at center, black 10%, transparent 80%);
+      z-index: 0;
+    }
+    .eco-carousel-section > .container,
+    .eco-carousel-section > .eco-carousel,
+    .eco-carousel-section > .eco-dots {
+      position: relative;
+      z-index: 2;
+    }
+
+    .eco-heading {
+      text-align: center;
+      margin-bottom: 64px;
+    }
+
+    /* Track (mobile-first: simple grid) */
+    .eco-carousel {
+      position: relative;
+    }
+    .eco-track {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      max-width: 1280px;
+      margin-inline: auto;
+      padding-inline: 24px;
+    }
+    .eco-dots {
+      display: none;
+    }
+    .eco-card {
+      background: #ffffff;
+      border: 1px solid rgba(0,0,0,0.06);
+      border-radius: 16px;
+      padding: 40px 32px;
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+    .eco-card:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: 0 10px 40px -10px rgba(0,0,0,0.08);
+    }
+    .eco-icon {
+      width: 56px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--c-green);
+      margin-bottom: 24px;
+      background: rgba(109, 181, 109, 0.1);
+      border-radius: 14px;
+      transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), background 0.5s ease;
+    }
+    .eco-card:hover .eco-icon {
+      transform: scale(1.05);
+      background: rgba(109, 181, 109, 0.18);
+    }
+    .eco-title {
+      font-size: 20px;
+      font-weight: 600;
+      color: var(--c-green-deep);
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+    .eco-desc {
+      font-size: 15px;
+      line-height: 1.6;
+      color: var(--c-muted);
+      flex-grow: 1;
+    }
+    .eco-arrow {
+      margin-top: 24px;
+      display: flex;
+      align-items: center;
+      color: var(--c-green);
+      font-size: 14px;
+      font-weight: 600;
+      opacity: 0.7;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+    .eco-arrow svg {
+      margin-left: 8px;
+      transition: transform 0.3s ease;
+    }
+    .eco-card:hover .eco-arrow {
+      opacity: 1;
+    }
+    .eco-card:hover .eco-arrow svg {
+      transform: translateX(4px);
+    }
+
+    @media (max-width: 1024px) {
+      .eco-track { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    }
+    @media (max-width: 600px) {
+      .eco-track { grid-template-columns: 1fr; gap: 20px; }
+    }
+
+    /* Desktop scroll-hijack carousel (see script at bottom of file) */
+    @media (min-width: 900px) and (prefers-reduced-motion: no-preference) {
+      .eco-carousel-section {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        padding-top: 148px;
+        padding-bottom: 40px;
+        overflow: hidden;
+      }
+      .eco-heading {
+        margin-bottom: 40px;
+        flex-shrink: 0;
+      }
+      .eco-carousel {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        overflow: hidden;
+        min-height: 0;
+      }
+      .eco-track {
+        display: flex;
+        gap: 32px;
+        padding: 0;
+        max-width: none;
+        margin: 0;
+        will-change: transform;
+        transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .eco-track .eco-card {
+        flex: 0 0 380px;
+        width: 380px;
+        transform: scale(0.94) rotate(0deg);
+        opacity: 0.55;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+        transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+          box-shadow 0.6s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.6s ease;
+      }
+      .eco-track .eco-card.is-active {
+        transform: scale(1.06) translateY(-10px) rotate(0deg);
+        opacity: 1;
+        box-shadow: 0 32px 56px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(15, 34, 17, 0.08),
+          0 0 40px rgba(109, 181, 109, 0.15);
+        border-color: rgba(109, 181, 109, 0.3);
+        z-index: 2;
+      }
+      .eco-track .eco-card.is-before {
+        transform: scale(0.94) rotate(-7deg);
+      }
+      .eco-track .eco-card.is-after {
+        transform: scale(0.94) rotate(7deg);
+      }
+      .eco-carousel .eco-card:hover {
+        transform: scale(0.94) rotate(0deg);
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+      }
+      .eco-carousel .eco-card.is-active:hover {
+        transform: scale(1.06) translateY(-10px) rotate(0deg);
+        box-shadow: 0 32px 56px rgba(0, 0, 0, 0.12), 0 0 0 1px rgba(15, 34, 17, 0.08),
+          0 0 40px rgba(109, 181, 109, 0.15);
+      }
+      .eco-carousel .eco-card.is-before:hover {
+        transform: scale(0.94) rotate(-7deg);
+      }
+      .eco-carousel .eco-card.is-after:hover {
+        transform: scale(0.94) rotate(7deg);
+      }
+      .eco-dots {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 32px;
+        flex-shrink: 0;
+      }
+      .eco-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(15, 34, 17, 0.15);
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.3s ease;
+      }
+      .eco-dot.active {
+        background: var(--c-green);
+        transform: scale(1.3);
+      }
+    }
+  </style>
+
+  <script>
+    // Scroll-hijack carousel for "Ecosistema Digital ANALAC" (mismo mecanismo que
+    // "Nodos de la Red" en /asociados-y-aliados, pero con fondo claro).
+    // Desktop-only (>=900px) y deshabilitado con prefers-reduced-motion.
+    ;(function () {
+      const section = document.getElementById('ecosistema')
+      const carousel = document.getElementById('ecoCarousel')
+      const track = document.getElementById('ecoTrack')
+      const dotsWrap = document.getElementById('ecoDots')
+      if (!section || !carousel || !track || !dotsWrap) return
+
+      const cards = Array.from(track.querySelectorAll('.eco-card'))
+      const dots = Array.from(dotsWrap.querySelectorAll('.eco-dot'))
+      const total = cards.length
+      if (!total) return
+
+      let activeIndex = 0
+      let isAnimating = false
+      let animTimer: number | undefined
+
+      function isDesktopEnabled() {
+        return (
+          window.matchMedia('(min-width: 900px)').matches &&
+          window.matchMedia('(prefers-reduced-motion: no-preference)').matches
+        )
+      }
+
+      function layout() {
+        const cardWidth = cards[0].getBoundingClientRect().width
+        if (!cardWidth) return
+        const trackStyle = getComputedStyle(track)
+        const gap = parseFloat(trackStyle.columnGap || trackStyle.gap || '0') || 0
+        const viewportWidth = carousel.clientWidth
+        const offset = (viewportWidth - cardWidth) / 2 - activeIndex * (cardWidth + gap)
+        track.style.transform = `translateX(${offset}px)`
+
+        cards.forEach((card, i) => {
+          card.classList.toggle('is-active', i === activeIndex)
+          card.classList.toggle('is-before', i < activeIndex)
+          card.classList.toggle('is-after', i > activeIndex)
+        })
+        dots.forEach((dot, i) => dot.classList.toggle('active', i === activeIndex))
+      }
+
+      function goTo(index: number) {
+        const clamped = Math.max(0, Math.min(total - 1, index))
+        if (clamped === activeIndex) return
+        activeIndex = clamped
+        isAnimating = true
+        layout()
+        window.clearTimeout(animTimer)
+        animTimer = window.setTimeout(() => {
+          isAnimating = false
+        }, 600)
+      }
+
+      dots.forEach((dot, i) => {
+        dot.addEventListener('click', () => {
+          if (!isAnimating) goTo(i)
+        })
+      })
+
+      function isSectionPinned() {
+        const rect = section.getBoundingClientRect()
+        return Math.abs(rect.top) <= 100
+      }
+
+      function onWheel(e: WheelEvent) {
+        if (!isDesktopEnabled()) return
+        if (!isSectionPinned()) return
+
+        const atFirst = activeIndex === 0
+        const atLast = activeIndex === total - 1
+        const goingDown = e.deltaY > 0
+        const goingUp = e.deltaY < 0
+
+        if (!goingDown && !goingUp) return
+        // At a boundary and trying to go further out: release the hijack
+        // so native page scroll continues into the next/previous section.
+        if ((atFirst && goingUp) || (atLast && goingDown)) return
+
+        e.preventDefault()
+        e.stopImmediatePropagation()
+
+        // Keep the section pixel-aligned to the viewport while hijacked.
+        const rect = section.getBoundingClientRect()
+        if (Math.abs(rect.top) > 2) {
+          window.scrollTo({ top: window.scrollY + rect.top, behavior: 'auto' })
+        }
+
+        if (isAnimating) return
+
+        if (goingDown) goTo(activeIndex + 1)
+        else if (goingUp) goTo(activeIndex - 1)
+      }
+
+      window.addEventListener('wheel', onWheel, { passive: false, capture: true })
+      window.addEventListener('resize', layout)
+      layout()
+    })()
+  </script>
 
   <!-- S7 CTA Final Customizado -->
   <section class="page-hero hero-dark fade-up" style="min-height: 70vh; display: flex; align-items: center; justify-content: center; text-align: center; padding: 120px 0; margin-top: 0;">

@@ -108,6 +108,10 @@ ul, ol {
 
 
 /* ── Typographic Utilities ───────────────────────────────────── */
+.text-center {
+  text-align: center;
+}
+
 .overline {
   font-size: 11px;
   text-transform: uppercase;
