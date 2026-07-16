@@ -1,5 +1,8 @@
 ---
+import type { OrganizationDTO } from '../../services/directory/types';
+
 export interface Props {
+  relatedOrgs?: OrganizationDTO[];
   org: {
     name: string;
     logo: string;
@@ -26,7 +29,7 @@ export interface Props {
   };
 }
 
-const { org } = Astro.props;
+const { org, relatedOrgs = [] } = Astro.props;
 ---
 
 <div class="page-ambient-bg"></div>
@@ -173,6 +176,39 @@ const { org } = Astro.props;
 
 </div>
 
+{relatedOrgs.length > 0 && (
+  <section class="related-section fade-up">
+    <div class="container related-heading">
+      <p class="overline">Directorio de Aliados</p>
+      <h2 class="related-title">Otras organizaciones del directorio</h2>
+    </div>
+
+    <div class="related-carousel-wrap">
+      <div class="related-track">
+        {[...relatedOrgs, ...relatedOrgs].map((related) => (
+          <a href={`/asociados-y-aliados/directorio/${related.slug}`} class="related-card">
+            <div class="related-card-head">
+              <img src={related.logo} alt={`Logo ${related.name}`} class="related-logo" />
+              <div>
+                <h3 class="related-name">{related.name}</h3>
+                <p class="related-meta">{related.category} · {related.type}</p>
+              </div>
+            </div>
+            <p class="related-summary">{related.summary}</p>
+            <div class="related-footer">
+              <span class="related-location">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                {related.location.city}, {related.location.department}
+              </span>
+              <span class="related-link">Ver perfil &rarr;</span>
+            </div>
+          </a>
+        ))}
+      </div>
+    </div>
+  </section>
+)}
+
 <style>
   body {
     background-color: #fcfcfc;
@@ -190,8 +226,13 @@ const { org } = Astro.props;
   }
 
   /* Header */
+  /* Los primeros 104px llevan un fondo oscuro sólido para respaldar el
+     menú superior (que es semitransparente y está pensado para ir sobre
+     una imagen oscura) — sin esto, el degradé del nav queda flotando
+     sobre blanco y se ve como una franja gris sucia. El resto del header
+     sigue blanco, igual que antes. */
   .profile-header {
-    background: #fff;
+    background: linear-gradient(to bottom, #06150f 0, #06150f 140px, #fff 140px, #fff 100%);
     border-bottom: 1px solid rgba(0,0,0,0.06);
     padding: 160px 0 60px;
     position: relative;
@@ -502,6 +543,130 @@ const { org } = Astro.props;
     }
     .btn {
       flex: 1;
+    }
+  }
+
+  /* Otras organizaciones del directorio: carrusel continuo (mismo
+     mecanismo que Ciencia Láctea / Consumo Lácteo en el home), en pausa
+     mientras el mouse esté encima. */
+  .related-section {
+    background: var(--c-cream);
+    border-top: 1px solid rgba(0,0,0,0.05);
+    padding: 64px 0 80px;
+  }
+  .related-heading {
+    margin-bottom: 32px;
+  }
+  .related-title {
+    font-size: clamp(24px, 2.6vw, 32px);
+    font-weight: 400;
+    color: var(--c-green-deep);
+    letter-spacing: -0.01em;
+    margin: 4px 0 0;
+  }
+
+  .related-carousel-wrap {
+    width: 100vw;
+    margin-left: 50%;
+    transform: translateX(-50%);
+    overflow: hidden;
+  }
+  .related-track {
+    display: flex;
+    width: max-content;
+    gap: 24px;
+    /* Suficiente aire arriba/abajo para que la sombra del hover (que crece
+       y la card se levanta) no quede cortada por el overflow:hidden del wrap. */
+    padding: 20px 4px 56px;
+    animation: related-marquee-scroll 32s linear infinite;
+  }
+  .related-track:hover {
+    animation-play-state: paused;
+  }
+  @keyframes related-marquee-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-50% - 12px)); }
+  }
+
+  .related-card {
+    flex: 0 0 360px;
+    width: 360px;
+    background: #fff;
+    border: 1px solid rgba(0,0,0,0.06);
+    border-radius: 20px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    box-shadow: 0 4px 16px rgba(0,0,0,0.02);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s ease;
+  }
+  .related-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(15, 34, 17, 0.1);
+    border-color: rgba(109, 181, 109, 0.25);
+  }
+  .related-card-head {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+  .related-logo {
+    width: 52px;
+    height: 52px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 1px solid rgba(0,0,0,0.05);
+    flex-shrink: 0;
+  }
+  .related-name {
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--c-green-deep);
+    line-height: 1.25;
+    margin: 0 0 4px;
+  }
+  .related-meta {
+    font-size: 12px;
+    color: var(--c-muted);
+    margin: 0;
+  }
+  .related-summary {
+    font-size: 14px;
+    color: var(--c-muted);
+    line-height: 1.6;
+    margin: 0 0 20px;
+    flex-grow: 1;
+  }
+  .related-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 14px;
+    border-top: 1px solid rgba(0,0,0,0.05);
+    font-size: 13px;
+  }
+  .related-location {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--c-muted);
+  }
+  .related-link {
+    color: var(--c-green);
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  @media (max-width: 640px) {
+    .related-card {
+      flex-basis: 280px;
+      width: 280px;
+    }
+    .related-track {
+      animation-duration: 22s;
     }
   }
 </style>

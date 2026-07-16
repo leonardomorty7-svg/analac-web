@@ -3,6 +3,7 @@ import BaseLayout from '../../../layouts/BaseLayout.astro';
 import OrganizationProfile from '../../../components/directory/OrganizationProfile.astro';
 import { getOrganizations } from '../../../services/directory/getOrganizations';
 import { getOrganizationBySlug } from '../../../services/directory/getOrganizationBySlug';
+import type { OrganizationDTO } from '../../../services/directory/types';
 
 export async function getStaticPaths() {
   // Obtenemos todos los slugs publicados para pre-renderizarlos
@@ -100,14 +101,19 @@ if (org.faqs && org.faqs.length > 0) {
 const customSchema = JSON.stringify(schemaPayload);
 const canonical = `https://analac.com/asociados-y-aliados/directorio/${org.slug}`;
 
+// Otras organizaciones del directorio, para la sección de "relacionadas"
+// al final del perfil (excluye la organización actual).
+const { data: allOrgs } = await getOrganizations({ page: 1, pageSize: 20 });
+const relatedOrgs: OrganizationDTO[] = allOrgs.filter((o) => o.slug !== org.slug);
+
 ---
 
-<BaseLayout 
-  title={title} 
-  description={description} 
+<BaseLayout
+  title={title}
+  description={description}
   ogImage={org.cover || org.logo || '/og-analac.jpg'}
   customSchema={customSchema}
   customCanonical={canonical}
 >
-  <OrganizationProfile org={org} />
+  <OrganizationProfile org={org} relatedOrgs={relatedOrgs} />
 </BaseLayout>
