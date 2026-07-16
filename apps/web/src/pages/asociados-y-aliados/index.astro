@@ -423,7 +423,10 @@ import BaseLayout from '../../layouts/BaseLayout.astro'
       flex: 1;
       display: flex;
       align-items: center;
-      overflow: hidden;
+      /* Sin overflow:hidden aquí: la card activa se agranda y levanta con
+         una sombra grande que si no quedaba cortada contra este borde.
+         El overflow:hidden de .nodos-section (el contenedor de afuera) ya
+         recorta lo horizontal (las cards fuera de pantalla). */
       min-height: 0;
     }
     .nodos-track {
@@ -518,6 +521,7 @@ import BaseLayout from '../../layouts/BaseLayout.astro'
     let activeIndex = 0
     let isAnimating = false
     let animTimer: number | undefined
+    let wasPinned = false
 
     function isDesktopEnabled() {
       return (
@@ -567,15 +571,42 @@ import BaseLayout from '../../layouts/BaseLayout.astro'
     }
 
     function onWheel(e: WheelEvent) {
-      if (!isDesktopEnabled()) return
-      if (!isSectionPinned()) return
+      if (!isDesktopEnabled()) {
+        wasPinned = false
+        return
+      }
+      if (!isSectionPinned()) {
+        wasPinned = false
+        return
+      }
+
+      const goingDown = e.deltaY > 0
+      const goingUp = e.deltaY < 0
+      if (!goingDown && !goingUp) return
+
+      // Recién se ancla la sección: siempre arranca desde el extremo que
+      // corresponde a la dirección de entrada (primera card si se venía
+      // bajando, última si se venía subiendo), sin avanzar todavía en este
+      // mismo tick de scroll — así el usuario ve la card de entrada quieta
+      // antes de que el scroll empiece a mover el carrusel.
+      if (!wasPinned) {
+        wasPinned = true
+        const rect = section.getBoundingClientRect()
+        if (Math.abs(rect.top) > 2) {
+          window.scrollTo({ top: window.scrollY + rect.top, behavior: 'auto' })
+        }
+        const entryIndex = goingDown ? 0 : total - 1
+        if (entryIndex !== activeIndex) {
+          activeIndex = entryIndex
+          layout()
+        }
+        e.preventDefault()
+        e.stopImmediatePropagation()
+        return
+      }
 
       const atFirst = activeIndex === 0
       const atLast = activeIndex === total - 1
-      const goingDown = e.deltaY > 0
-      const goingUp = e.deltaY < 0
-
-      if (!goingDown && !goingUp) return
       // At a boundary and trying to go further out: release the hijack
       // so native page scroll continues into the next/previous section.
       if ((atFirst && goingUp) || (atLast && goingDown)) return
