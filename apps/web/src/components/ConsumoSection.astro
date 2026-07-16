@@ -82,7 +82,7 @@ const recipes = [
 
   <div class="recetario-carousel-wrap reveal" style="transition-delay: 150ms">
     <div class="recetario-track" id="recetarioTrack">
-      {[...recipes, ...recipes, ...recipes].map((receta) => (
+      {[...recipes, ...recipes].map((receta) => (
         <a href="/consumo-lacteo" class="recipe-card">
           <div class="rc-img-wrapper">
             <img src={receta.imagen} alt={receta.titulo} class="rc-img" />
@@ -104,15 +104,6 @@ const recipes = [
           </div>
         </a>
       ))}
-    </div>
-
-    <div class="recetario-nav">
-      <button type="button" class="recetario-nav-btn" id="recetarioPrev" aria-label="Receta anterior">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
-      </button>
-      <button type="button" class="recetario-nav-btn recetario-nav-btn--active" id="recetarioNext" aria-label="Siguiente receta">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-      </button>
     </div>
   </div>
 
@@ -167,64 +158,33 @@ const recipes = [
     text-wrap: balance;
   }
 
-  /* Carrusel horizontal con "peek" de la siguiente receta */
+  /* Carrusel horizontal con movimiento continuo (mismo mecanismo que el
+     marquee de "Organizaciones e instituciones que respaldan..."):
+     2 copias del set, animadas con translateX en loop infinito, y en
+     pausa mientras el mouse esté encima. */
   .recetario-carousel-wrap {
     width: 100vw;
     max-width: none;
     align-self: flex-start;
     margin-left: -5vw;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
+    overflow: hidden;
   }
 
   .recetario-track {
     display: flex;
+    width: max-content;
     gap: 28px;
-    width: 100%;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-    scrollbar-width: none;
-    padding: 4px 4px 8px;
+    /* Suficiente aire arriba/abajo para que la sombra del hover (que crece
+       y la card se levanta) no quede cortada por el overflow:hidden del wrap. */
+    padding: 24px 4px 72px;
+    animation: recetario-marquee-scroll 50s linear infinite;
   }
-  .recetario-track::-webkit-scrollbar {
-    display: none;
+  .recetario-track:hover {
+    animation-play-state: paused;
   }
-
-  .recetario-nav {
-    display: flex;
-    gap: 12px;
-    margin-top: 32px;
-    margin-left: 5vw;
-  }
-  .recetario-nav-btn {
-    width: 48px;
-    height: 48px;
-    border-radius: 50%;
-    border: 1px solid rgba(15, 34, 17, 0.12);
-    background: #ffffff;
-    color: #0f2211;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
-  }
-  .recetario-nav-btn:hover {
-    transform: translateY(-2px);
-    border-color: #6db56d;
-    color: #6db56d;
-  }
-  .recetario-nav-btn--active {
-    background: #0f2211;
-    color: #ffffff;
-    border-color: #0f2211;
-  }
-  .recetario-nav-btn--active:hover {
-    background: #1a3a1e;
-    color: #ffffff;
+  @keyframes recetario-marquee-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(calc(-50% - 14px)); }
   }
 
   .recipe-card {
@@ -234,7 +194,6 @@ const recipes = [
        wrap sea full-bleed a 100vw. */
     flex: 0 0 calc((95vw - 84px) / 3.5);
     width: calc((95vw - 84px) / 3.5);
-    scroll-snap-align: center;
     text-decoration: none;
     border-radius: 16px;
     overflow: hidden;
@@ -410,8 +369,8 @@ const recipes = [
       width: 100vw;
       margin-left: -24px;
     }
-    .recetario-nav {
-      margin-left: 24px;
+    .recetario-track {
+      animation-duration: 34s;
     }
     .recipe-card {
       flex-basis: 280px;
@@ -433,93 +392,4 @@ const recipes = [
   }, { threshold: 0.1 });
 
   document.querySelectorAll('.recetario .reveal').forEach(el => observer.observe(el));
-
-  // Carrusel horizontal de "Consumo Lácteo": auto-rotación infinita + botones
-  ;(function () {
-    const wrap = document.querySelector('.recetario-carousel-wrap')
-    const track = document.getElementById('recetarioTrack')
-    const prev = document.getElementById('recetarioPrev')
-    const next = document.getElementById('recetarioNext')
-    if (!wrap || !track || !prev || !next) return
-
-    const AUTOPLAY_MS = 3500
-
-    function cardWidth() {
-      const card = track.querySelector('.recipe-card')
-      return card ? card.getBoundingClientRect().width : 0
-    }
-
-    function cardStep() {
-      const style = getComputedStyle(track)
-      const gap = parseFloat(style.columnGap || style.gap || '0') || 0
-      return cardWidth() + gap
-    }
-
-    // Las cards usan scroll-snap-align:center, así que en reposo quedan
-    // centradas y el sobrante se reparte en ambos bordes (peek simétrico).
-    // El offset entre "scrollLeft" y "posición lógica de inicio de copia"
-    // es la mitad del espacio que sobra alrededor de la card centrada.
-    function centerOffset() {
-      return (track.clientWidth - cardWidth()) / 2
-    }
-
-    // El track contiene 3 copias del set de recetas. Mantenemos el scroll
-    // siempre dentro de la copia del medio y, cuando se sale de ese rango,
-    // saltamos instantáneamente una copia hacia el otro lado (contenido
-    // idéntico, así que el salto es invisible) => loop infinito.
-    function setWidth() {
-      return track.scrollWidth / 3
-    }
-
-    function normalize() {
-      const width = setWidth()
-      const logical = track.scrollLeft + centerOffset()
-      if (logical < width * 0.5) {
-        track.scrollTo({ left: track.scrollLeft + width, behavior: 'instant' })
-      } else if (logical > width * 1.5) {
-        track.scrollTo({ left: track.scrollLeft - width, behavior: 'instant' })
-      }
-    }
-
-    function advance(dir) {
-      track.scrollBy({ left: dir * cardStep(), behavior: 'smooth' })
-    }
-
-    let normalizeTimeout
-    track.addEventListener('scroll', () => {
-      clearTimeout(normalizeTimeout)
-      normalizeTimeout = setTimeout(normalize, 150)
-    })
-
-    let timer = null
-    function startAutoplay() {
-      stopAutoplay()
-      timer = setInterval(() => advance(1), AUTOPLAY_MS)
-    }
-    function stopAutoplay() {
-      if (timer) clearInterval(timer)
-      timer = null
-    }
-
-    next.addEventListener('click', () => {
-      advance(1)
-      startAutoplay()
-    })
-    prev.addEventListener('click', () => {
-      advance(-1)
-      startAutoplay()
-    })
-
-    wrap.addEventListener('mouseenter', stopAutoplay)
-    wrap.addEventListener('mouseleave', startAutoplay)
-
-    window.addEventListener('resize', () => {
-      normalize()
-    })
-
-    // Posiciona el scroll al inicio de la copia del medio antes de arrancar
-    // (el layout ya está resuelto de forma síncrona en este punto).
-    track.scrollTo({ left: setWidth() - centerOffset(), behavior: 'instant' })
-    startAutoplay()
-  })()
 </script>
